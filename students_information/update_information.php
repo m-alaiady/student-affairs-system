@@ -1,8 +1,8 @@
 <?php
 
-
-include'template/t1.php';
-
+// session_start()
+require_once('../connection.php');
+include("../template/t1.php");
 
 if( !isset($_SESSION['student_id']))
 {

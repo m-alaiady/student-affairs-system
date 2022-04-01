@@ -4,6 +4,6 @@
 
     if(!$con)
     {
-        die(' Please Check Your Connection'.mysqli_error($con));
+        die(' Please Check Your Connection'.  mysqli_connect_error());
     }
 ?>

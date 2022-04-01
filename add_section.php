@@ -51,7 +51,6 @@ if( basename($_SERVER['HTTP_REFERER']) == "courses.php"){
 
     $credits = mysqli_fetch_assoc($credits_result);
 
-    var_dump();
 
     if($credits['credits'] + $course_credit['credits'] <= 20){
         while($section_id = mysqli_fetch_assoc($get_sections_id_result)){
