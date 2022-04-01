@@ -24,22 +24,70 @@ if( !isset($_SESSION['student_id']))
 
 <body>
 
+
     <div class="update">
     <form method="post">
-        <label> Student ID: </label><br />
-        <input type="text" value="<?php echo $data['student_id']; ?>" title="Cannot modified" disabled /><br />
-        <label> National ID: </label><br />
-        <input type="text" value="<?php echo $data['national_id']; ?>" title="Cannot modified" disabled /><br />
-        <label> Student Name: </label><br />
-        <input required type="text" name="s_name" value="<?php echo $data['s_name']; ?>" /><br />
-        <label> Email: </label><br />
-        <input required type="email" name="email" value="<?php echo $data['email']; ?>" /><br  /><br />
-        <input type="submit" name="submit" value="Save" />
-        <a href="../home.php">Go back to dashboard</a>
+    <table>
+      <tr>
+        <td> Student ID: </td>
+        <td><input type="text" value="<?php echo $data['student_id']; ?>" title="Cannot modified" disabled /></td>
+        </tr>
+        <tr>
+        <td>National ID: </td>
+        <td><input type="text" value="<?php echo $data['national_id']; ?>" title="Cannot modified" disabled /></td>
+        </tr>
+        <tr>
+        <td> Student Name: </td>
+        <td><input required type="text" name="s_name" value="<?php echo $data['s_name']; ?>" /></td>
+        </tr>
+        <tr>
+        <td> Personal Email: </td>
+        <td><input required type="email" name="email" value="<?php echo $data['email']; ?>" /></td> 
+        </tr>
+        <tr>
+        <td> Mobile number:</td>
+        <td><input required type="mobile" name="mobile" value="<?php echo $data['mobile']; ?>" /></td> 
+        </tr>
+        <tr>
+        <td> Alternative mobile number: </td>
+        <td><input required type="mobile2" name="mobile2" value="<?php echo $data['mobile2']; ?>" /></td>
+        </tr>
+        <tr>
+        <td> blood type: </td>
+        <td><input required type="blood" name="blood" value="<?php echo $data['blood']; ?>" /></td>
+        </tr>        
+    </table>
+    <br>
+    <input style="width: 30%;
+                  height:40px;
+                  margin-left:37%;
+                  border: 1px solid;
+                    background: #2691d9;
+                    border-radius: 25px;
+                    font-size: 18px;
+                    color: #e9f4fb;
+                    font-weight: 700;
+                    cursor: pointer;
+                    outline: none;
+                    margin-bottom: 15px" 
+     type="submit" name="submit" value="Save" />
     </form>
     </div>
 
     <style>
+        table, td{
+        
+        border-top: 1px solid #fff;
+        padding: 1em 2.5em;
+    }
+    tr:nth-child(odd) {
+        background: #eee;
+      }
+      form td input{
+          width: 114%;
+          text-align: center;
+      }
+     
         .update{
             position: absolute;
         margin-left:525px;
@@ -66,7 +114,9 @@ if( !isset($_SESSION['student_id']))
 $success ;
 
 if(isset($_POST['submit'])){
-    $query="update `students` set s_name = '" . $_POST['s_name'] . "', email = '". $_POST['email'] ."' where student_id = '" . $_SESSION['student_id'] . "' ";
+    $query="update `students` set s_name = '" . $_POST['s_name'] . "', email = '". $_POST['email'] ."' 
+    mobile = '" . $_POST['mobile'] . "', mobile2 = '". $_POST['mobile2'] . "', blood = '". $_POST['blood'] ."'
+    where student_id = '" . $_SESSION['student_id'] . "' ";
     $result=mysqli_query($con,$query);
     // var_dump($query);
 

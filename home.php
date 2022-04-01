@@ -31,7 +31,7 @@ include('template/t1.php');
     <td><?php echo $data['national_id']; ?></td>
     </tr>
     <tr>
-    <td> Student Email</td>
+    <td> Personal Email</td>
     <td><?php echo $data['email']; ?> </td>
     </tr>
     <tr>

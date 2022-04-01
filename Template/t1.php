@@ -126,7 +126,7 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
 <!-- Start of side menu code -->
 <nav class="spider">
     <ul>
-        <li><a href="#">Home</a></li>
+        <li><a href="<?php echo $path ?> /home.php">Home</a></li>
         <li><a href="#" class="st-btn">Student Information 
             <span class="fas fa-caret-down first"></span></a>
         <ul class="st-show">
