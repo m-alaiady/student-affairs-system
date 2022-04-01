@@ -1,6 +1,6 @@
 <?php
-
-include'template/t1.php';
+require_once('connection.php');
+include('template/t1.php');
 
 
 

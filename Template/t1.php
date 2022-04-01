@@ -1,12 +1,14 @@
 <?php
-
-require_once('connection.php');
 session_start();
 
 $query="select * from students where student_id='".$_SESSION['student_id']."' ";
 $result=mysqli_query($con,$query);
 $data = mysqli_fetch_assoc($result);
 
+$pathInPieces = explode('\\', __DIR__);
+$proj_name = $pathInPieces[3];
+$dir_name = $pathInPieces[4];
+$path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name ."/". $dir_name;
 
 
 ?>
@@ -54,11 +56,11 @@ $data = mysqli_fetch_assoc($result);
   }
   
   ?>
-     
-  
+
+
     
         <!-- <img src="image/Vision-2030-logo.jpg" height="80" width="200" style="float: right"> -->
-        <img src="image/aou-logo.png" height="80"  style="float:center; margin-right: 100px">
+        <img src="<?php echo $path ?>/image/aou-logo.png" height="80"  style="float:center; margin-right: 100px">
         <!-- <img src="image/ministry.jpg" height="80" width="200" style="float: left"> -->
       </div>
       </head>
@@ -126,8 +128,8 @@ $data = mysqli_fetch_assoc($result);
         <li><a href="#" class="st-btn">Student Information 
             <span class="fas fa-caret-down first"></span></a>
         <ul class="st-show">
-            <li><a href="../students_information/update_information.php">Update information</a></li>
-            <li><a href="students_information/change_password.php">Change password</a></li>
+            <li><a href="<?php echo $path ?>/students_information/update_information.php">Update information</a></li>
+            <li><a href="<?php echo $path ?>/students_information/change_password.php">Change password</a></li>
         </ul>
     </li>
     <li><a href="#" class="af-btn">Academic affairs 
@@ -142,7 +144,7 @@ $data = mysqli_fetch_assoc($result);
     <li><a href="#" class="rh-btn">Registration 
         <span class="fas fa-caret-down sixth"></span></a>
         <ul class="rh-show">
-            <li><a href="registration/register.php">Register</a></li>
+            <li><a href="<?php echo $path ?>/registration/register.php">Register</a></li>
             <li><a href="#">View offered courses</a></li>
         </ul>
     </li>

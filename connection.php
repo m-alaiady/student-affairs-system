@@ -1,9 +1,9 @@
 <?php
 
-    $con=mysqli_connect('localhost','root','','sis project');
+    $con=mysqli_connect('localhost','root','123456','sis project');
 
     if(!$con)
     {
-        die(' Please Check Your Connection'.mysqli_error($con));
+        die(' Please Check Your Connection'.  mysqli_connect_error());
     }
 ?>
