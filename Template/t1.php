@@ -7,8 +7,7 @@ $data = mysqli_fetch_assoc($result);
 
 $pathInPieces = explode('\\', __DIR__);
 $proj_name = $pathInPieces[3];
-$dir_name = $pathInPieces[4];
-$path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name ."/". $dir_name;
+$path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
 
 
 ?>
