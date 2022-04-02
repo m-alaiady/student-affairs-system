@@ -1,6 +1,7 @@
 <?php
 
 // session_start()
+ob_start();
 require_once('../connection.php');
 include("../template/t1.php");
 
@@ -114,9 +115,16 @@ if( !isset($_SESSION['student_id']))
 $success ;
 
 if(isset($_POST['submit'])){
-    $query="update `students` set s_name = '" . $_POST['s_name'] . "', email = '". $_POST['email'] ."' 
-    mobile = '" . $_POST['mobile'] . "', mobile2 = '". $_POST['mobile2'] . "', blood = '". $_POST['blood'] ."'
-    where student_id = '" . $_SESSION['student_id'] . "' ";
+
+
+    $query="update `students` set 
+        s_name = '" . $_POST['s_name'] . 
+        "', email = '". $_POST['email'] .
+        "', mobile = '" . $_POST['mobile'] . 
+        "', mobile2 = '". $_POST['mobile2'] . 
+        "', blood = '". $_POST['blood'] .
+        "' where student_id = '" . $_SESSION['student_id'] . "' ";
+        
     $result=mysqli_query($con,$query);
     // var_dump($query);
 

@@ -49,7 +49,7 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
                 color: #e9f4fb;
                 text-decoration: none;    
        "
-       href="logout.php?logout">Logout</a>' ;
+       href="' . $path . '/logout.php?logout">Logout</a>' ;
   }
   
   else
@@ -107,7 +107,7 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
   body{
     margin: 0;
     padding: 0;
-    background-image: url("pexels-johannes-plenio-1103970.jpg"); 
+    background-image: url("<?php echo $path; ?>/image/pexels-johannes-plenio-1103970.jpg"); 
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
@@ -137,7 +137,7 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
     <li><a href="#" class="af-btn">Academic affairs 
             <span class="fas fa-caret-down eight"></span></a>
         <ul class="af-show">
-            <li><a href="#">Academic status</a></li>
+            <li><a href="<?php echo $path ?>/academic_affairs/academic_status.php">Academic status</a></li>
             <li><a href="#">Certificate ID</a></li>
             <li><a href="#">View courses absence</a></li>
             <li><a href="#">Upload absence execuse</a></li>
