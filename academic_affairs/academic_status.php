@@ -139,7 +139,7 @@ $faculty= mysqli_fetch_assoc($faculty_data);
             </div>
         </div>
     </div>
-    <a href="print_student_data.php" class="student_data_print_btn"><span class="fa fa-print"></span> Print </a>
+    <a href="print_student_data.php" class="student_data_print_btn" style="text-decoration: none;"><span class="fa fa-print"></span> Print </a>
 
 </body>
 

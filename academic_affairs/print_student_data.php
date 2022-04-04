@@ -58,7 +58,7 @@ $html .= "
             <p>Statement of Credits Hours Completed by Students</p>
         </div>
         <div class='logo'>
-            <img src='logo3.png' alt='logo' width='250'/>
+            <img src='logo.png' alt='logo' width='250'/>
         </div>
     </div>
     ";
