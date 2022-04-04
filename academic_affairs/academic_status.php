@@ -9,6 +9,15 @@ if( !isset($_SESSION['student_id']))
     header("location:../index.php");
 }
 
+// get the faculty, major and branch name
+$sql = "SELECT faculties.* FROM faculties 
+        JOIN students 
+        ON faculties.id = students.faculty_id 
+        WHERE students.student_id = " . $_SESSION['student_id'] . "";
+        
+$faculty_data=mysqli_query($con,$sql);
+$faculty= mysqli_fetch_assoc($faculty_data);
+
 ?>
 
 <html>
@@ -69,12 +78,23 @@ if( !isset($_SESSION['student_id']))
         .student, .student_id, .SSN{
             padding: 0 3em 0 1em;
         }
+        .student_data_print_btn{
+            position: absolute;
+            margin-left:525px;
+            margin-top:500px;
+            background-color: dodgerblue;
+            border-radius: 10px;
+            padding: 0.5em 2em;
+            border: none;
+            cursor: pointer;
+            color: white;
+        }
     </style>
 </head>
 
 
 <body>
-    <div class="student_data">
+    <div id="canvas_div_pdf" class="student_data">
         <p class="super-box-title">Student Data</p>
         <div class="row">
             <div class="student box">
@@ -107,7 +127,7 @@ if( !isset($_SESSION['student_id']))
         <div class="row">
             <div class="student box">
                 <p class="box-title">Faculty</p>
-                <p><?php echo $data['s_name']; ?></p>
+                <p><?php echo $faculty['name']; ?></p>
             </div>
             <div class="student_id box">
                 <p class="box-title">Major</p>
@@ -115,12 +135,13 @@ if( !isset($_SESSION['student_id']))
             </div>
             <div class="SSN box">
                 <p class="box-title">Branch</p>
-                <p><?php echo $data['student_id']; ?></p>
+                <p><?php echo $faculty['branch']; ?></p>
             </div>
         </div>
     </div>
-</body>
+    <a href="print_student_data.php" class="student_data_print_btn"><span class="fa fa-print"></span> Print </a>
 
+</body>
 
 </html>
 
