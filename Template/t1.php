@@ -186,7 +186,6 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
         <ul class="su-show">
             <li><a href="#">Registration assistant</a></li>
             <li><a href="#">Payment support</a></li>
-            <li><a href="#"></a></li>
         </ul>
     </li>
             <li><a href="#">LMS</a></li>
