@@ -178,8 +178,7 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
         <li><a href="#">Exam postpone</a></li>
             <li><a href="#">Exam objection</a></li>
             <li><a href="#">Register for makeup exam</a></li>
-            <li><a href="#">Exam-different branch</a></li>
-            <li><a href="#">Exam-different centre</a></li>
+            <li><a href="#">Exam in other branch/center</a></li>
         </ul>
     </li>
     <li><a href="#" class="su-btn">Support 
