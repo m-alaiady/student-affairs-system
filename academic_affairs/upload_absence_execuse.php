@@ -15,6 +15,26 @@ $sql = "SELECT faculties.* FROM faculties
         ON faculties.id = students.faculty_id 
         WHERE students.student_id = " . $_SESSION['student_id'] . "";
         
+
+$get_id = "select id from students where student_id = '" . $_SESSION['student_id'] . "' ";
+
+$get_id_result=mysqli_query($con,$get_id);
+$student_id= mysqli_fetch_assoc($get_id_result);
+
+$get_all_student_courses = "
+        SELECT  enrolled.absences, courses.*, sections.id as section_id, courses_time.time, teachers.teacher_name
+        FROM enrolled
+        JOIN sections
+            ON enrolled.section_id = sections.id
+        JOIN courses
+            ON sections.course_id = courses.id
+        JOIN courses_time
+            ON courses_time.id = sections.time_id
+        JOIN teachers
+            ON teachers.id = sections.tutor_id
+        WHERE enrolled.student_id = '" . $student_id['id']  . "'";    
+
+
 $faculty_data=mysqli_query($con,$sql);
 $faculty= mysqli_fetch_assoc($faculty_data);
 
@@ -94,52 +114,38 @@ $faculty= mysqli_fetch_assoc($faculty_data);
 
 
 <body>
-    <div id="canvas_div_pdf" class="student_data">
-        <p class="super-box-title">Student Data</p>
-        <div class="row">
-            <div class="student box">
-                <p class="box-title">Stundet Name</p>
-                <p><?php echo $data['s_name']; ?></p>
-            </div>
-            <div class="student_id box">
-                <p class="box-title">Stundet ID</p>
-                <p><?php echo $data['student_id']; ?></p>
-            </div>
-            <div class="SSN box">
-                <p class="box-title">SSN</p>
-                <p><?php echo $data['national_id']; ?></p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="student box">
-                <p class="box-title">Acceptance Term</p>
-                <p><?php echo $data['acceptance_term']; ?></p>
-            </div>
-            <div class="student_id box">
-                <p class="box-title">Current Academic Status</p>
-                <p><?php echo ($data['status'] == '1'? 'Active': 'Not active'); ?></p>
-            </div>
-            <div class="SSN box">
-                <p class="box-title">Final GPA</p>
-                <p><?php echo $data['GPA']; ?></p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="student box">
-                <p class="box-title">Faculty</p>
-                <p><?php echo $faculty['name']; ?></p>
-            </div>
-            <div class="student_id box">
-                <p class="box-title">Major</p>
-                <p><?php echo $data['major']; ?></p>
-            </div>
-            <div class="SSN box">
-                <p class="box-title">Branch</p>
-                <p><?php echo $faculty['branch']; ?></p>
-            </div>
-        </div>
+    <div class="student_data">
+        <form action="" method="post">
+            <table>
+                <tr>
+                    <th>Course Code</th>
+                    <th>Course Name</th>
+                    <th>Allowed Absences</th>
+                    <th>Student's Absences</th>
+                    <th>Action</th>
+                </tr>
+                <?php
+                    $student_courses_result = mysqli_query($con, $get_all_student_courses);
+
+                    while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
+                        if($courses_data['absences'] > 0){
+                            echo <<< _END
+                                <tr>
+                                    <td> {$courses_data['course_id']} </td>
+                                    <td> {$courses_data['course_name']} </td>
+                                    <td> {$courses_data['allowed_absences']} </td>
+                                    <td> {$courses_data['absences']} </td>
+                                    <td> <input name="{$courses_data['course_id']}_excuse_file" type='file' accept='image/*, .doc, .pdf'/> </td>
+                                </tr>
+                            _END;
+                        }
+                    }
+
+                ?>
+            </table>
+        </form>
     </div>
-    <a href="print_student_data.php" class="student_data_print_btn" style="text-decoration: none;" target="_blank"><span class="fa fa-print"></span> Print </a>
+    <a class="student_data_print_btn" style="text-decoration: none;" target="_blank"> Upload Excuse </a>
 
 </body>
 

@@ -35,7 +35,15 @@ CREATE TABLE `enrolled` (
   KEY `section_id` (`section_id`),
   CONSTRAINT `enrolled_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE,
   CONSTRAINT `enrolled_ibfk_2` FOREIGN KEY (`section_id`) REFERENCES `sections` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `faculties`;
+CREATE TABLE `faculties` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `branch` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `sections`;
 CREATE TABLE `sections` (
@@ -60,10 +68,20 @@ CREATE TABLE `students` (
   `national_id` int(16) NOT NULL,
   `s_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `mobile2` int(128) NOT NULL,
+  `mobile` int(100) NOT NULL,
+  `blood` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `GPA` float(3,2) NOT NULL,
   `term_credits` smallint(6) DEFAULT 0,
+  `status` tinyint(1) NOT NULL,
+  `acceptance_term` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `major` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `faculty_id` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `student_id` (`student_id`)
+  UNIQUE KEY `student_id` (`student_id`),
+  KEY `faculty_id` (`faculty_id`),
+  CONSTRAINT `students_ibfk_1` FOREIGN KEY (`faculty_id`) REFERENCES `faculties` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `teachers`;
@@ -110,9 +128,13 @@ INSERT INTO `enrolled` (`id`, `student_id`, `section_id`) VALUES
 INSERT INTO `enrolled` (`id`, `student_id`, `section_id`) VALUES
 (5, 5, 3);
 INSERT INTO `enrolled` (`id`, `student_id`, `section_id`) VALUES
-(46, 3, 1),
 (47, 3, 2),
-(48, 3, 5);
+(48, 3, 5),
+(49, 3, 1);
+
+INSERT INTO `faculties` (`id`, `name`, `branch`) VALUES
+(1, 'computer', 'main');
+
 
 INSERT INTO `sections` (`id`, `course_id`, `tutor_id`, `time_id`, `status`) VALUES
 (1, 1, 1, 1, 1);
@@ -124,12 +146,12 @@ INSERT INTO `sections` (`id`, `course_id`, `tutor_id`, `time_id`, `status`) VALU
 (4, 2, 2, 4, 1),
 (5, 3, 2, 6, 1);
 
-INSERT INTO `students` (`id`, `student_id`, `national_id`, `s_name`, `email`, `password`, `term_credits`) VALUES
-(3, 123456789, 987654321, 'mohammed', 's@a.c22', '701fd6f18a46f7c72397c91b9cb1a6353744b9cca3aa329af5e5e1124b6b8c5a', 0);
-INSERT INTO `students` (`id`, `student_id`, `national_id`, `s_name`, `email`, `password`, `term_credits`) VALUES
-(4, 987654321, 123456789, 'ahmed', 'a@b.c', '481f6cc0511143ccdd7e2d1b1b94faf0a700a8b49cd13922a70b5ae28acaa8c5', 0);
-INSERT INTO `students` (`id`, `student_id`, `national_id`, `s_name`, `email`, `password`, `term_credits`) VALUES
-(5, 123654897, 987412563, 'Ali', 'z@y.x', '96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e', 0);
+INSERT INTO `students` (`id`, `student_id`, `national_id`, `s_name`, `email`, `mobile2`, `mobile`, `blood`, `password`, `GPA`, `term_credits`, `status`, `acceptance_term`, `major`, `faculty_id`) VALUES
+(3, 123456789, 987654321, 'mohammed', 's@a.c22', 553401234, 553409834, 'O+', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 2.41, 0, 1, 'First Semester 2017-2018', 'Computer Science', 1);
+INSERT INTO `students` (`id`, `student_id`, `national_id`, `s_name`, `email`, `mobile2`, `mobile`, `blood`, `password`, `GPA`, `term_credits`, `status`, `acceptance_term`, `major`, `faculty_id`) VALUES
+(4, 987654321, 123456789, 'ahmed', 'a@b.c', 0, 0, '', '481f6cc0511143ccdd7e2d1b1b94faf0a700a8b49cd13922a70b5ae28acaa8c5', 0.00, 0, 0, '', '', 1);
+INSERT INTO `students` (`id`, `student_id`, `national_id`, `s_name`, `email`, `mobile2`, `mobile`, `blood`, `password`, `GPA`, `term_credits`, `status`, `acceptance_term`, `major`, `faculty_id`) VALUES
+(5, 123654897, 987412563, 'Ali', 'z@y.x', 0, 0, '', '96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e', 0.00, 0, 0, '', '', 1);
 
 INSERT INTO `teachers` (`id`, `teacher_name`) VALUES
 (1, 'Ali Khan');

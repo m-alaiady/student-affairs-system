@@ -138,9 +138,9 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
             <span class="fas fa-caret-down eight"></span></a>
         <ul class="af-show">
             <li><a href="<?php echo $path ?>/academic_affairs/academic_status.php">Academic status</a></li>
-            <li><a href="#">Certificate ID</a></li>
-            <li><a href="#">View courses absence</a></li>
-            <li><a href="#">Upload absence execuse</a></li>
+            <li><a href="<?php echo $path ?>/academic_affairs/certificate_id.php">Certificate ID</a></li>
+            <li><a href="<?php echo $path ?>/academic_affairs/view_courses_absence.php">View courses absence</a></li>
+            <li><a href="<?php echo $path ?>/academic_affairs/upload_absence_execuse.php">Upload absence execuse</a></li>
         </ul>
     </li>
     <li><a href="#" class="rh-btn">Registration 
