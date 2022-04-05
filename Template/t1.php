@@ -168,21 +168,7 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
     </li>
         
             <li><a href="#" class="se-btn">Services 
-        <span class="fas fa-caret-down third"></span></a>
-        <ul class="se-show">
-            <li><a href="#">Change major</a></li>
-            <li><a href="#">Change branch</a></li>
-            <li><a href="#">Term postoone</a></li>
-            <li><a href="#">Term excuse</a></li>
-            <li><a href="#">English equalize</a></li>
-            <li><a href="#">Course equalize</a></li>
-            <li><a href="#">Cancel course</a></li>
-            <li><a href="#">Withdraw from university</a></li>
-            <li><a href="#">Re enroll</a></li>
-            <li><a href="#">Social Reward</a></li>
-            <li><a href="#">Aid Request</a></li>
-            <li><a href="#">ID reissuing</a></li>
-        </ul>
+        
     </li>
             <li><a href="#" class="ex-btn">Examination 
         <span class="fas fa-caret-down fourth"></span></a>
