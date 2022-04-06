@@ -68,16 +68,16 @@ $faculty= mysqli_fetch_assoc($faculty_data);
     
             <form method="post" enctype="multipart/form-data">
                 <label for="social_security">Social Security: </label>
-                <input name="social_security_file" type="file" accept='image/*, .doc, .pdf' /><br /><br />
+                <input name="social_security_file" type="file" accept='image/*, .doc, .pdf' required /><br /><br />
 
                 <label for="salary_certifiacte">Salary Certifiacte: </label>
-                <input name="salary_certifiacte_file" type="file" accept='image/*, .doc, .pdf' /><br /><br />
+                <input name="salary_certifiacte_file" type="file" accept='image/*, .doc, .pdf' required /><br /><br />
 
                 <label for="electricity_bill">Electricity Bill: </label>
-                <input name="electricity_bill_file" type="file" accept='image/*, .doc, .pdf' /><br /><br />
+                <input name="electricity_bill_file" type="file" accept='image/*, .doc, .pdf' required /><br /><br />
 
                 <label for="account_statement">Account Statement: </label>
-                <input name="account_statement_file" type="file" accept='image/*, .doc, .pdf' /><br /><br />
+                <input name="account_statement_file" type="file" accept='image/*, .doc, .pdf' required /><br /><br />
 
                 <input name="submit" type="submit" class="upload-btn" value="upload" />
                 

@@ -1,5 +1,8 @@
 <?php
   session_start();
+  $pathInPieces = explode('\\', __DIR__);
+  $proj_name = $pathInPieces[3];
+  $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +51,7 @@
 body{
     margin: 0;
   padding: 0;
-  background-image: url("pexels-johannes-plenio-1103970.jpg"); 
+  background-image: url("<?php echo $path; ?>/image/pexels-johannes-plenio-1103970.jpg"); 
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
