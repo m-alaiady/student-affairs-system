@@ -153,16 +153,16 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
     <li><a href="#" class="re-btn">Grades & Transcripts 
         <span class="fas fa-caret-down second"></span></a>
         <ul class="re-show">
-            <li><a href="#">Grades</a></li>
-            <li><a href="#">Transcripts</a></li>
-            <li><a href="#">Acadmemic plan</a></li>
+            <li><a href="<?php echo $path ?>/grades_and_transcripts/grades.php">Grades</a></li>
+            <li><a href="<?php echo $path ?>/grades_and_transcripts/transcripts.php" target="_blank">Transcripts</a></li>
+            <li><a href="<?php echo $path ?>/grades_and_transcripts/academic_plan.php">Acadmemic plan</a></li>
         </ul>
     </li>
     <li><a href="#" class="fi-btn">Finanical 
         <span class="fas fa-caret-down seventh"></span></a>
         <ul class="fi-show">
-            <li><a href="#">Fees payment</a></li>
-            <li><a href="#">Tuuition fees exemption</a></li>
+            <li><a href="<?php echo $path ?>/financial/financial.php">Fees payment</a></li>
+            <li><a href="<?php echo $path ?>/financial/tuition_fees_exemption.php">Tuition fees exemption</a></li>
             <li><a href="#">View balance</a></li>
         </ul>
     </li>

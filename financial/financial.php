@@ -1,8 +1,7 @@
 <?php
 
-session_start();
-
-require_once("../connection.php");
+require_once('../connection.php');
+include("../template/t1.php");
 $query="select * from courses";
 $get_id = "select * from students where student_id = '" . $_SESSION['student_id'] . "' ";
 
@@ -21,29 +20,44 @@ if( !isset($_SESSION['student_id']))
     header("location:../index.php");
 }
 // if user did not pay 
-if( basename($_SERVER['HTTP_REFERER']) != "courses.php"){
-    header("location:../registration/courses.php");
-}
+// if( basename($_SERVER['HTTP_REFERER']) != "courses.php"){
+//     header("location:../registration/courses.php");
+// }
 
 ?>
 
 <html>
 <head>
+<title>SIS | Grades & Transcripts</title>
+    <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/box.css" />
+    <style>
+        body{
+            overflow-y: scroll !important;
+        }
+        .box{
+            min-width: 10em !important;
+        }
+        .student_data{
+            margin-top: 100px;
+            margin-left:400px;
+            z-index: 1;
+            transform: scale(0.85);
+        }
+        .student_data:last-child{
+            padding-bottom: 5em;
+        }
+        .foot{
+            position: fixed;
+            opacity: 1;
+            z-index: 999;
+        }
+        .header{
+            margin: 0 2em;
+        }
+        
+    </style>
 <style>
-    table, th, td{
-        border: 1px solid #000;
-        border-collapse: collapse;
-        padding: 1em 2em;
-    }
-    table tr{
-        cursor: pointer;
-    }
-    table tr:nth-child(2n+1){
-        background-color: #eee;
-    }
-    tr:hover td{
-        background-color: #ccc;
-    }
+
 </style>
 </head>
 <body>
@@ -65,29 +79,45 @@ $get_all_student_courses = "
     WHERE enrolled.student_id = '" . $student['id'] . "'";
 $student_courses_result = mysqli_query($con, $get_all_student_courses);
 $courses_data= mysqli_fetch_assoc($student_courses_result);
+/*
+    // <fieldset>
+    //     <legend>Courses Registered</legend>
+    //     <table>
+    //         <tr>
+    //             <th>Course Code</th>
+    //             <th>Section </th>
+    //             <th>Credits</th>
+    //             <th>Tutor</th>
+    //             <th>Price</th>
+    //             <th>Schedule</th>
+    //             <th>Status</th>
+    //         </tr>
+                <tr>
+                <td> {$courses_data['course_id']} </td>
+                <td> {$courses_data['section_id']} </td>
+                <td> {$courses_data['credits']} </td>
+                <td> {$courses_data['teacher_name']} </td>
+                <td> {$price} SAR </td>
+                <td> {$courses_data['time']} </td>
+                <td> <span style="color:green">Enrolled</span> </td>
+            </tr>
 
+*/
 ?>
 <?php
 if($courses_data > 0){
     echo <<< _END
-    <strong>Registeration ID: </strong> 
-    <span>{$reg_id}</span>
-    <strong style='margin-left: 10rem'>Student info:</strong>
-    <span> {$student['s_name']} -  {$student['student_id']} - {$student['email']} </span><br />
-    <a id="print_btn" href="#" onclick="PrintPage()">Click here to print this page</a>
-    <div class="registered-courses">
-    <fieldset>
-        <legend>Courses Registered</legend>
-        <table>
-            <tr>
-                <th>Course Code</th>
-                <th>Section </th>
-                <th>Credits</th>
-                <th>Tutor</th>
-                <th>Price</th>
-                <th>Schedule</th>
-                <th>Status</th>
-            </tr>
+    <div class="student_data">
+        <p class="super-box-title">Student Absences</p>
+        <div class="header">
+            <strong>Registeration ID: </strong> 
+            <span>{$reg_id}</span>
+            <strong style='margin-left: 10rem'>Student info:</strong>
+            <span> {$student['s_name']} -  {$student['student_id']} - {$student['email']} </span><br />
+            <a id="print_btn" href="#" onclick="PrintPage()">Click here to print this page</a>
+            <div class="registered-courses">
+        </div>
+       
     _END;
 
     $get_all_student_courses = "
@@ -109,15 +139,33 @@ if($courses_data > 0){
         $price = number_format($courses_data['course_price']);
 
         echo <<< _END
-            <tr>
-                <td> {$courses_data['course_id']} </td>
-                <td> {$courses_data['section_id']} </td>
-                <td> {$courses_data['credits']} </td>
-                <td> {$courses_data['teacher_name']} </td>
-                <td> {$price} SAR </td>
-                <td> {$courses_data['time']} </td>
-                <td> <span style="color:green">Enrolled</span> </td>
-            </tr>
+            <div class="row">
+                <div class="box">
+                    <p class="box-title">Course Code</p>
+                    <p>{$courses_data['course_id']}</p>
+                </div>
+                <div class="box">
+                    <p class="box-title">Section ID</p>
+                    <p>{$courses_data['section_id']}</p>
+                </div>
+                <div class="box">
+                    <p class="box-title">Credits</p>
+                    <p>{$courses_data['credits']}</p>
+                </div>
+                <div class="box">
+                    <p class="box-title">Teacher</p>
+                    <p>{$courses_data['teacher_name']}</p>
+                </div>
+                <div class="box">
+                    <p class="box-title">Price</p>
+                    <p>{$price} SAR </p>
+                </div>
+                <div class="box">
+                    <p class="box-title">Time</p>
+                    <p>{$courses_data['time']}</p>
+                </div>
+            </div>
+
         _END;
     }
                 
@@ -146,9 +194,9 @@ $overall_price = 90 + $price['total_price'] + 469 + 23 + 848;
 ?>
 
 
-<fieldset>
-    <legend>ٍSemester Tuition Fees</legend>
-    <p>Listed below is a view of your tuition summary for this semester</p>
+<div>
+    <p class="super-box-title">Listed below is a view of your tuition summary for this semester</p>
+    <!-- <p>Listed below is a view of your tuition summary for this semester</p> -->
     <table>
         <tr>
             <th>Category</th>
@@ -187,8 +235,9 @@ $overall_price = 90 + $price['total_price'] + 469 + 23 + 848;
 
 
     </table>
-</fieldset>
-<a href="../registration/courses.php">Go back to courses registration</a>
+    </div>
+</div>
+<!-- <a href="../registration/courses.php">Go back to courses registration</a> -->
 <script>
 
 function PrintPage(){
