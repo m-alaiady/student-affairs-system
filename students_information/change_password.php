@@ -1,8 +1,8 @@
 <?php
 
+ob_start();
 require_once('../connection.php');
-
-session_start();
+include("../template/t1.php");
 
 if( !isset($_SESSION['student_id']))
 {
@@ -21,18 +21,66 @@ $data = mysqli_fetch_assoc($result);
 
 <head>
     <title>Updating information</title>
+    <link rel="stylesheet" href="<?php echo $path  ?>/assets/css//alert-box.css" />
 </head>
 <body>
+    <div class="update">
     <form method="post">
-        <label> Current password: </label><br />
-        <input type="text" name="old_password" placeholder="current password" /><br />
-        <label> New password: </label><br />
-        <input type="text" name="new_password" placeholder="New password" /><br />
-        <label> Retype new password: </label><br />
-        <input type="text" name="password_confirm" placeholder="Retype new password" /><br /><br />
-        <input type="submit" name="submit" value="Save" />
-        <a href="../home.php">Go back to dashboard</a>
+    <table>
+      <tr>
+        <td> Current password: </td>
+        <td><input type="text" name="old_password" placeholder="current password" /><br /></td>
+        </tr>
+        <tr>
+        <td>New password:  </td>
+        <td><input type="text" name="new_password" placeholder="New password" /></td>
+        </tr>
+        <tr>
+        <td>  Retype new password:  </td>
+        <td> <input type="text" name="password_confirm" placeholder="Retype new password" /><br /><br /></td>
+        </tr>
+    </table>
+    <br>
+    <input style="width: 30%;
+                  height:40px;
+                  margin-left:37%;
+                  border: 1px solid;
+                    background: #2691d9;
+                    border-radius: 25px;
+                    font-size: 18px;
+                    color: #e9f4fb;
+                    font-weight: 700;
+                    cursor: pointer;
+                    outline: none;
+                    margin-bottom: 15px" 
+     type="submit" name="submit" value="Save" />
     </form>
+    </div>
+
+    <style>
+        table, td{
+        
+        border-top: 1px solid #fff;
+        padding: 1em 2.5em;
+    }
+    tr:nth-child(odd) {
+        background: #eee;
+      }
+      form td input{
+          width: 114%;
+          text-align: center;
+      }
+     
+        .update{
+            position: absolute;
+        margin-left:525px;
+        margin-top:200px;
+        background: white;
+        border-radius: 10px;
+        opacity: .85;
+        padding: 20px; 
+        }
+    </style>
 </body>
 </html>
 <?php 
@@ -54,18 +102,35 @@ if(isset($_POST['submit'])){
             
                 if(mysqli_affected_rows($con))
                 {
-                    echo "password changed successfully";
+                    echo <<< _END
+                    <div class="alert success">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                        <p>Password Changed Successfully!</p>
+                    </div>
+                    _END;
                     // after 2 second refresh the page (to view the new changes)
                     header("Refresh:2");
                 }
             }
             else{
-                die("new password do not match the confirmation");
+                echo <<< _END
+                <div class="alert error">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                    <p>New password do not match the confirmation!</p>
+                </div>
+                _END;
+                die;
             }
         }
         // old password doesnt match the the input
         else{
-            die("invalid current password");
+            echo <<< _END
+            <div class="alert error">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <p>Invalid Current Password!</p>
+            </div>
+            _END;
+            die;
         }
        
        

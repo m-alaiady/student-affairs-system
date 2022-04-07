@@ -44,32 +44,26 @@ $get_all_grades_data = "SELECT  enrolled.notes, enrolled.grade,enrolled.absences
                         case 0:
                             return '';
                             break;
-                        case $grade >= 0 && $grade < 60:
+                        case $grade >= 0 && $grade < 50:
                             return 'F';
                             break;
-                        case $grade >= 60 && $grade < 65:
+                        case $grade >= 50 && $grade < 58:
                             return 'D';
                             break;
-                        case $grade >= 65 && $grade < 70:
-                            return 'D+';
-                            break;
-                        case $grade >= 70 && $grade < 75:
-                            return 'C+';
-                            break;
-                        case $grade >= 75 && $grade < 80:
+                        case $grade >= 58 && $grade < 66:
                             return 'C';
                             break;
-                        case $grade >= 80 && $grade < 85:
+                        case $grade >= 66 && $grade < 74:
+                            return 'C+';
+                            break;
+                        case $grade >= 74 && $grade < 82:
                             return 'B';
                             break;
-                        case $grade >= 85 && $grade < 90:
+                        case $grade >= 82 && $grade < 90:
                             return 'B+';
                             break;
-                        case $grade >= 90 && $grade < 95:
+                        case $grade >= 90 && $grade <= 100:
                             return 'A';
-                            break;
-                        case $grade >= 95 && $grade <= 100:
-                            return 'A+';
                             break;
                        
                     }

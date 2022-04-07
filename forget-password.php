@@ -11,6 +11,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<?php echo $path  ?>/assets/css//alert-box.css" />
+    <style>
+      .alert{
+        top: 10em;
+      }
+    </style>
+    
     <title>SIS | Password Reset</title>
 
 
@@ -286,7 +293,12 @@ if(isset($_POST['submit'])){
     }
     else
     {
-        echo "Invalid entry data";
+      echo <<< _END
+        <div class="alert error">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <p>Invalid data entry</p>
+        </div>
+       _END;
     }
 }
 
@@ -348,14 +360,24 @@ if(isset($_POST['reset_submit'])){
 
            
         } else {
-            echo "Sorry we could not update the password";
+          echo <<< _END
+            <div class="alert error">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <p>Something Went Wrong in the database</p>
+            </div>
+        _END;
         }
     }
     
     else{
         
         
-        echo "Passwords Do Not Match!";
+      echo <<< _END
+        <div class="alert error">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <p>Passwords do not match!</p>
+        </div>
+     _END;
         
         
     }

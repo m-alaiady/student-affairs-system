@@ -110,15 +110,74 @@ $html .= "
         </tr>
 ";
 $student_courses_result = mysqli_query($con, $get_all_student_courses);
-
+function grade_details($grade)
+{
+    switch ($grade) {
+        case 0:
+            return '';
+            break;
+        case $grade >= 0 && $grade < 50:
+            return 'F';
+            break;
+        case $grade >= 50 && $grade < 58:
+            return 'D';
+            break;
+        case $grade >= 58 && $grade < 66:
+            return 'C';
+            break;
+        case $grade >= 66 && $grade < 74:
+            return 'C+';
+            break;
+        case $grade >= 74 && $grade < 82:
+            return 'B';
+            break;
+        case $grade >= 82 && $grade < 90:
+            return 'B+';
+            break;
+        case $grade >= 90 && $grade <= 100:
+            return 'A';
+            break;
+       
+    }
+}
+function get_points($grade){
+    switch ($grade) {
+        case 'A':
+            return 4;
+            break;
+        case 'B+':
+            return 3.5;
+            break;
+        case 'B':
+            return 3;
+            break;
+        case 'C+':
+            return 2.5;
+            break;
+        case 'C':
+            return 2;
+            break;
+        case 'D':
+            return 1.5;
+            break;
+        case 'F':
+            return 0;
+            break;
+    }
+}
 while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
+    $grade = grade_details($courses_data['grade']);
+    $points = "";
+    if($grade){
+        $points = get_points($grade) * $courses_data['credits'];
+    }
     $html .= "
         <tr>
             <td>{$courses_data['course_id']}</td> 
             <td>{$courses_data['course_name']}</td>
             <td>{$courses_data['credits']}</td>
-            <td>{$courses_data['grade']}</td>
-            <td></td>
+            <td>{$grade}</td>
+            <td>{$points}</td>
         </tr>";
 }
 

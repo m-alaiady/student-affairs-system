@@ -18,7 +18,7 @@ if( !isset($_SESSION['student_id']))
    
     
     <title>SIS | Update Information</title>
-
+    <link rel="stylesheet" href="<?php echo $path  ?>/assets/css//alert-box.css" />
 
 </head>
 
@@ -130,9 +130,23 @@ if(isset($_POST['submit'])){
 
     if(mysqli_affected_rows($con))
     {
-        echo "Information updated successfully";
+        echo <<< _END
+            <div class="alert success">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <p>Information updated successfully</p>
+            </div>
+        _END;
         // after 2 second refresh the page (to view the new changes)
         header("Refresh:2");
+    }
+    else{
+        echo <<< _END
+            <div class="alert error">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <p>Sorry! We couldn't udpate the information, Try later!</p>
+            </div>
+        _END;
+        die;
     }
 
 
