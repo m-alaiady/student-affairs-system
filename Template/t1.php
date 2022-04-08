@@ -167,9 +167,7 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
         </ul>
     </li>
         
-            <li><a href="#" class="se-btn">Services 
-        
-    </li>
+            <li><a href="<?php echo $path ?>/services/select-service.php" class="se-btn">Services </a></li>
             <li><a href="#" class="ex-btn">Examination 
         <span class="fas fa-caret-down fourth"></span></a>
         <ul class="ex-show">
@@ -496,3 +494,10 @@ nav ul li a span.rotate{
   <!-- End of footer coding -->
   
   </html>
+
+<script>
+  // stop resubmitting data when refreshing the page
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
