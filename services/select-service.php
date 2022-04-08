@@ -18,6 +18,15 @@ if( !isset($_SESSION['student_id']))
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css//box.css" />
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css//alert-box.css" />
     <style>
+        .student_data_print_btn{
+            all: unset;
+            background-color: dodgerblue;
+            border-radius: 10px;
+            padding: 0.25em 1em;
+            border: none;
+            cursor: pointer;
+            color: white;
+        }
 
     </style>
 </head>
@@ -81,16 +90,9 @@ if( !isset($_SESSION['student_id']))
                             <td>
                                 <select>
                                     <option selected disabled hidden >-- Select Faculty --</option>
-                                    <option value="change_track">Change Track</option>
-                                    <option value="center_transfer">Branch - center transfer</option>
-                                    <option value="semester_postponing">Semester Postponing</option>
-                                    <option value="semester_excuse">Semester Excuse</option>    
-                                    <option value="english_equalize">English Equalize</option>
-                                    <option value="course_equalize">Course Equalize</option>
-                                    <option value="withdraw_from_university">Withdraw from University</option>
-                                    <option value="social_reward">Social Reward</option>
-                                    <option value="aid_request">Aid Request</option>
-                                    <option value="id_reissuing">ID reussuing</option>
+                                    <option value="business_studies">Business studies</option>
+                                    <option value="computer_studies">Computer studies</option>
+                                    <option value="language_studies">Language studies</option>
                                 </select>
                             </td>
                             <td>
@@ -108,7 +110,7 @@ if( !isset($_SESSION['student_id']))
                                     <option value="id_reissuing">ID reussuing</option>
                                 </select>
                             </td>
-                            <td>Submit</td>
+                            <td><input type="submit" name="submit" class="student_data_print_btn" value="Submit"></td>
                         </tr>
                     </table>
                 `;
