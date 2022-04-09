@@ -100,6 +100,8 @@ $field_name = "";
                                     <p class="box-title">Action</p>
                                     <p><input name="{$field_name}" type='file' accept='image/*, .doc, .pdf' required /></p>
                                 </div>
+                                </div>
+                                <input type="submit" name="submit" class="student_data_print_btn" value="Upload Excuse"> 
                             _END;
                         }
                     }
@@ -107,8 +109,7 @@ $field_name = "";
 
             ?>
 
-</div>
-<input type="submit" name="submit" class="student_data_print_btn" value="Upload Excuse"> 
+
 
 </form>
                                
@@ -155,6 +156,7 @@ if(isset($_POST['submit'])){
                                         <p>File Uploaded Successfully!</p>
                                     </div>
                                 _END;
+                                header('Refresh: 2');
                             }
                             else{
                                 $err = mysqli_error($con);

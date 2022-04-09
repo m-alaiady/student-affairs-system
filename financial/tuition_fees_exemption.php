@@ -183,8 +183,8 @@ if(isset($_POST['submit'])){
 
                     if(move_uploaded_file($file_tmp, $file_destination)){
                         $today = new DateTime();
-                        $season = get_season($today) . ' term ' . (date("y")-1) . '-' . date("y");;
-                        $insert_file = "INSERT INTO `tuition_fees_exemption` (semester, file_name, student_id) VALUES ('$season', '$file_name_new', '$std_id')";
+                        $semester = get_season($today) . ' term ' . (date("y")-1) . '-' . date("y");
+                        $insert_file = "INSERT INTO `tuition_fees_exemption` (semester, file_name, student_id) VALUES ('$semester', '$file_name_new', '$std_id')";
                         if(mysqli_query($con,$insert_file)){
                             echo <<< _END
                                 <div class="alert success">
