@@ -9,6 +9,7 @@ if (!isset($_SESSION['student_id'])) {
     header("location:../index.php");
 }
 
+
 $get_id = "select id from students where student_id = '" . $_SESSION['student_id'] . "' ";
 
 $get_id_result = mysqli_query($con, $get_id);
