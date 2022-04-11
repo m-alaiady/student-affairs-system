@@ -49,7 +49,7 @@ $faculty= mysqli_fetch_assoc($faculty_data);
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css//alert-box.css" />
     <style>
         .student_data{
-            margin-top:10em !important;
+            margin-top:15em !important;
         }
         .student_data form{
             padding: 2em;
@@ -66,7 +66,7 @@ $faculty= mysqli_fetch_assoc($faculty_data);
         .request_data{
             position: absolute;
             margin-left:525px;
-            margin-top:33em !important;
+            margin-top:40em !important;
             background: white;
             border-radius: 10px;
             opacity: .85;

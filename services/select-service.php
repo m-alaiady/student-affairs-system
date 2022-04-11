@@ -194,7 +194,8 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
                                         <option value="" selected disabled hidden >-- Choose faculty first --</option>
                                     </select>
                                 </td>
-                                <td><input type="submit" name="submit" class="student_data_print_btn" value="change_track"></td>
+                                <td><input type="submit" name="submit" class="student_data_print_btn" value="Submit"></td>
+                                <input type="hidden" name="service_type" value="change_track">
                             </tr>
                         </table>
                     </form>
@@ -229,7 +230,8 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
                                         <option selected disabled hidden >-- Select Branch First --</option>
                                     </select>
                                 </td>
-                                <td><input type="submit" name="submit" class="student_data_print_btn" value="change_branch"></td>
+                                <td><input type="submit" name="submit" class="student_data_print_btn" value="Submit"></td>
+                                <input type="hidden" name="service_type" value="center_transfer">
                             </tr>
                         </table>
                     </form>
@@ -249,7 +251,8 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
                                 <td>
                                     <input name="semester_postponing_checkbox" type='checkbox' required />
                                 </td>
-                                <td><input type="submit" name="submit" class="student_data_print_btn" value="semester_postponing"></td>
+                                <td><input type="submit" name="submit" class="student_data_print_btn" value="Submit"></td>
+                                <input type="hidden" name="service_type" value="semester_postponing">
                             </tr>
                         </table>
                     </form>
@@ -269,7 +272,8 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
                                 <td>
                                     <input name="semester_excuse_checkbox" type='checkbox' required />
                                 </td>
-                                <td><input type="submit" name="submit" class="student_data_print_btn" value="semester_excuse"></td>
+                                <td><input type="submit" name="submit" class="student_data_print_btn" value="Submit"></td>
+                                <input type="hidden" name="service_type" value="semester_excuse">
                             </tr>
                         </table>
                     </form>
@@ -289,7 +293,8 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
                                         <input name="file" type="file"  accept='image/*, .doc, .pdf' required />
                                     </td>
                                     <td>
-                                        <input type="submit" name="submit" class="student_data_print_btn" value="english_equalize">
+                                        <input type="submit" name="submit" class="student_data_print_btn" value="Submit">
+                                        <input type="hidden" name="service_type" value="english_equalize">
                                     </td>
                                 </tr>
                         </table>
@@ -311,7 +316,8 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
                                         <input name="file" type="file"  accept='image/*, .doc, .pdf' required />
                                     </td>
                                     <td>
-                                        <input type="submit" name="submit" class="student_data_print_btn" value="courses_equalize">
+                                        <input type="submit" name="submit" class="student_data_print_btn" value="Submit">
+                                        <input type="hidden" name="service_type" value="courses_equalize">
                                     </td>
                                 </tr>
                         </table>
@@ -334,7 +340,8 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
                                     <td>
                                         <input name="withdraw_from_university_checkbox" type='checkbox' required />
                                     </td>
-                                    <td><input type="submit" name="submit" class="student_data_print_btn" value="withdraw_from_university"></td>
+                                    <td><input type="submit" name="submit" class="student_data_print_btn" value="Submit"></td>
+                                    <input type="hidden" name="service_type" value="withdraw_from_university">
                                 </tr>
                             </table>
                         </form>
@@ -355,7 +362,8 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
                                     <td>
                                         <textarea name="details" style="resize: none;" placeholder="Explain .. " required ></textarea>
                                     </td>
-                                    <td><input type="submit" name="submit" class="student_data_print_btn" value="social_reward"></td>
+                                    <td><input type="submit" name="submit" class="student_data_print_btn" value="Submit"></td>
+                                    <input type="hidden" name="service_type" value="withdraw_from_university">
                                 </tr>
                             </table>
                         </form>
@@ -376,7 +384,8 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
                                     <td>
                                         <textarea name="details" style="resize: none;" placeholder="Explain .. " required></textarea>
                                     </td>
-                                    <td><input type="submit" name="submit" class="student_data_print_btn" value="aid_request"></td>
+                                    <td><input type="submit" name="submit" class="student_data_print_btn" value="Submit"></td>
+                                    <input type="hidden" name="service_type" value="aid_request">
                                 </tr>
                             </table>
                         </form>
@@ -404,7 +413,8 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
                                         <input name="file" type="file"  accept='image/*' required />
                                     </td>
                                     <td>
-                                        <input type="submit" name="submit" class="student_data_print_btn" value="id_reissuing">
+                                        <input type="submit" name="submit" class="student_data_print_btn" value="Submit">
+                                        <input type="hidden" name="service_type" value="id_reissuing">
                                     </td>
                                 </tr>
                             </table>
@@ -541,7 +551,7 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
 
 if (isset($_POST['submit'])) {
     $stid = $student_id["id"];
-    $form = $_POST['submit'];
+    $form = $_POST['service_type'];
     switch ($form) {
         case 'change_track':
             $faculty = $_POST['faculty'];
@@ -552,7 +562,7 @@ if (isset($_POST['submit'])) {
                 echo <<< _END
                     <div class="alert success">
                         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                        <p>Data saved Successfully!</p>
+                        <p>Data submitted Successfully!</p>
                     </div>
                 _END;
             } else {
@@ -575,7 +585,7 @@ if (isset($_POST['submit'])) {
                 echo <<< _END
                     <div class="alert success">
                         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                        <p>Data saved Successfully!</p>
+                        <p>Data submitted Successfully!</p>
                     </div>
                 _END;
             } else {
@@ -597,7 +607,7 @@ if (isset($_POST['submit'])) {
                 echo <<< _END
                     <div class="alert success">
                         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                        <p>Data saved Successfully!</p>
+                        <p>Data submitted Successfully!</p>
                     </div>
                 _END;
             } else {
@@ -619,7 +629,7 @@ if (isset($_POST['submit'])) {
                 echo <<< _END
                     <div class="alert success">
                         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                        <p>Data saved Successfully!</p>
+                        <p>Data submitted Successfully!</p>
                     </div>
                 _END;
             } else {
@@ -650,7 +660,7 @@ if (isset($_POST['submit'])) {
                 echo <<< _END
                     <div class="alert success">
                         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                        <p>Data saved Successfully!</p>
+                        <p>Data submitted Successfully!</p>
                     </div>
                 _END;
             } else {
@@ -671,7 +681,7 @@ if (isset($_POST['submit'])) {
                 echo <<< _END
                     <div class="alert success">
                         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                        <p>Data saved Successfully!</p>
+                        <p>Data submitted Successfully!</p>
                     </div>
                 _END;
             } else {
@@ -693,7 +703,7 @@ if (isset($_POST['submit'])) {
                 echo <<< _END
                     <div class="alert success">
                         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                        <p>Data saved Successfully!</p>
+                        <p>Data submitted Successfully!</p>
                     </div>
                 _END;
             } else {
