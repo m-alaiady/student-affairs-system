@@ -36,19 +36,17 @@ $head = "
             justify-content: space-between;
         }
         .logo{
-            margin-top: -75px;
+            margin-top: -60x;
             margin-left: 450px;
             width: 50%;
         }
         .text p{
-            position:absolute;
-            top: 50;
-            margin-bottom: -25px;
-            z-index: 5;
+            margin-bottom: -50px;
+            z-index: -5;
         }
         .stamp{
             text-align: right;
-            margin-top: -72px;
+            margin-top: -5.8em;
         }
         .deanship{
             margin-left: 50px;

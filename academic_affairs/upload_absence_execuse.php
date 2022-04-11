@@ -67,7 +67,7 @@ $field_name = "";
 <form method="post" enctype="multipart/form-data">
 
 <div class="student_data">
-     <p class="super-box-title">Student Absences</p>
+     <p class="super-box-title">Upload student excuse</p>
             <?php
                 $student_courses_result = mysqli_query($con, $get_all_student_courses);
 

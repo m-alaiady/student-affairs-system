@@ -34,7 +34,7 @@ $get_all_grades_data = "SELECT  enrolled.notes, enrolled.grade,enrolled.absences
 </head>
 <body>
 <div class="student_data">
-     <p class="super-box-title">Student Absences</p>
+     <p class="super-box-title">Grades</p>
     
             <?php
 

@@ -3,12 +3,36 @@ require_once('../connection.php');
 
 include("../template/t1.php");
 
+
+$sql = "SELECT faculties.* FROM faculties 
+        JOIN students 
+        ON faculties.id = students.faculty_id 
+        WHERE students.student_id = " . $_SESSION['student_id'] . "";
+        
+
+$get_id = "select id from students where student_id = '" . $_SESSION['student_id'] . "' ";
+
+$get_id_result=mysqli_query($con,$get_id);
+$student_id= mysqli_fetch_assoc($get_id_result);
+
+$get_all_student_courses = "
+        SELECT  enrolled.absences, courses.*, sections.id as section_id,sections.*, courses_time.time, teachers.teacher_name
+        FROM enrolled
+        JOIN sections
+            ON enrolled.section_id = sections.id
+        JOIN courses
+            ON sections.course_id = courses.id
+        JOIN courses_time
+            ON courses_time.id = sections.time_id
+        JOIN teachers
+            ON teachers.id = sections.tutor_id
+        WHERE enrolled.student_id = '" . $student_id['id']  . "'";  
 ?>
 
 <html>
 
 <head>
-    <title>SIS | Exam Certificate</title>
+    <title>SIS | Exam Schedule</title>
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/box.css" />
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/alert-box.css" />
     <style>
@@ -17,7 +41,7 @@ include("../template/t1.php");
             position: absolute;
             background-color: dodgerblue;
             margin-left:33em;
-            margin-top:25em;
+            margin-top:34em;
             border-radius: 10px;
             padding: 0.25em 1em;
             border: none;
@@ -30,51 +54,56 @@ include("../template/t1.php");
 
 <body>
 
-    <div class="student_data">
-        <p class="super-box-title">Exam Certificate</p>
+    <form action="print_exam_certificate.php" method="post" >
+        <div class="student_data">
+            <p class="super-box-title">Exam Certificate</p>
+
+            <div style="margin-left: 5em;padding: 1em 0">
+                <label for="company_name">To: </label>
+                <input type="text" name="company_name" placeholder="company name .. " required style="padding: 0.5em"/>
+            </div>
+
+            <div class="row">
+            
+                <table>
+                    <tr>
+                        <th>Course Code</th>
+                        <th>Course Name</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Classroom</th>
+                    </tr>
+                    <tr>
+                        
+                        <?php
+                            $courses_result = mysqli_query($con, $get_all_student_courses);
+                        
+                            while( $courses= mysqli_fetch_assoc($courses_result)){
+                                $course_time = $courses['exam_time'] > 12 ?  $courses['exam_time'] . ' PM': $courses['exam_time'] . ' AM';
+                                echo <<<_END
+                                    <tr>
+                                        <td>{$courses['course_name']}</td>
+                                        <td>{$courses['course_name']}</td>
+                                        <td>{$courses['exam_date']}</td>
+                                        <td>{$course_time}</td>
+                                        <td>{$courses['id']}</td>
+                                    </tr>
+                                _END;
+                            }
+                                    
+                            ?>
+                    </tr>
+                </table>
 
 
-        <div class="row">
+            </div>
 
-            <table>
-                <tr>
-                    <th>Course Code</th>
-                    <th>Course Name</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Classroom</th>
-                </tr>
-                <tr>
-                    <td>
-                        <select name="reason" required>
-                            <option value="" selected hidden disabled>-- Choose a reason --</option>
-                            <option value="lost">Lost</option>
-                            <option value="defective">Defective</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input name="file" type="file" accept='image/*' required />
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        10-12
-                    </td>
-                    <td>
-                        10-12
-                    </td>
-                </tr>
-            </table>
+
 
 
         </div>
-
-
-
-
-    </div>
-    <a href="print_student_data.php" class="student_data_print_btn" style="text-decoration: none;" target="_blank"><span class="fa fa-print"></span> Print </a>
-
+        <button type="submit"  class="student_data_print_btn" style="text-decoration: none;"><span class="fa fa-print"></span> Print </button>
+    </form>
 
     <div id="service"></div>
 
@@ -83,3 +112,9 @@ include("../template/t1.php");
 </body>
 
 </html>
+
+<?php
+// show requedted file
+
+
+?>

@@ -52,19 +52,17 @@ $head = "
             justify-content: space-between;
         }
         .logo{
-            margin-top: -75px;
+            margin-top: -60x;
             margin-left: 450px;
             width: 50%;
         }
         .text p{
-            position:absolute;
-            top: 50;
-            margin-bottom: -25px;
-            z-index: 5;
+            margin-bottom: -50px;
+            z-index: -5;
         }
         .stamp{
             text-align: right;
-            margin-top: -72px;
+            margin-top: -5.8em;
         }
         .deanship{
             margin-left: 50px;
@@ -73,14 +71,23 @@ $head = "
 ";
 
 $html = $head;
-
 $html .= "
     <div class='header'>
-        <p>OFFICAL TRANSCRIPT / Saudi Arabia 2030 Brar</p>
-        <p style='margin-left: 2em'>Divsion of Admissions and Registration</p>
-        <h3>Student Information:</h3>
+        <div class='text'>
+            <p>Statement of Credits Hours Completed by Students</p>
+        </div>
+        <div class='logo'>
+            <img src='logo.png' alt='logo' width='250'/>
+        </div>
     </div>
     ";
+// $html .= "
+//     <div class='header'>
+//         <p>OFFICAL TRANSCRIPT / Saudi Arabia 2030 Brar</p>
+//         <p style='margin-left: 2em'>Divsion of Admissions and Registration</p>
+//         <h3>Student Information:</h3>
+//     </div>
+//     ";
 
 $html .= "<table>";
 $html .= "
@@ -186,7 +193,23 @@ while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
         </tr>";
 }
 
-$html .= "</table>";
+$html .= "
+</table>
+<br><br><br><br>
+<div class='footer'>
+    <div class='signature'>
+        <p>
+            Deanship of admission & Students Affairs<br>
+                    <p class='deanship'>Name here</p>
+        </p>
+    </div>
+    <div class='stamp'>
+        <p>Stamp</p>
+    </div>
+</div>
+";
+
+
 
 // echo $html;
 
