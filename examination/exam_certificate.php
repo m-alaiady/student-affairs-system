@@ -3,9 +3,6 @@ require_once('../connection.php');
 
 include("../template/t1.php");
 
-if (!isset($_SESSION['student_id'])) {
-    header("location:../index.php");
-}
 ?>
 
 <html>

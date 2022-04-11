@@ -3,9 +3,6 @@ require_once('../connection.php');
 
 include("../template/t1.php");
 
-if (!isset($_SESSION['student_id'])) {
-    header("location:../index.php");
-}
 
 $sql = "SELECT faculties.* FROM faculties 
         JOIN students 
@@ -100,7 +97,7 @@ $get_all_student_courses = "
 
 
     </div>
-    <a href="print_student_data.php" class="student_data_print_btn" style="text-decoration: none;" target="_blank"><span class="fa fa-print"></span> Print </a>
+    <a href="print_exam_schedule.php" class="student_data_print_btn" style="text-decoration: none;" target="_blank"><span class="fa fa-print"></span> Print </a>
 
 
     <div id="service"></div>

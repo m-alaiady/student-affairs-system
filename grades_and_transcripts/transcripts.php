@@ -3,6 +3,11 @@ session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once('../connection.php');
 
+if(!isset($_SESSION['student_id']))
+{
+    header("location:../index.php");
+}
+
 $query="select * from students where student_id='".$_SESSION['student_id']."' ";
 $result=mysqli_query($con,$query);
 $data = mysqli_fetch_assoc($result);

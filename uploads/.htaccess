@@ -1,0 +1,2 @@
+# prevents to access all this area(dir and subdir) from outside
+DENY FROM ALL 

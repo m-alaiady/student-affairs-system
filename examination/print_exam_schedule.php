@@ -3,6 +3,11 @@ session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once('../connection.php');
 
+if(!isset($_SESSION['student_id']))
+{
+    header("location:../index.php");
+}
+
 $query="select * from students where student_id='".$_SESSION['student_id']."' ";
 $result=mysqli_query($con,$query);
 $data = mysqli_fetch_assoc($result);
@@ -47,15 +52,13 @@ $head = "
             justify-content: space-between;
         }
         .logo{
-            margin-top: -75px;
+            margin-top: -60x;
             margin-left: 450px;
             width: 50%;
         }
         .text p{
-            position:absolute;
-            top: 50;
-            margin-bottom: -25px;
-            z-index: 5;
+            margin-bottom: -50px;
+            z-index: -5;
         }
         .stamp{
             text-align: right;
@@ -73,8 +76,8 @@ $html .= "
     <div class='header'>
         <div class='text'>
             <p>
-                OFFICAL TRANSCRIPT / Saudi Arabia 2030 Brar<br />
-                Divsion of Admissions and Registration
+                Arab Open University/ Saudi Arabia<br />
+                Students Affairs
             </p>
         </div>
         <div class='logo'>

@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+if(!isset($_SESSION['student_id']))
+{
+    header("location:../index.php");
+}
+
 $query="select * from students where student_id='".$_SESSION['student_id']."' ";
 $result=mysqli_query($con,$query);
 $data = mysqli_fetch_assoc($result);
@@ -8,6 +13,8 @@ $data = mysqli_fetch_assoc($result);
 $pathInPieces = explode('\\', __DIR__);
 $proj_name = $pathInPieces[3];
 $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
+
+
 
 
 ?>
