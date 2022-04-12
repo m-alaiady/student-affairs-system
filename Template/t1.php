@@ -189,8 +189,8 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
     <li><a href="#" class="su-btn">Support 
         <span class="fas fa-caret-down nineth"></span></a>
         <ul class="su-show">
-            <li><a href="#">Registration assistant</a></li>
-            <li><a href="#">Payment support</a></li>
+            <li><a href="<?php echo $path ?>/support/registration_assistant.php"">Registration assistant</a></li>
+            <li><a href="<?php echo $path ?>/support/payment_support.php"">Payment support</a></li>
         </ul>
     </li>
             <li><a href="#">LMS</a></li>
