@@ -42,7 +42,7 @@ $faculty_data=mysqli_query($con,$sql);
 $faculty= mysqli_fetch_assoc($faculty_data);
 $field_name = "";
 
-function store_file($file, $course_id){
+function store_file($file, $course_id, $uploaded_file_result){
     global $con, $student_id, $uploaded_file_result;
     $file_name = $file['name']['file'];
     $file_tmp = $file['tmp_name']['file'];
@@ -150,6 +150,8 @@ function store_file($file, $course_id){
                     while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
                         $get_uploaded_file = "SELECT * FROM absence_excuses WHERE student_id = '" . $student_id['id'] ."' AND course_id = '" . $courses_data['course_id'] ."' LIMIT 1"; 
                         $uploaded_file_result = mysqli_query($con, $get_uploaded_file);
+                        $uploaded_file = mysqli_fetch_assoc($uploaded_file_result);
+
                         if($courses_data['absences'] > 0){
                             array_push($courses, $courses_data['course_id']);
                             $count_absences++;
@@ -168,6 +170,10 @@ function store_file($file, $course_id){
                             _END;
                             if(mysqli_num_rows($uploaded_file_result) > 0){
                                 echo <<< _END
+                                            <div class="box">
+                                                <p class="box-title">Uploaded Date</p>
+                                                <p> {$uploaded_file['request_date']} </p>
+                                            </div>
                                             <div class="box">
                                                 <p class="box-title">Action</p>
                                                 <p>Processing .. </p>
@@ -228,8 +234,12 @@ foreach ($courses as $course) {
         $file = $_FILES[$course];
 
         $course_id = $form['course_id'];
+
+        $get_uploaded_file = "SELECT * FROM absence_excuses WHERE student_id = '" . $student_id['id'] ."' AND course_id = '" . $courses_data['course_id'] ."' LIMIT 1"; 
+        $uploaded_file_result = mysqli_query($con, $get_uploaded_file);
+
         // print_r($file['name']['file']);
-        store_file($file, $course_id);
+        store_file($file, $course_id, $uploaded_file_result);
     }
 }
 
