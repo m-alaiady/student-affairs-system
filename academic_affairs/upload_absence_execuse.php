@@ -34,14 +34,83 @@ $get_all_student_courses = "
             ON teachers.id = sections.tutor_id
         WHERE enrolled.student_id = '" . $student_id['id']  . "'";    
 
-$get_uploaded_file = "SELECT * FROM absence_excuses WHERE student_id = '" . $student_id['id'] ."' LIMIT 1"; 
-$uploaded_file_result = mysqli_query($con, $get_uploaded_file);
+
 
 
 
 $faculty_data=mysqli_query($con,$sql);
 $faculty= mysqli_fetch_assoc($faculty_data);
 $field_name = "";
+
+function store_file($file, $course_id){
+    global $con, $student_id, $uploaded_file_result;
+    $file_name = $file['name']['file'];
+    $file_tmp = $file['tmp_name']['file'];
+    $file_size = $file['size']['file'];
+    $file_error = $file['error']['file'];
+    // echo $file_name; die;
+    $file_ext = explode('.', $file_name);
+    $file_ext = strtolower(end($file_ext));
+
+    $allowed = array('jpg', 'pdf', 'png', 'jpeg', 'doc');
+    $std_id = $student_id['id'];
+
+    if(mysqli_num_rows($uploaded_file_result) == 0){
+        if(in_array($file_ext, $allowed)){
+            if($file_error === 0){
+                if($file_size <= FIVE_MIGA_BYTES){
+                    $file_name_new = uniqid('', true) . '.' . $file_ext;
+                    $upload_dir = '../uploads/absences/' . $student_id['id'] ;
+                    $file_destination = $upload_dir. '/' . $file_name_new;
+
+                    if (!file_exists($upload_dir)) {
+                        mkdir($upload_dir, 0777, true);
+                    }
+
+                    if(move_uploaded_file($file_tmp, $file_destination)){
+                        $insert_file = "INSERT INTO `absence_excuses` (file_name, student_id, course_id) VALUES ('$file_name_new', '$std_id', '$course_id')";
+                        if(mysqli_query($con,$insert_file)){
+                            echo <<< _END
+                                <div class="alert success">
+                                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                                    <p>File Uploaded Successfully!</p>
+                                </div>
+                            _END;
+                            header('Refresh: 2');
+                        }
+                        else{
+                            $err = mysqli_error($con);
+                            echo <<< _END
+                                <div class="alert error">
+                                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                                    <p>Something Went Wrong in the database: {$err}</p>
+                                </div>
+                            _END;
+                        }
+                    }
+                }
+                else{
+                    // if file too large
+                    echo <<< _END
+                        <div class="alert error">
+                            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                            <p>File is too large!</p>
+                        </div>
+                    _END;
+                }
+            }
+        }
+    }
+    else{
+        echo <<< _END
+            <div class="alert error">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <p>File already uploaded!</p>
+            </div>
+        _END;
+    }
+
+}
 ?>
 
 <html>
@@ -56,54 +125,71 @@ $field_name = "";
             margin-left: -25em !important;
         }
         .student_data_print_btn{
-            margin-top: 5em !important;
-            margin-left: 0em !important;
+            all: unset;
+            background-color: dodgerblue;
+            border-radius: 10px;
+            padding: 0.025em 1em;
+            border: none;
+            cursor: pointer;
+            color: white;
+            margin: 0.25em;
         }
     </style>
 </head>
 
 
 <body>
-<form method="post" enctype="multipart/form-data">
 
 <div class="student_data">
      <p class="super-box-title">Upload student excuse</p>
             <?php
+                $courses = array();
                 $student_courses_result = mysqli_query($con, $get_all_student_courses);
                 if(mysqli_num_rows($student_courses_result) > 0){
                     $count_absences = 0;
                     while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
+                        $get_uploaded_file = "SELECT * FROM absence_excuses WHERE student_id = '" . $student_id['id'] ."' AND course_id = '" . $courses_data['course_id'] ."' LIMIT 1"; 
+                        $uploaded_file_result = mysqli_query($con, $get_uploaded_file);
                         if($courses_data['absences'] > 0){
+                            array_push($courses, $courses_data['course_id']);
                             $count_absences++;
                             $field_name = $courses_data['course_id'] . "_excuse_file";
                             echo <<< _END
-                                <div class="row">
-                                    <div class="box">
-                                        <p class="box-title">Course Code</p>
-                                        <p>{$courses_data['course_id']}</p>
-                                    </div>
-                                    <div class="box">
-                                        <p class="box-title">Student's Absences</p>
-                                        <p>{$courses_data['absences']}</p>
-                                    </div>
-                            
+                                <form method="post" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="box">
+                                            <p class="box-title">Course Code</p>
+                                            <p>{$courses_data['course_id']}</p>
+                                        </div>
+                                        <div class="box">
+                                            <p class="box-title">Student's Absences</p>
+                                            <p>{$courses_data['absences']}</p>
+                                        </div>
                             _END;
                             if(mysqli_num_rows($uploaded_file_result) > 0){
                                 echo <<< _END
-                                    <div class="box">
-                                        <p class="box-title">Action</p>
-                                        <p>Processing .. </p>
-                                    </div>
+                                            <div class="box">
+                                                <p class="box-title">Action</p>
+                                                <p>Processing .. </p>
+                                            </div>
+                                        </div>
+                                    </form>
                                 _END;
                             }
                             else{
                                 echo <<< _END
-                                    <div class="box">
-                                        <p class="box-title">Action</p>
-                                        <p><input name="{$field_name}" type='file' accept='image/*, .doc, .pdf' required /></p>
-                                    </div>
-                                    </div>
-                                    <input type="submit" name="submit" class="student_data_print_btn" value="Upload Excuse"> 
+                                            <div class="box">
+                                                <p class="box-title">Action</p>
+                                                <p><input name="{$courses_data['course_id']}[file]" type="file" accept='image/*, .doc, .pdf' required /></p>
+                                            </div>
+                                            <div class="box">
+                                                <p class="box-title">Submit</p>
+                                                <p><input type="submit" name="{$courses_data['course_id']}[submit]" class="student_data_print_btn" value="Upload Excuse"></p>
+                                                <input type="hidden" name="{$courses_data['course_id']}[course_id]" value="{$courses_data['course_id']}">
+                                            </div>
+                                        </div>
+                                    </form>
+
                                 _END;
                             }
                         }
@@ -130,80 +216,22 @@ $field_name = "";
 
 </html>
 <?php
-if(isset($_POST['submit'])){
-    $file = $_FILES[$field_name];
-
-
-    function store_file($file){
-        global $con, $student_id, $uploaded_file_result;
-        $file_name = $file['name'];
-        $file_tmp = $file['tmp_name'];
-        $file_size = $file['size'];
-        $file_error = $file['error'];
-
-        $file_ext = explode('.', $file_name);
-        $file_ext = strtolower(end($file_ext));
-
-        $allowed = array('jpg', 'pdf', 'png', 'jpeg', 'doc');
-        $std_id = $student_id['id'];
-
-        if(mysqli_num_rows($uploaded_file_result) == 0){
-            if(in_array($file_ext, $allowed)){
-                if($file_error === 0){
-                    if($file_size <= FIVE_MIGA_BYTES){
-                        $file_name_new = uniqid('', true) . '.' . $file_ext;
-                        $upload_dir = '../uploads/absences/' . $student_id['id'] ;
-                        $file_destination = $upload_dir. '/' . $file_name_new;
+// print_r($courses);
+// foreach ($courses as $course) {
+//     echo $course . '[submit]';
     
-                        if (!file_exists($upload_dir)) {
-                            mkdir($upload_dir, 0777, true);
-                        }
-    
-                        if(move_uploaded_file($file_tmp, $file_destination)){
-                            $insert_file = "INSERT INTO `absence_excuses` (file_name, student_id) VALUES ('$file_name_new', '$std_id')";
-                            if(mysqli_query($con,$insert_file)){
-                                echo <<< _END
-                                    <div class="alert success">
-                                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                                        <p>File Uploaded Successfully!</p>
-                                    </div>
-                                _END;
-                                header('Refresh: 2');
-                            }
-                            else{
-                                $err = mysqli_error($con);
-                                echo <<< _END
-                                    <div class="alert error">
-                                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                                        <p>Something Went Wrong in the database: {$err}</p>
-                                    </div>
-                                _END;
-                            }
-                        }
-                    }
-                    else{
-                        // if file too large
-                        echo <<< _END
-                            <div class="alert error">
-                                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                                <p>File is too large!</p>
-                            </div>
-                        _END;
-                    }
-                }
-            }
-        }
-        else{
-            echo <<< _END
-                <div class="alert error">
-                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                    <p>File already uploaded!</p>
-                </div>
-            _END;
-        }
+// }
 
+foreach ($courses as $course) {
+    if(isset($_POST[$course])){
+        $form = $_POST[$course];
+        $file = $_FILES[$course];
+
+        $course_id = $form['course_id'];
+        // print_r($file['name']['file']);
+        store_file($file, $course_id);
     }
-    store_file($file);
 }
+
 
 ?>

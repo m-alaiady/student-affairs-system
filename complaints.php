@@ -72,7 +72,7 @@ $get_all_student_courses = "
 </html>
 <?php
 // show requedted file
-$get_requested = "SELECT * FROM `complaints` WHERE student_id = {$student_id['id']} LIMIT 1";
+$get_requested = "SELECT * FROM `complaints` WHERE student_id = {$student_id['id']}";
 $requested_result = mysqli_query($con, $get_requested);
 if(mysqli_num_rows($requested_result) > 0){
     echo '<div class="request_data">
