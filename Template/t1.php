@@ -189,13 +189,13 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
     <li><a href="#" class="su-btn">Support 
         <span class="fas fa-caret-down nineth"></span></a>
         <ul class="su-show">
-            <li><a href="<?php echo $path ?>/support/registration_assistant.php"">Registration assistant</a></li>
-            <li><a href="<?php echo $path ?>/support/payment_support.php"">Payment support</a></li>
+            <li><a href="<?php echo $path ?>/support/registration_assistant.php">Registration assistant</a></li>
+            <li><a href="<?php echo $path ?>/support/payment_support.php">Payment support</a></li>
         </ul>
     </li>
-            <li><a href="#">LMS</a></li>
-            <li><a href="#">Graduation ceremony</a> </li>
-            <li><a href="#">Complaints</a></li>
+            <li><a href="https://mdl.arabou.edu.kw/ksa/" target="_blank">LMS</a></li>
+            <li><a href="<?php echo $path ?>/graduation_ceremony.php"">Graduation ceremony</a> </li>
+            <li><a href="<?php echo $path ?>/complaints.php">Complaints</a></li>
             
     </ul>
     
