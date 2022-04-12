@@ -96,7 +96,7 @@ if($courses_data <= 0){
             <div class="student_data" style="
                 position: absolute;
                 margin-left:25em;
-                margin-top:10em;
+                margin-top:12em;
                 background: white;
                 border-radius: 10px;
                 opacity: .85;  
@@ -117,7 +117,7 @@ if($courses_data <= 0){
             <div class="student_data" style="
                 position: absolute;
                 margin-left:25em;
-                margin-top:30em;
+                margin-top:31em;
                 background: white;
                 border-radius: 10px;
                 opacity: .85;  
@@ -162,7 +162,39 @@ if($courses_data <= 0){
 
         </table>
         </div>
-    </div>
+
+        <?php
+        $get_all_price_query = "
+            SELECT  SUM(courses.course_price) as total_price
+            FROM `enrolled`
+            JOIN `sections`
+                ON enrolled.section_id = sections.id 
+            JOIN `courses`
+                ON sections.course_id = courses.id
+            WHERE enrolled.student_id = '" . $student_id['id'] . "'"; 
+        $get_all_price_result = mysqli_query($con, $get_all_price_query); 
+
+        $price = mysqli_fetch_assoc($get_all_price_result);
+        if($price['total_price'] > 0){
+            echo <<< _END
+                <div class="invoice" style="margin-left: 1em">
+                    <p>Total price: {$price['total_price']} SAR </p>
+                    <br />
+                    <a href="../financial/index.php">Go to step 2 (Financial)</a><br />
+                    <a href="../home.php">Cancel my requests and take me to dashboard</a>
+                </div>
+            _END;
+        }
+        else{
+            echo <<< _END
+                <a href="../home.php" style="margin-left: 2em">Go back to dashboard</a>
+            _END;
+        }
+        
+
+    ?>
+        </div>
+
 </form>
 <div class="view-sections"> 
             <?php
@@ -186,7 +218,7 @@ if($courses_data <= 0){
                                 display: none;
                                 position: absolute;
                                 margin-left:25em;
-                                margin-top:33em;
+                                margin-top:38em;
                                 background: white;
                                 border-radius: 10px;
                                 opacity: .85;
@@ -208,7 +240,7 @@ if($courses_data <= 0){
                                 display: none;
                                 position: absolute;
                                 margin-left:25em;
-                                margin-top:53em;
+                                margin-top:65em;
                                 background: white;
                                 border-radius: 10px;
                                 opacity: .85;
@@ -320,37 +352,7 @@ if($courses_data > 0){
 
 ?>
 
-<div class="invoice">
-    
-    <?php
-        $get_all_price_query = "
-            SELECT  SUM(courses.course_price) as total_price
-            FROM `enrolled`
-            JOIN `sections`
-                ON enrolled.section_id = sections.id 
-            JOIN `courses`
-                ON sections.course_id = courses.id
-            WHERE enrolled.student_id = '" . $student_id['id'] . "'"; 
-        $get_all_price_result = mysqli_query($con, $get_all_price_query); 
 
-        $price = mysqli_fetch_assoc($get_all_price_result);
-        if($price['total_price'] > 0){
-            echo <<< _END
-                <p>Total price: {$price['total_price']} SAR </p>
-                <a href="../financial/index.php">Go to step 2 (Financial)</a><br />
-                <a href="../home.php">Cancel my requests and take me to dashboard</a>
-            _END;
-        }
-        else{
-            echo <<< _END
-                <a href="../home.php">Go back to dashboard</a>
-            _END;
-        }
-        
-
-    ?>
-
-</div>
 
 <script>
 

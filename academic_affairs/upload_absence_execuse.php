@@ -70,40 +70,52 @@ $field_name = "";
      <p class="super-box-title">Upload student excuse</p>
             <?php
                 $student_courses_result = mysqli_query($con, $get_all_student_courses);
-
-                while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
-                    if($courses_data['absences'] > 0){
-                        $field_name = $courses_data['course_id'] . "_excuse_file";
+                if(mysqli_num_rows($student_courses_result) > 0){
+                    $count_absences = 0;
+                    while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
+                        if($courses_data['absences'] > 0){
+                            $count_absences++;
+                            $field_name = $courses_data['course_id'] . "_excuse_file";
+                            echo <<< _END
+                                <div class="row">
+                                    <div class="box">
+                                        <p class="box-title">Course Code</p>
+                                        <p>{$courses_data['course_id']}</p>
+                                    </div>
+                                    <div class="box">
+                                        <p class="box-title">Student's Absences</p>
+                                        <p>{$courses_data['absences']}</p>
+                                    </div>
+                            
+                            _END;
+                            if(mysqli_num_rows($uploaded_file_result) > 0){
+                                echo <<< _END
+                                    <div class="box">
+                                        <p class="box-title">Action</p>
+                                        <p>Processing .. </p>
+                                    </div>
+                                _END;
+                            }
+                            else{
+                                echo <<< _END
+                                    <div class="box">
+                                        <p class="box-title">Action</p>
+                                        <p><input name="{$field_name}" type='file' accept='image/*, .doc, .pdf' required /></p>
+                                    </div>
+                                    </div>
+                                    <input type="submit" name="submit" class="student_data_print_btn" value="Upload Excuse"> 
+                                _END;
+                            }
+                        }
+                    }
+                    if($count_absences == 0){
                         echo <<< _END
                             <div class="row">
-                                <div class="box">
-                                    <p class="box-title">Course Code</p>
-                                    <p>{$courses_data['course_id']}</p>
+                                <div class="student box">
+                                <p>No absences</p>
                                 </div>
-                                <div class="box">
-                                    <p class="box-title">Student's Absences</p>
-                                    <p>{$courses_data['absences']}</p>
-                                </div>
-                          
-                        _END;
-                        if(mysqli_num_rows($uploaded_file_result) > 0){
-                            echo <<< _END
-                                <div class="box">
-                                    <p class="box-title">Action</p>
-                                    <p>Processing .. </p>
-                                </div>
-                            _END;
-                        }
-                        else{
-                            echo <<< _END
-                                <div class="box">
-                                    <p class="box-title">Action</p>
-                                    <p><input name="{$field_name}" type='file' accept='image/*, .doc, .pdf' required /></p>
-                                </div>
-                                </div>
-                                <input type="submit" name="submit" class="student_data_print_btn" value="Upload Excuse"> 
-                            _END;
-                        }
+                            </div>
+                         _END;
                     }
                 }
 

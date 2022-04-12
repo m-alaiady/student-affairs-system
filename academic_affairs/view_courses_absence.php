@@ -43,7 +43,7 @@ $faculty= mysqli_fetch_assoc($faculty_data);
 <html>
 
 <head>
-    <title>SIS | Academic Affairs</title>
+    <title>SIS | Student Absences</title>
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/box.css" />
 </head>
 
@@ -54,32 +54,47 @@ $faculty= mysqli_fetch_assoc($faculty_data);
     
             <?php
                 $student_courses_result = mysqli_query($con, $get_all_student_courses);
-
-                while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
-                    if($courses_data['absences'] > 0){
+                if(mysqli_num_rows($student_courses_result) > 0){
+                    $count_absences = 0;
+                    while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
+                        if($courses_data['absences'] > 0){
+                            $count_absences++;
+                            echo <<< _END
+                                <div class="row">
+                                    <div class="student box">
+                                        <p class="box-title">Course Code</p>
+                                        <p>{$courses_data['course_id']}</p>
+                                    </div>
+                                    <div class="student_id box">
+                                        <p class="box-title">Course Name</p>
+                                        <p>{$courses_data['course_name']}</p>
+                                    </div>
+                                    <div class="SSN box">
+                                        <p class="box-title">Allowed Absences</p>
+                                        <p>{$courses_data['allowed_absences']}</p>
+                                    </div>
+                                    <div class="SSN box">
+                                        <p class="box-title">Student's Absences</p>
+                                        <p>{$courses_data['absences']}</p>
+                                    </div>
+                                </div>
+                            
+                            _END;
+                        }
+                    }
+                    if($count_absences == 0){
                         echo <<< _END
                             <div class="row">
                                 <div class="student box">
-                                    <p class="box-title">Course Code</p>
-                                    <p>{$courses_data['course_id']}</p>
-                                </div>
-                                <div class="student_id box">
-                                    <p class="box-title">Course Name</p>
-                                    <p>{$courses_data['course_name']}</p>
-                                </div>
-                                <div class="SSN box">
-                                    <p class="box-title">Allowed Absences</p>
-                                    <p>{$courses_data['allowed_absences']}</p>
-                                </div>
-                                <div class="SSN box">
-                                    <p class="box-title">Student's Absences</p>
-                                    <p>{$courses_data['absences']}</p>
+                                <p>No absences</p>
                                 </div>
                             </div>
-                          
-                        _END;
+                         _END;
                     }
                 }
+                   
+
+               
 
             ?>
 
