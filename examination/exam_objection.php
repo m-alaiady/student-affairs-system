@@ -80,7 +80,7 @@ $get_all_student_courses = "
                 <tr>
                     <td>
                         <select name="course" required>
-                            <option value="" selected hidden disabled>-- Choose a reason --</option>
+                            <option value="" selected hidden disabled>-- Choose a course --</option>
                             <?php
                                 $courses_result = mysqli_query($con, $get_all_student_courses);
                             
