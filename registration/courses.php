@@ -1,8 +1,9 @@
 <?php
 
-session_start();
-
 require_once("../connection.php");
+
+include("../template/t1.php");
+
 $query="select * from courses";
 $get_id = "select id from students where student_id = '" . $_SESSION['student_id'] . "' ";
 
@@ -25,11 +26,51 @@ if( !isset($_SESSION['paid']) ){
     header("location:register.php");
 }
 
+
+$get_all_student_courses = "
+    SELECT  courses.*, sections.id as section_id, courses_time.time
+    FROM enrolled
+    JOIN sections
+        ON enrolled.section_id = sections.id
+    JOIN courses
+        ON sections.course_id = courses.id
+    JOIN courses_time
+        ON courses_time.id = sections.time_id
+    WHERE enrolled.student_id = '" . $student_id['id'] . "'";
+$student_courses_result = mysqli_query($con, $get_all_student_courses);
+$courses_data= mysqli_fetch_assoc($student_courses_result);
+
+
 ?>
 
 <html>
 <head>
+    <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/box.css" />
+    <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/alert-box.css" />
 <style>
+    body{
+        overflow: auto;
+        z-index: 20;
+    }
+    .logo, .foot{
+        z-index: 1;
+    }
+    .student_data div,.view-section div, .registered-courses div{
+        padding: 2em;
+    }
+    
+
+    .registered-courses{
+        position: absolute;
+        margin-left:25em;
+        margin-top:10em;
+        background: white;
+        border-radius: 10px;
+        opacity: .85;
+    }
+    .foot{
+        position: fixed;
+    }
     table, th, td{
         border: 1px solid #000;
         border-collapse: collapse;
@@ -48,48 +89,82 @@ if( !isset($_SESSION['paid']) ){
 </head>
 <body>
 <form>
-    <fieldset>
-        <legend>Courses Advised</legend>
-        <table>
-            <tr>
-                <th>Course Code</th>
-                <th>Course Name</th>
-                <th>Credits</th>
-                <th>Course Price</th>
-                <th>View Sections</th>
-            </tr>
-            <?php
-                $result=mysqli_query($con,$query);
-                while($row= mysqli_fetch_assoc($result) ){
-                    $price = number_format($row['course_price']);
-                       
-                    // $get_all_teachers = "SELECT teachers.* FROM teachers JOIN courses ON teachers.id = courses.tutor_id WHERE courses.tutor_id = '" . $row['tutor_id'] . "' ";
-                    $get_all_teachers_by_course = "SELECT teachers.* FROM teachers JOIN teachers_courses ON teachers.id = teachers_courses.tutor_id WHERE teachers_courses.course_id = '" . $row['id'] . "' ";
-                    // var_dump($get_all_teachers);
-                    $teachers_result = mysqli_query($con,$get_all_teachers_by_course);
-                    $teacher_name = mysqli_fetch_assoc($teachers_result);
+    <?php
 
-                    echo <<< _END
-                        <tr>
-                            <td> {$row['course_id']} </td>
-                            <td> {$row['course_name']} </td>
-                            <td> {$row['credits']} </td>
-                            <td> {$price} SAR </td>
-                            <td> <span onclick="showViewSections({$row['id']})" style="color:blue; text-decoration: underline;">View Sections</span> </td>
+if($courses_data <= 0){
+    echo <<< _END
+            <div class="student_data" style="
+                position: absolute;
+                margin-left:25em;
+                margin-top:10em;
+                background: white;
+                border-radius: 10px;
+                opacity: .85;  
+            ">
+            <p class="super-box-title">Courses Advised</p>
+                <div class="row">
+                        <table>
+                            <tr>
+                                <th>Course Code</th>
+                                <th>Course Name</th>
+                                <th>Credits</th>
+                                <th>Course Price</th>
+                                <th>View Sections</th>
                         </tr>
-                    _END;
-                }
-                
+        _END;
+}else{
+    echo <<< _END
+            <div class="student_data" style="
+                position: absolute;
+                margin-left:25em;
+                margin-top:30em;
+                background: white;
+                border-radius: 10px;
+                opacity: .85;  
+            ">
+            <p class="super-box-title">Courses Advised</p>
+                <div class="row">
+                        <table>
+                            <tr>
+                                <th>Course Code</th>
+                                <th>Course Name</th>
+                                <th>Credits</th>
+                                <th>Course Price</th>
+                                <th>View Sections</th>
+                        </tr>
+        _END;
+}
+                ?>
+                <?php
+                    $result=mysqli_query($con,$query);
+                    while($row= mysqli_fetch_assoc($result) ){
+                        $price = number_format($row['course_price']);
+                        
+                        // $get_all_teachers = "SELECT teachers.* FROM teachers JOIN courses ON teachers.id = courses.tutor_id WHERE courses.tutor_id = '" . $row['tutor_id'] . "' ";
+                        $get_all_teachers_by_course = "SELECT teachers.* FROM teachers JOIN teachers_courses ON teachers.id = teachers_courses.tutor_id WHERE teachers_courses.course_id = '" . $row['id'] . "' ";
+                        // var_dump($get_all_teachers);
+                        $teachers_result = mysqli_query($con,$get_all_teachers_by_course);
+                        $teacher_name = mysqli_fetch_assoc($teachers_result);
+
+                        echo <<< _END
+                            <tr>
+                                <td> {$row['course_id']} </td>
+                                <td> {$row['course_name']} </td>
+                                <td> {$row['credits']} </td>
+                                <td> {$price} SAR </td>
+                                <td> <span onclick="showViewSections({$row['id']})" style="color:blue; text-decoration: underline;">View Sections</span> </td>
+                            </tr>
+                        _END;
+                    }
+                    
 
             ?>
 
         </table>
-    </fieldset>
+        </div>
+    </div>
 </form>
-<div class="view-sections">
-
-   
-       
+<div class="view-sections"> 
             <?php
                 $result=mysqli_query($con,$query);
                 while($row= mysqli_fetch_assoc($result) ){
@@ -105,18 +180,52 @@ if( !isset($_SESSION['paid']) ){
                         WHERE sections.course_id = '" . $row['id'] . "'";
                    
                     $sections_result = mysqli_query($con,$sections);
-                    echo <<< _END
-                        <fieldset class="viewSections" id="{$row['id']}" style="display:none">
-                        <legend>Sections for Course {$row['course_id']}</legend>
-                        <table>
-                        <tr>
-                            <th>Sections</th>
-                            <th>Tutor</th>
-                            <th>Schedule</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    _END;
+                    if($courses_data <= 0){
+                        echo <<< _END
+                            <div class="view-section viewSections" id="{$row['id']}" style="    
+                                display: none;
+                                position: absolute;
+                                margin-left:25em;
+                                margin-top:33em;
+                                background: white;
+                                border-radius: 10px;
+                                opacity: .85;
+                            ">
+                            <p class="super-box-title">Section for Course {$row['course_id']}</p>
+                            <div class="row">
+                            <table>
+                            <tr>
+                                <th>Sections</th>
+                                <th>Tutor</th>
+                                <th>Schedule</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                         _END;
+                    }else{
+                        echo <<< _END
+                            <div class="view-section viewSections" id="{$row['id']}" style="    
+                                display: none;
+                                position: absolute;
+                                margin-left:25em;
+                                margin-top:53em;
+                                background: white;
+                                border-radius: 10px;
+                                opacity: .85;
+                            ">
+                            <p class="super-box-title">Section for Course {$row['course_id']}</p>
+                            <div class="row">
+                            <table>
+                            <tr>
+                                <th>Sections</th>
+                                <th>Tutor</th>
+                                <th>Schedule</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                         _END;
+                    }
+                 
                     
                     while($sections_row = mysqli_fetch_assoc($sections_result)){
 
@@ -138,7 +247,8 @@ if( !isset($_SESSION['paid']) ){
                 
                     echo <<< _END
                         </table>
-                        </fieldset>
+                        </div>
+                        </div>
                     _END;
 
                    
@@ -151,28 +261,12 @@ if( !isset($_SESSION['paid']) ){
 
 
 </div>
-<?php 
-
-$get_all_student_courses = "
-    SELECT  courses.*, sections.id as section_id, courses_time.time
-    FROM enrolled
-    JOIN sections
-        ON enrolled.section_id = sections.id
-    JOIN courses
-        ON sections.course_id = courses.id
-    JOIN courses_time
-        ON courses_time.id = sections.time_id
-    WHERE enrolled.student_id = '" . $student_id['id'] . "'";
-$student_courses_result = mysqli_query($con, $get_all_student_courses);
-$courses_data= mysqli_fetch_assoc($student_courses_result);
-
-?>
 <?php
 if($courses_data > 0){
     echo <<< _END
     <div class="registered-courses">
-    <fieldset>
-        <legend>Courses Registered</legend>
+    <p class="super-box-title">Registered Courses</p>
+    <div class="row">
         <table>
             <tr>
                 <th>Course Code</th>
@@ -218,7 +312,8 @@ if($courses_data > 0){
                 
     echo <<< _END
             </table>
-        </fieldset>
+        </div>
+        </div>
     </div>
     _END;
 }
