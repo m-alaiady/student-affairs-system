@@ -44,6 +44,18 @@ $get_registered_hours_result = mysqli_query($con, $get_registered_hours);
 
 $registered_hours = mysqli_fetch_assoc($get_registered_hours_result);
 
+$get_all_student_courses = "
+        SELECT  
+            enrolled.absences, courses.*, sections.*, sections.id as section_id, courses.course_id as course_id, courses_time.time, teachers.teacher_name
+        FROM 
+            enrolled
+            JOIN sections ON enrolled.section_id = sections.id
+            JOIN courses ON sections.course_id = courses.id
+            JOIN courses_time ON courses_time.id = sections.time_id
+            JOIN teachers ON teachers.id = sections.tutor_id
+        WHERE 
+            enrolled.student_id = '$std_id'";  
+
 $head = "
     <style>
         table,tr, td, th{
@@ -95,21 +107,25 @@ $html .= "
             <th>Name</th> <td colspan='5'>" . $data['s_name'] . "</td>
         </tr>
         <tr>
-            <th>National ID</th> <td>" . $data['national_id'] . "</td>
-            <th>Student ID</th> <td>" . $data['student_id'] . "</td>
-            <th>Registered Hours</th> <td>" . $registered_hours['SUM(credits)'] . " hrs </td>
+            <th>National ID</th> <td colspan='3'>" . $data['national_id'] . "</td>
+            <th>Student ID</th> <td colspan='1'>" . $data['student_id'] . "</td>
         </tr>
         <tr>
-            <th>GPA</th> <td>" . $data['GPA'] . "</td>
-            <th>Academic Status</th> <td>" . ($data['status'] == '1'? 'Active': 'Not active') . "</td>
-            <th>Academic Term</th> <td>" . $data['acceptance_term'] . "</td>
+            <th>College</th> <td colspan='3'>" . ucwords($faculty['name']) . "</td>
+            <th>Major</th> <td colspan='1'>" . $data['major'] . "</td>
         </tr>
         <tr>
-            <th>Faculty</th> <td>" . $faculty['name'] . "</td>
-            <th>Major</th> <td>" . $data['major'] . "</td>
-            <th>Branch</th> <td>" . $faculty['branch'] . "</td>
-         </tr>
-        ";
+            <th>Level</th> <td colspan='3'>" . $data['level'] . "</td>
+            <th>Degree</th> <td colspan='1'>" . $data['degree'] . "</td>
+        </tr>
+        <tr>
+            <th>Academic Status</th> <td colspan='3'>" . ($data['status'] == '1'? 'Active': 'Not active') . "</td>
+            <th>Branch</th> <td colspan='1'>" . ucwords($faculty['branch']) . "</td>
+        </tr>
+        <tr>
+            <th>Registered Hours</th> <td colspan='5'>" . $registered_hours['SUM(credits)'] . " hrs </td>
+        </tr>
+";
 
 
 $html .= "</table>";
@@ -125,24 +141,53 @@ $html .= "
             <th>Room</th>
             <th>Day</th>
             <th>Lecture Type</th>
-        </tr>
-        <tr>
-            <td>No.</td>
-            <td>Reference No.</td>
-            <td>Course Code</td>
-            <td>Course</td>
-            <td>Time</td>
-            <td>Room</td>
-            <td>Day</td>
-            <td>Lecture Type</td>
-         </tr>
-    </table>
-    ";
+        </tr>";
+
+$student_courses_result = mysqli_query($con, $get_all_student_courses);
+$counter = 0;
+while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
+    $day_and_times = explode(' ', $courses_data['time']);
+    $days = array();
+    $times = array();
+
+    // split time and day from string
+    foreach ($day_and_times as $day_and_time) {
+        if (DateTime::createFromFormat('H:i', $day_and_time) !== false) {
+             array_push($times, $day_and_time);
+        }
+        else{
+            array_push($days, $day_and_time);
+        }
+    }
+    
+    foreach ($times as $index => $time) {
+        $counter++;
+        $time_oo = strtotime($time);
+        $time_format = date('h:i A', strtotime($time));
+        $time_format = $time_format . " - " . date('h:i A', strtotime('+50 minutes', $time_oo));
+
+        $html .= "
+            <tr>
+                <td>{$counter}</td>
+                <td>{$courses_data['id']}</td>
+                <td>{$courses_data['course_id']}</td>
+                <td style='width: 22%'>{$courses_data['course_name']}</td>
+                <td style='width: 22%'>{$time_format}</td>
+                <td>{$courses_data['room']}</td>
+                <td>$days[$index]</td>
+                <td>{$courses_data['lecture_type']}</td>
+            </tr>
+        ";
+    }
+
+    // print_r($times);
+    
+}
+
 
 $html .= "
-    <p>
-       
-    </p>
+    </table>    
+    <p></p>
     <br><br><br><br>
     <div class='footer'>
         <div class='signature'>
