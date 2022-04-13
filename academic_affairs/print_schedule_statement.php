@@ -159,7 +159,7 @@ while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
             array_push($days, $day_and_time);
         }
     }
-    
+    $lecture_or_lab = "lecture_type";
     foreach ($times as $index => $time) {
         $counter++;
         $time_oo = strtotime($time);
@@ -175,9 +175,15 @@ while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
                 <td style='width: 22%'>{$time_format}</td>
                 <td>{$courses_data['room']}</td>
                 <td>$days[$index]</td>
-                <td>{$courses_data['lecture_type']}</td>
+                <td>{$courses_data[$lecture_or_lab]}</td>
             </tr>
         ";
+        if($lecture_or_lab == "lecture_type"){
+            $lecture_or_lab = "lab_type";
+        }
+        else{
+            $lecture_or_lab = "lecture_type";
+        }
     }
 
     // print_r($times);
