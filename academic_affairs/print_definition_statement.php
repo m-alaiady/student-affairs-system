@@ -69,7 +69,7 @@ $head = "
         }
         .stamp{
             text-align: right;
-            margin-top: -5.8em;
+            margin-top: -6em;
         }
         .deanship{
             margin-left: 50px;

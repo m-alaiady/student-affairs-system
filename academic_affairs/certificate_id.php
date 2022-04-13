@@ -38,7 +38,7 @@ $registered_hours = mysqli_fetch_assoc($get_registered_hours_result);
 ?>
 <html>
 <head>
-    <title>SIS | Services</title>
+    <title>SIS | Statements</title>
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/box.css" />
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/alert-box.css" />
     <style>
@@ -56,13 +56,13 @@ $registered_hours = mysqli_fetch_assoc($get_registered_hours_result);
 <body>
     <form method="post" enctype="multipart/form-data">
         <div class="student_data">
-            <p class="super-box-title">Services</p>
+            <p class="super-box-title">Statements</p>
             <div class="row">
                 <div class="box">
-                    <p class="box-title">Select a service: </p>
+                    <p class="box-title">Select a statement: </p>
                     <p>
                         <select id="servicesList" onchange="services();">
-                            <option selected disabled hidden>-- Select Service --</option>
+                            <option selected disabled hidden>-- Select statement --</option>
                             <option value="change_track">Statement of Credit Hours Completed by Student</option>
                             <option value="center_transfer">Schedule Statement</option>
                             <option value="semester_postponing">Study Duration Statement</option>
