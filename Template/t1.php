@@ -154,7 +154,7 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
         <span class="fas fa-caret-down sixth"></span></a>
         <ul class="rh-show">
             <li><a href="<?php echo $path ?>/registration/register.php">Register</a></li>
-            <li><a href="#">View offered courses</a></li>
+            <li><a href="<?php echo $path ?>/registration/view_offered_courses.php">View offered courses</a></li>
         </ul>
     </li>
     <li><a href="#" class="re-btn">Grades & Transcripts 
