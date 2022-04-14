@@ -104,17 +104,16 @@ $courses_data= mysqli_fetch_assoc($student_courses_result);
 
 */
 ?>
+<div class="student_data">
+    <p class="super-box-title">Registered courses</p>
 <?php
 if($courses_data > 0){
     echo <<< _END
-    <div class="student_data">
-        <p class="super-box-title">Student Absences</p>
         <div class="header">
             <strong>Registeration ID: </strong> 
             <span>{$reg_id}</span>
             <strong style='margin-left: 10rem'>Student info:</strong>
             <span> {$student['s_name']} -  {$student['student_id']} - {$student['email']} </span><br />
-            <a id="print_btn" href="#" onclick="PrintPage()">Click here to print this page</a>
             <div class="registered-courses">
         </div>
        
@@ -174,6 +173,16 @@ if($courses_data > 0){
         </fieldset>
     </div>
     _END;
+}
+// no courses registered
+else{
+    echo <<< _END
+        <div class="row">
+            <div class="student box">
+            <p style="color: crimson">No courses registered</p>
+            </div>
+        </div>
+     _END;
 }
 
 

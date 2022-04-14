@@ -54,8 +54,8 @@ $faculty= mysqli_fetch_assoc($faculty_data);
     
             <?php
                 $student_courses_result = mysqli_query($con, $get_all_student_courses);
+                $count_absences = 0;
                 if(mysqli_num_rows($student_courses_result) > 0){
-                    $count_absences = 0;
                     while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
                         if($courses_data['absences'] > 0){
                             $count_absences++;
@@ -82,17 +82,26 @@ $faculty= mysqli_fetch_assoc($faculty_data);
                             _END;
                         }
                     }
+                    // no absences
                     if($count_absences == 0){
                         echo <<< _END
                             <div class="row">
                                 <div class="student box">
-                                <p>No absences</p>
+                                <p style="color: crimson">No absences</p>
                                 </div>
                             </div>
                          _END;
                     }
+                } 
+                else{ // no courses 
+                    echo <<< _END
+                        <div class="row">
+                            <div class="student box">
+                            <p style="color: crimson">No courses registered</p>
+                            </div>
+                        </div>
+                     _END;
                 }
-                   
 
                
 

@@ -6,7 +6,7 @@ session_start();
 if(isset($_SESSION['student_id']))
 {
     if(isset($_SESSION['paid'])){
-        header("location:courses.php");
+        header("location:courses.php?page=1");
     }
 }
 else

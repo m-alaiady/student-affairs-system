@@ -45,10 +45,11 @@ $get_all_student_courses = "
             cursor: pointer;
             color: white;
         }
-        .request_data{
+
+        .request_data {
             position: absolute;
-            margin-left:525px;
-            margin-top:33em !important;
+            margin-left: 525px;
+            margin-top: 33em !important;
             background: white;
             border-radius: 10px;
             opacity: .85;
@@ -59,23 +60,25 @@ $get_all_student_courses = "
 
 <body>
 
-<div class="student_data">
-    <p class="super-box-title">Exam In Other Branch/Center</p>
+    <div class="student_data">
+        <p class="super-box-title">Exam In Other Branch/Center</p>
 
-    <div class="row">
-
-        <div class="box">
-                <table>
-                    <tr>
-                        <th>Course</th>
-                        <th>Branch</th>
-                        <th>Center</th>
-                        <th>Submit</th>
-                    </tr>
                     <?php
-                        $courses_result = mysqli_query($con, $get_all_student_courses);
-                        $counter = 1;
-                        while( $courses= mysqli_fetch_assoc($courses_result)){
+                    $courses_result = mysqli_query($con, $get_all_student_courses);
+                    $counter = 1;
+                    if (mysqli_num_rows($courses_result) > 0) {
+                        echo <<< _END
+                        <div class="row">
+                        <div class="box">
+                            <table>
+                                <tr>
+                                    <th>Course</th>
+                                    <th>Branch</th>
+                                    <th>Center</th>
+                                    <th>Submit</th>
+                                </tr>
+                        _END;
+                        while ($courses = mysqli_fetch_assoc($courses_result)) {
                             echo <<<_END
                                     <tr>
                                         <form method="post">
@@ -107,13 +110,25 @@ $get_all_student_courses = "
                             _END;
                             $counter++;
                         }
-                                
-                        ?>
-                  
+                    }else{
+                        echo <<< _END
+                            <div class="row">
+                                <div class="student box">
+                                <p style="color: crimson">No courses registered</p>
+                                </div>
+                                    </div>
+                                    </tr>
+                                    </table>             
+                                </div>
+                            </div>
+                         _END;
+                    }
+                    ?>
+
                 </table>
+            </div>
         </div>
     </div>
-</div>
 
 
 
@@ -129,7 +144,7 @@ $get_all_student_courses = "
 </html>
 
 <script>
-     function get_centers(select, counter) {
+    function get_centers(select, counter) {
         let options = "";
 
         switch (select.options[select.selectedIndex].value) {
@@ -194,7 +209,7 @@ $get_all_student_courses = "
                 break;
         }
         // document.write(options)
-        document.getElementById('facultiesResult'+counter).innerHTML = options;
+        document.getElementById('facultiesResult' + counter).innerHTML = options;
 
     }
 </script>
@@ -226,16 +241,15 @@ if (isset($_POST['submit'])) {
             </div>
         _END;
     }
-  
 }
 
 // show requedted file
 $get_requested = "SELECT * FROM `change_exam_location` WHERE student_id = {$student_id['id']}";
 $requested_result = mysqli_query($exam_con, $get_requested);
-if(mysqli_num_rows($requested_result) > 0){
+if (mysqli_num_rows($requested_result) > 0) {
     echo '<div class="request_data">
         <p  class="super-box-title">Submitted request summary</p>';
-    while( $requested= mysqli_fetch_assoc($requested_result)){
+    while ($requested = mysqli_fetch_assoc($requested_result)) {
         echo <<<_END
             <div class="row">
                 <div class="student box">
@@ -256,7 +270,7 @@ if(mysqli_num_rows($requested_result) > 0){
     echo "</div>";
 }
 
-if(isset($_POST['submit'])){
+if (isset($_POST['submit'])) {
     $file = $_FILES['file'];
     $course = $_POST['course'];
     store_file($file, $course);

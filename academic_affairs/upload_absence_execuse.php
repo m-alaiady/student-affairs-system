@@ -204,11 +204,20 @@ function store_file($file, $course_id, $uploaded_file_result){
                         echo <<< _END
                             <div class="row">
                                 <div class="student box">
-                                <p>No absences</p>
+                                <p style="color: crimson">No absences</p>
                                 </div>
                             </div>
                          _END;
                     }
+                }
+                else{
+                    echo <<< _END
+                        <div class="row">
+                            <div class="student box">
+                            <p style="color: crimson">No courses registered</p>
+                            </div>
+                        </div>
+                     _END;
                 }
 
             ?>

@@ -1,26 +1,25 @@
-<?php 
+<?php
 session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once('../connection.php');
 
-if(!isset($_SESSION['student_id']))
-{
+if (!isset($_SESSION['student_id'])) {
     header("location:../index.php");
 }
 
-$query="select * from students where student_id='".$_SESSION['student_id']."' ";
-$result=mysqli_query($con,$query);
+$query = "select * from students where student_id='" . $_SESSION['student_id'] . "' ";
+$result = mysqli_query($con, $query);
 $data = mysqli_fetch_assoc($result);
 
 $sql = "SELECT faculties.* FROM faculties 
         JOIN students 
         ON faculties.id = students.faculty_id 
         WHERE students.student_id = " . $_SESSION['student_id'] . "";
-        
+
 $get_id = "select id from students where student_id = '" . $_SESSION['student_id'] . "' ";
 
-$get_id_result=mysqli_query($con,$get_id);
-$student_id= mysqli_fetch_assoc($get_id_result);
+$get_id_result = mysqli_query($con, $get_id);
+$student_id = mysqli_fetch_assoc($get_id_result);
 
 $get_all_student_courses = "
         SELECT  enrolled.grade, enrolled.absences, courses.*, sections.id as section_id, courses_time.time, teachers.teacher_name
@@ -33,10 +32,66 @@ $get_all_student_courses = "
             ON courses_time.id = sections.time_id
         JOIN teachers
             ON teachers.id = sections.tutor_id
-        WHERE enrolled.student_id = '" . $student_id['id']  . "'";    
-        
-$faculty_data=mysqli_query($con,$sql);
-$faculty= mysqli_fetch_assoc($faculty_data);
+        WHERE enrolled.student_id = '" . $student_id['id']  . "'";
+
+$faculty_data = mysqli_query($con, $sql);
+$faculty = mysqli_fetch_assoc($faculty_data);
+
+function grade_details($grade)
+{
+    switch ($grade) {
+        case 0:
+            return '';
+            break;
+        case $grade >= 0 && $grade < 50:
+            return 'F';
+            break;
+        case $grade >= 50 && $grade < 58:
+            return 'D';
+            break;
+        case $grade >= 58 && $grade < 66:
+            return 'C';
+            break;
+        case $grade >= 66 && $grade < 74:
+            return 'C+';
+            break;
+        case $grade >= 74 && $grade < 82:
+            return 'B';
+            break;
+        case $grade >= 82 && $grade < 90:
+            return 'B+';
+            break;
+        case $grade >= 90 && $grade <= 100:
+            return 'A';
+            break;
+    }
+}
+function get_points($grade)
+{
+    switch ($grade) {
+        case 'A':
+            return 4;
+            break;
+        case 'B+':
+            return 3.5;
+            break;
+        case 'B':
+            return 3;
+            break;
+        case 'C+':
+            return 2.5;
+            break;
+        case 'C':
+            return 2;
+            break;
+        case 'D':
+            return 1.5;
+            break;
+        case 'F':
+            return 0;
+            break;
+    }
+}
 
 $head = "
     <style>
@@ -109,9 +164,14 @@ $html .= "
         ";
 
 
-$html .= "</table>";
-$html .= "
-    <h3 style='margin-top: 2em'>Courses Information:</h3>
+$html .= "</table>
+        <h3 style='margin-top: 2em'>Courses Information:</h3>
+";
+$student_courses_result = mysqli_query($con, $get_all_student_courses);
+
+if (mysqli_num_rows($student_courses_result) > 0) {
+
+    $html .= "
     <table style='margin-top: 5em'>
         <tr>
             <th>Course</th> 
@@ -120,70 +180,15 @@ $html .= "
             <th>Grade</th>
             <th>Points</th>
         </tr>
-";
-$student_courses_result = mysqli_query($con, $get_all_student_courses);
-function grade_details($grade)
-{
-    switch ($grade) {
-        case 0:
-            return '';
-            break;
-        case $grade >= 0 && $grade < 50:
-            return 'F';
-            break;
-        case $grade >= 50 && $grade < 58:
-            return 'D';
-            break;
-        case $grade >= 58 && $grade < 66:
-            return 'C';
-            break;
-        case $grade >= 66 && $grade < 74:
-            return 'C+';
-            break;
-        case $grade >= 74 && $grade < 82:
-            return 'B';
-            break;
-        case $grade >= 82 && $grade < 90:
-            return 'B+';
-            break;
-        case $grade >= 90 && $grade <= 100:
-            return 'A';
-            break;
-       
-    }
-}
-function get_points($grade){
-    switch ($grade) {
-        case 'A':
-            return 4;
-            break;
-        case 'B+':
-            return 3.5;
-            break;
-        case 'B':
-            return 3;
-            break;
-        case 'C+':
-            return 2.5;
-            break;
-        case 'C':
-            return 2;
-            break;
-        case 'D':
-            return 1.5;
-            break;
-        case 'F':
-            return 0;
-            break;
-    }
-}
-while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
-    $grade = grade_details($courses_data['grade']);
-    $points = "";
-    if($grade){
-        $points = get_points($grade) * $courses_data['credits'];
-    }
-    $html .= "
+    ";
+
+    while ($courses_data = mysqli_fetch_assoc($student_courses_result)) {
+        $grade = grade_details($courses_data['grade']);
+        $points = "";
+        if ($grade) {
+            $points = get_points($grade) * $courses_data['credits'];
+        }
+        $html .= "
         <tr>
             <td>{$courses_data['course_id']}</td> 
             <td>{$courses_data['course_name']}</td>
@@ -191,10 +196,16 @@ while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
             <td>{$grade}</td>
             <td>{$points}</td>
         </tr>";
+    }
+    $html .= "</table>";
+} else {
+    $html .= '   
+    
+        <p> No Courses Registered </p>    
+    ';
 }
-
 $html .= "
-</table>
+
 <br><br><br><br>
 <div class='footer'>
     <div class='signature'>

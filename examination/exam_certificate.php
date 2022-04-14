@@ -8,12 +8,12 @@ $sql = "SELECT faculties.* FROM faculties
         JOIN students 
         ON faculties.id = students.faculty_id 
         WHERE students.student_id = " . $_SESSION['student_id'] . "";
-        
+
 
 $get_id = "select id from students where student_id = '" . $_SESSION['student_id'] . "' ";
 
-$get_id_result=mysqli_query($con,$get_id);
-$student_id= mysqli_fetch_assoc($get_id_result);
+$get_id_result = mysqli_query($con, $get_id);
+$student_id = mysqli_fetch_assoc($get_id_result);
 
 $get_all_student_courses = "
         SELECT  enrolled.absences, courses.*, sections.id as section_id,sections.*, courses_time.time, teachers.teacher_name
@@ -26,7 +26,7 @@ $get_all_student_courses = "
             ON courses_time.id = sections.time_id
         JOIN teachers
             ON teachers.id = sections.tutor_id
-        WHERE enrolled.student_id = '" . $student_id['id']  . "'";  
+        WHERE enrolled.student_id = '" . $student_id['id']  . "'";
 ?>
 
 <html>
@@ -40,8 +40,8 @@ $get_all_student_courses = "
             all: unset;
             position: absolute;
             background-color: dodgerblue;
-            margin-left:33em;
-            margin-top:34em;
+            margin-left: 33em;
+            margin-top: 34em;
             border-radius: 10px;
             padding: 0.25em 1em;
             border: none;
@@ -54,32 +54,31 @@ $get_all_student_courses = "
 
 <body>
 
-    <form action="print_exam_certificate.php" method="post" >
+    <form action="print_exam_certificate.php" method="post">
         <div class="student_data">
-            <p class="super-box-title">Exam Certificate</p>
+            <p class="super-box-title">Exam Certificate</p> 
 
-            <div style="margin-left: 5em;padding: 1em 0">
-                <label for="company_name">To: </label>
-                <input type="text" name="company_name" placeholder="company name .. " required style="padding: 0.5em"/>
-            </div>
-
-            <div class="row">
-            
-                <table>
-                    <tr>
-                        <th>Course Code</th>
-                        <th>Course Name</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Classroom</th>
-                    </tr>
-                    <tr>
-                        
                         <?php
-                            $courses_result = mysqli_query($con, $get_all_student_courses);
-                        
-                            while( $courses= mysqli_fetch_assoc($courses_result)){
-                                $course_time = $courses['exam_time'] > 12 ?  $courses['exam_time'] . ' PM': $courses['exam_time'] . ' AM';
+                        $courses_result = mysqli_query($con, $get_all_student_courses);
+                        if (mysqli_num_rows($courses_result) > 0) {
+                            echo <<< _END
+                                    <div style="margin-left: 5em;padding: 1em 0">
+                                    <label for="company_name">To: </label>
+                                    <input type="text" name="company_name" placeholder="company name .. " required style="padding: 0.5em" />
+                                </div>
+                                <div class="row">
+                                <table>
+                                <tr>
+                                    <th>Course Code</th>
+                                    <th>Course Name</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Classroom</th>
+                                </tr>
+                                <tr>
+                            _END;
+                            while ($courses = mysqli_fetch_assoc($courses_result)) {
+                                $course_time = $courses['exam_time'] > 12 ?  $courses['exam_time'] . ' PM' : $courses['exam_time'] . ' AM';
                                 echo <<<_END
                                     <tr>
                                         <td>{$courses['course_name']}</td>
@@ -90,19 +89,29 @@ $get_all_student_courses = "
                                     </tr>
                                 _END;
                             }
-                                    
-                            ?>
-                    </tr>
-                </table>
+                            echo <<< _END
+                                    </tr>
+                                    </table>  
+                                </div>
+                            </div>
+                            <button type="submit" class="student_data_print_btn" style="text-decoration: none;"><span class="fa fa-print"></span> Print </button>
+                            _END;
+                        }else{
+                            echo <<< _END
+                                <div class="row">
+                                    <div class="student box">
+                                    <p style="color: crimson">No courses registered</p>
+                                    </div>
+                                        </div>
+                                        </tr>
+                                        </table>             
+                                    </div>
+                                </div>
+                             _END;
+                        }
 
+                        ?>
 
-            </div>
-
-
-
-
-        </div>
-        <button type="submit"  class="student_data_print_btn" style="text-decoration: none;"><span class="fa fa-print"></span> Print </button>
     </form>
 
     <div id="service"></div>

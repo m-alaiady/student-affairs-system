@@ -35,6 +35,7 @@ $get_registered_hours = "
 
 $get_registered_hours_result = mysqli_query($con, $get_registered_hours);
 $registered_hours = mysqli_fetch_assoc($get_registered_hours_result);
+$registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $registered_hours['SUM(credits)'] : 0;
 ?>
 <html>
 <head>
@@ -214,7 +215,7 @@ $registered_hours = mysqli_fetch_assoc($get_registered_hours_result);
                     <div class="row">
                         <div class="student box">
                             <p class="box-title">College</p>
-                            <p><?php echo $faculty['name']; ?></p>
+                            <p><?php echo ucwords($faculty['name']); ?></p>
                         </div>
                         <div class="student_id box">
                             <p class="box-title">Major</p>

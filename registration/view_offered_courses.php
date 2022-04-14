@@ -31,7 +31,7 @@ $offset = ($pageNum - 1) * $row_per_page;
 function is_valid_pagination(){
     global $row_per_page, $courses_number;
     if(isset($_GET['page'])){
-        if($_GET['page'] > (int)($courses_number['courses_number']/$row_per_page) || $_GET['page'] <= 0){
+        if($_GET['page'] > ceil(($courses_number['courses_number']/$row_per_page)) || $_GET['page'] <= 0){
             return false;
         }
         else{
@@ -147,7 +147,6 @@ if( !isset($_SESSION['paid']) ){
                                 <th>Course Name</th>
                                 <th>Credits</th>
                                 <th>Course Price</th>
-                                <th>View Sections</th>
                             </tr>
             _END;
 
@@ -161,7 +160,6 @@ if( !isset($_SESSION['paid']) ){
                         <td> {$course_name} </td>
                         <td> {$row['credits']} </td>
                         <td> {$price} SAR </td>
-                        <td> <span onclick="showViewSections({$row['id']})" style="color:blue; text-decoration: underline;">View Sections</span> </td>
                     </tr>
                 _END;
             }
@@ -231,7 +229,7 @@ if( !isset($_SESSION['paid']) ){
                                 <i class="fa fa-arrow-left"></i>
                                 Next
                             </a>
-                            <a href="view_offered_courses.php?page={$back_page}">
+                            <a href="view_offered_courses.php?page={$back_page}" style='margin-left: 2em'>
                                 Back
                                 <i class="fa fa-arrow-right"></i>
                             </a>

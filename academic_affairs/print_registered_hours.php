@@ -43,6 +43,7 @@ $get_registered_hours = "
 $get_registered_hours_result = mysqli_query($con, $get_registered_hours);
 
 $registered_hours = mysqli_fetch_assoc($get_registered_hours_result);
+$registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $registered_hours['SUM(credits)'] : 0;
 
 $head = "
     <style>

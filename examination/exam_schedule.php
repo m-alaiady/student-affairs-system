@@ -60,44 +60,57 @@ $get_all_student_courses = "
 
         <div class="row">
 
-            <table>
-                <tr>
-                    <th>Course Code</th>
-                    <th>Course Name</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Classroom</th>
-                </tr>
-                <tr>
+           
                     
                     <?php
                         $courses_result = mysqli_query($con, $get_all_student_courses);
-                    
-                        while( $courses= mysqli_fetch_assoc($courses_result)){
-                            $course_time = $courses['exam_time'] > 12 ?  $courses['exam_time'] . ' PM': $courses['exam_time'] . ' AM';
-                            echo <<<_END
-                                <tr>
-                                    <td>{$courses['course_name']}</td>
-                                    <td>{$courses['course_name']}</td>
-                                    <td>{$courses['exam_date']}</td>
-                                    <td>{$course_time}</td>
-                                    <td>{$courses['id']}</td>
-                                </tr>
+
+                        if(mysqli_num_rows($courses_result) > 0){
+                            echo "<table>
+                            <tr>
+                                <th>Course Code</th>
+                                <th>Course Name</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Classroom</th>
+                            </tr>
+                            <tr>";
+                        
+                            while( $courses= mysqli_fetch_assoc($courses_result)){
+                                $course_time = $courses['exam_time'] > 12 ?  $courses['exam_time'] . ' PM': $courses['exam_time'] . ' AM';
+                                echo <<<_END
+                                    <tr>
+                                        <td>{$courses['course_name']}</td>
+                                        <td>{$courses['course_name']}</td>
+                                        <td>{$courses['exam_date']}</td>
+                                        <td>{$course_time}</td>
+                                        <td>{$courses['id']}</td>
+                                    </tr>
+                                _END;
+                            }
+                            echo <<< _END
+                                    </tr>
+                                    </table>             
+                                </div>
+                            </div>
+                            <a href="print_exam_schedule.php" class="student_data_print_btn" style="text-decoration: none;" target="_blank"><span class="fa fa-print"></span> Print </a>
                             _END;
+                        }else{
+                            echo <<< _END
+                                <div class="row">
+                                    <div class="student box">
+                                    <p style="color: crimson">No courses registered</p>
+                                    </div>
+                                        </div>
+                                        </tr>
+                                        </table>             
+                                    </div>
+                                </div>
+                             _END;
                         }
-                                
                         ?>
-                </tr>
-            </table>
 
 
-        </div>
-
-
-
-
-    </div>
-    <a href="print_exam_schedule.php" class="student_data_print_btn" style="text-decoration: none;" target="_blank"><span class="fa fa-print"></span> Print </a>
 
 
     <div id="service"></div>

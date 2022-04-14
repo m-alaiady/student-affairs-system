@@ -2,7 +2,7 @@
 
 session_start();
 
-if( basename($_SERVER['HTTP_REFERER']) == "courses.php"){
+if( basename(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH))  == "courses.php"){
     require_once("connection.php");
 
     $get_id = "select id from students where student_id = '" . $_SESSION['student_id'] . "' ";

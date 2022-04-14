@@ -154,7 +154,7 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
         <span class="fas fa-caret-down sixth"></span></a>
         <ul class="rh-show">
             <li><a href="<?php echo $path ?>/registration/register.php">Register</a></li>
-            <li><a href="<?php echo $path ?>/registration/view_offered_courses.php">View offered courses</a></li>
+            <li><a href="<?php echo $path ?>/registration/view_offered_courses.php?page=1">View offered courses</a></li>
         </ul>
     </li>
     <li><a href="#" class="re-btn">Grades & Transcripts 
@@ -162,7 +162,7 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
         <ul class="re-show">
             <li><a href="<?php echo $path ?>/grades_and_transcripts/grades.php">Grades</a></li>
             <li><a href="<?php echo $path ?>/grades_and_transcripts/transcripts.php" target="_blank">Transcripts</a></li>
-            <li><a href="<?php echo $path ?>/grades_and_transcripts/academic_plan.php">Acadmemic plan</a></li>
+            <li><a href="<?php echo $path ?>/grades_and_transcripts/academic_plan.php" target="_blank">Acadmemic plan</a></li>
         </ul>
     </li>
     <li><a href="#" class="fi-btn">Finanical 

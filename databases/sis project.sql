@@ -1,0 +1,300 @@
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+DROP TABLE IF EXISTS `absence_excuses`;
+CREATE TABLE `absence_excuses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `file_name` varchar(255) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `request_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `course_id` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `student_id` (`student_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `complaints`;
+CREATE TABLE `complaints` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) NOT NULL,
+  `details` varchar(255) NOT NULL,
+  `status` varchar(255) DEFAULT 'Processing',
+  `feedback` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `courses`;
+CREATE TABLE `courses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `course_id` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `course_name` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `credits` int(128) DEFAULT NULL,
+  `course_price` decimal(10,2) DEFAULT NULL,
+  `allowed_absences` int(128) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `courses_time`;
+CREATE TABLE `courses_time` (
+  `id` int(11) NOT NULL,
+  `section_id` int(11) NOT NULL,
+  `time` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `enrolled`;
+CREATE TABLE `enrolled` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) NOT NULL,
+  `section_id` int(11) NOT NULL,
+  `absences` int(11) DEFAULT 0,
+  `grade` int(11) DEFAULT NULL,
+  `notes` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `student_id` (`student_id`),
+  KEY `section_id` (`section_id`),
+  CONSTRAINT `enrolled_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `enrolled_ibfk_2` FOREIGN KEY (`section_id`) REFERENCES `sections` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `faculties`;
+CREATE TABLE `faculties` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `branch` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `payment_support`;
+CREATE TABLE `payment_support` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) NOT NULL,
+  `details` varchar(255) NOT NULL,
+  `status` varchar(255) DEFAULT 'Processing',
+  `feedback` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `registration_assistant`;
+CREATE TABLE `registration_assistant` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) NOT NULL,
+  `details` varchar(255) NOT NULL,
+  `status` varchar(255) DEFAULT 'Processing',
+  `feedback` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `sections`;
+CREATE TABLE `sections` (
+  `id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
+  `tutor_id` int(11) NOT NULL,
+  `time_id` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `exam_date` date DEFAULT NULL,
+  `exam_time` time DEFAULT NULL,
+  `room` varchar(255) DEFAULT NULL,
+  `lecture_type` varchar(255) DEFAULT NULL,
+  `lab_type` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tutor_id` (`tutor_id`),
+  KEY `time_id` (`time_id`),
+  KEY `course_id` (`course_id`) USING BTREE,
+  CONSTRAINT `sections_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`),
+  CONSTRAINT `sections_ibfk_2` FOREIGN KEY (`tutor_id`) REFERENCES `teachers` (`id`),
+  CONSTRAINT `sections_ibfk_3` FOREIGN KEY (`time_id`) REFERENCES `courses_time` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `students`;
+CREATE TABLE `students` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(128) NOT NULL,
+  `national_id` int(16) NOT NULL,
+  `s_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `mobile2` int(128) NOT NULL,
+  `mobile` int(100) NOT NULL,
+  `blood` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `GPA` float(3,2) NOT NULL,
+  `term_credits` smallint(6) DEFAULT 0,
+  `status` tinyint(1) NOT NULL,
+  `acceptance_term` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `major` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `faculty_id` int(11) NOT NULL DEFAULT 0,
+  `birth_date` date DEFAULT NULL,
+  `nationality` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `degree` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'None',
+  `level` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'One',
+  `gender` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `mother` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `birth_place` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `student_id` (`student_id`),
+  KEY `faculty_id` (`faculty_id`),
+  CONSTRAINT `students_ibfk_1` FOREIGN KEY (`faculty_id`) REFERENCES `faculties` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `teachers`;
+CREATE TABLE `teachers` (
+  `id` int(11) NOT NULL,
+  `teacher_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `teachers_courses`;
+CREATE TABLE `teachers_courses` (
+  `id` int(11) NOT NULL,
+  `tutor_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tutor_id` (`tutor_id`),
+  KEY `course_id` (`course_id`),
+  CONSTRAINT `teachers_courses_ibfk_1` FOREIGN KEY (`tutor_id`) REFERENCES `teachers` (`id`),
+  CONSTRAINT `teachers_courses_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tuition_fees_exemption`;
+CREATE TABLE `tuition_fees_exemption` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `file_name` varchar(255) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `request_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `semester` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT 'Processing',
+  `feedback` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `student_id` (`student_id`),
+  CONSTRAINT `tuition_fees_exemption_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+
+
+
+INSERT INTO `complaints` (`id`, `student_id`, `details`, `status`, `feedback`) VALUES
+(10, 3, 'test Complaints', 'Processing', NULL);
+
+
+INSERT INTO `courses` (`id`, `course_id`, `course_name`, `credits`, `course_price`, `allowed_absences`) VALUES
+(1, 'CS423', 'System Programming', 4, 2500.00, 4);
+INSERT INTO `courses` (`id`, `course_id`, `course_name`, `credits`, `course_price`, `allowed_absences`) VALUES
+(2, 'IT352', 'Data Science', 8, 3750.00, 3);
+INSERT INTO `courses` (`id`, `course_id`, `course_name`, `credits`, `course_price`, `allowed_absences`) VALUES
+(3, 'CS101', 'Java Programming', 10, 1580.00, 8);
+INSERT INTO `courses` (`id`, `course_id`, `course_name`, `credits`, `course_price`, `allowed_absences`) VALUES
+(4, 'ACC300', 'Accounting Information system', 4, 1622.40, 4),
+(5, 'ACC302', 'auditing theory and practice', 4, 1622.40, 4),
+(6, 'ACCT201', 'principles of accounting (1)', 4, 2340.00, 4),
+(7, 'ACCT202', 'principles of accounting (2)', 3, 2340.00, 4),
+(8, 'ACCT250', 'computer applications in accounting', 3, 2340.00, 4),
+(9, 'ACCT301', 'Accounting Information Systems', 3, 2340.00, 4),
+(10, 'ACCT305', 'Cost accounting', 3, 2340.00, 4),
+(11, 'ACCT306', 'Managerial accounting', 3, 2340.00, 4),
+(12, 'ACCT307', 'Govermental accounting', 3, 2340.00, 4),
+(13, 'ACCT311', 'Audit of accounting information systems', 3, 2340.00, 4),
+(14, 'ACCT320', 'Intermediate Accounting (1)', 3, 2340.00, 4),
+(15, 'ACCT322', 'Intermediate Accounting (2)', 3, 2340.00, 4),
+(16, 'ACCT330', 'Financial Statement analysis', 3, 2340.00, 4),
+(17, 'ACCT340', 'Tax accounting and zakat', 3, 2340.00, 4),
+(18, 'ACCT345', 'Corporate accounting', 3, 2340.00, 4),
+(19, 'ACCT350', 'Banking and insurance accounting', 3, 2340.00, 4),
+(20, 'ACCT401', 'Accounting Theory', 3, 2340.00, 4),
+(21, 'ACCT402', 'Auditing', 3, 2340.00, 4),
+(22, 'ACCT403', 'Advanced financial accounting', 3, 2340.00, 4),
+(23, 'ACCT412', 'International Auditing standards', 3, 2340.00, 4),
+(24, 'ACCT413', 'International Accounting standards', 3, 2340.00, 4),
+(25, 'ACCT420', 'Contemporary Issues in international accounting', 3, 2340.00, 4),
+(26, 'B124', 'Fundamentals of accounting', 8, 3244.80, 4),
+(27, 'B291', 'Financial Accounting', 8, 3244.80, 4),
+(28, 'B292', 'certificate in accounting (cost and management accounting)', 8, 3244.80, 4),
+(29, 'B326', 'Advanced financial accounting', 8, 3244.80, 4),
+(30, 'B392', 'Advanced management accounting', 8, 3244.80, 4);
+
+INSERT INTO `courses_time` (`id`, `section_id`, `time`) VALUES
+(1, 1, 'Mon 18:30 Wed 18:00');
+INSERT INTO `courses_time` (`id`, `section_id`, `time`) VALUES
+(2, 1, 'Mon 20:00 Wed  20:00 ');
+INSERT INTO `courses_time` (`id`, `section_id`, `time`) VALUES
+(3, 2, 'Sun 17:00 Tue 17:30');
+INSERT INTO `courses_time` (`id`, `section_id`, `time`) VALUES
+(4, 2, 'Tue 09:30 Thu 09:45'),
+(5, 3, 'Sun 19:00 Mon 19:10'),
+(6, 3, 'Sun 18:00 Wed 18:30');
+
+INSERT INTO `enrolled` (`id`, `student_id`, `section_id`, `absences`, `grade`, `notes`) VALUES
+(3, 4, 3, 2, NULL, NULL);
+INSERT INTO `enrolled` (`id`, `student_id`, `section_id`, `absences`, `grade`, `notes`) VALUES
+(4, 5, 1, 0, NULL, NULL);
+INSERT INTO `enrolled` (`id`, `student_id`, `section_id`, `absences`, `grade`, `notes`) VALUES
+(5, 5, 3, 0, NULL, NULL);
+INSERT INTO `enrolled` (`id`, `student_id`, `section_id`, `absences`, `grade`, `notes`) VALUES
+(70, 3, 5, 2, NULL, NULL),
+(71, 3, 4, 1, NULL, NULL);
+
+INSERT INTO `faculties` (`id`, `name`, `branch`) VALUES
+(1, 'computer', 'Riyadh');
+INSERT INTO `faculties` (`id`, `name`, `branch`) VALUES
+(2, 'computer', 'Jeddah');
+INSERT INTO `faculties` (`id`, `name`, `branch`) VALUES
+(3, 'Mechanical Engineering', 'Bahrain');
+
+
+
+
+
+INSERT INTO `sections` (`id`, `course_id`, `tutor_id`, `time_id`, `status`, `exam_date`, `exam_time`, `room`, `lecture_type`, `lab_type`) VALUES
+(1, 1, 1, 1, 1, '2022-04-22', '20:30:00', 'RF034', 'Class', 'Virtual');
+INSERT INTO `sections` (`id`, `course_id`, `tutor_id`, `time_id`, `status`, `exam_date`, `exam_time`, `room`, `lecture_type`, `lab_type`) VALUES
+(2, 1, 2, 2, 1, '2022-04-27', '17:45:00', 'RF035', 'Virtual', 'Class');
+INSERT INTO `sections` (`id`, `course_id`, `tutor_id`, `time_id`, `status`, `exam_date`, `exam_time`, `room`, `lecture_type`, `lab_type`) VALUES
+(3, 2, 3, 3, 0, '2022-04-20', '15:30:00', 'RF036', 'Virtual', 'Virtual');
+INSERT INTO `sections` (`id`, `course_id`, `tutor_id`, `time_id`, `status`, `exam_date`, `exam_time`, `room`, `lecture_type`, `lab_type`) VALUES
+(4, 2, 2, 4, 1, '2022-05-01', '14:00:00', 'RF037', 'Class', 'Virtual'),
+(5, 3, 2, 6, 1, '2022-05-05', '18:30:00', 'RF038', 'Class', 'Virtual');
+
+INSERT INTO `students` (`id`, `student_id`, `national_id`, `s_name`, `email`, `mobile2`, `mobile`, `blood`, `password`, `GPA`, `term_credits`, `status`, `acceptance_term`, `major`, `faculty_id`, `birth_date`, `nationality`, `degree`, `level`, `gender`, `mother`, `birth_place`) VALUES
+(3, 123456789, 987654321, 'mohammed', 's@a.c22', 553401234, 553409834, 'O+', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 2.41, 0, 1, 'First Semester 2017-2018', 'Computer Science', 1, '1990-01-01', 'Saudi', 'Bachelors', 'One', 'male', '', '');
+INSERT INTO `students` (`id`, `student_id`, `national_id`, `s_name`, `email`, `mobile2`, `mobile`, `blood`, `password`, `GPA`, `term_credits`, `status`, `acceptance_term`, `major`, `faculty_id`, `birth_date`, `nationality`, `degree`, `level`, `gender`, `mother`, `birth_place`) VALUES
+(4, 987654321, 123456789, 'ahmed', 'a@b.c', 0, 0, '', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 0.00, 0, 0, '', '', 1, '2004-05-27', 'Saudi', 'Master', 'One', 'male', NULL, NULL);
+INSERT INTO `students` (`id`, `student_id`, `national_id`, `s_name`, `email`, `mobile2`, `mobile`, `blood`, `password`, `GPA`, `term_credits`, `status`, `acceptance_term`, `major`, `faculty_id`, `birth_date`, `nationality`, `degree`, `level`, `gender`, `mother`, `birth_place`) VALUES
+(5, 123654897, 987412563, 'Ali', 'z@y.x', 0, 0, '', '96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e', 0.00, 0, 0, '', '', 1, '1984-07-30', 'Jordanian', 'PhD', 'One', 'male', NULL, NULL);
+
+INSERT INTO `teachers` (`id`, `teacher_name`) VALUES
+(1, 'Ali Khan');
+INSERT INTO `teachers` (`id`, `teacher_name`) VALUES
+(2, 'Othman Mohammed');
+INSERT INTO `teachers` (`id`, `teacher_name`) VALUES
+(3, 'Mustafa Qamar');
+
+INSERT INTO `teachers_courses` (`id`, `tutor_id`, `course_id`) VALUES
+(1, 1, 1);
+INSERT INTO `teachers_courses` (`id`, `tutor_id`, `course_id`) VALUES
+(2, 1, 2);
+INSERT INTO `teachers_courses` (`id`, `tutor_id`, `course_id`) VALUES
+(3, 2, 3);
+INSERT INTO `teachers_courses` (`id`, `tutor_id`, `course_id`) VALUES
+(4, 3, 2),
+(5, 3, 3);
+
+INSERT INTO `tuition_fees_exemption` (`id`, `file_name`, `student_id`, `request_date`, `semester`, `status`, `feedback`) VALUES
+(20, '625365f85e98e4.77254680.png', 3, '2022-04-11 02:19:20', 'Spring term 21-22', 'Processing', NULL);
+INSERT INTO `tuition_fees_exemption` (`id`, `file_name`, `student_id`, `request_date`, `semester`, `status`, `feedback`) VALUES
+(21, '625365f8733969.40056237.png', 3, '2022-04-11 02:19:20', 'Spring term 21-22', 'Processing', NULL);
+INSERT INTO `tuition_fees_exemption` (`id`, `file_name`, `student_id`, `request_date`, `semester`, `status`, `feedback`) VALUES
+(22, '625365f87f6ef3.80944857.png', 3, '2022-04-11 02:19:20', 'Spring term 21-22', 'Processing', NULL);
+INSERT INTO `tuition_fees_exemption` (`id`, `file_name`, `student_id`, `request_date`, `semester`, `status`, `feedback`) VALUES
+(23, '625365f8922d74.53825133.jpg', 3, '2022-04-11 02:19:20', 'Spring term 21-22', 'Processing', NULL);
+
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

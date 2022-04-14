@@ -4,7 +4,49 @@ require_once("../connection.php");
 
 include("../template/t1.php");
 
-$query="select * from courses";
+const ROW_PER_PAGE = 9;
+const DEFAULT_PAGE = 1;
+
+$get_courses_number="select COUNT(*) AS courses_number from courses";
+$corses_numbers_result = mysqli_query($con, $get_courses_number);
+$courses_number = mysqli_fetch_assoc($corses_numbers_result);
+// echo  die;
+
+$row_per_page = constant('ROW_PER_PAGE');
+$default = constant('DEFAULT_PAGE');
+$pageNum = 1;
+
+
+if(isset($_GET['page'])){
+    if(!is_numeric($_GET['page'])){
+        echo "<script>alert('Invalid page number')</script>";
+        die;
+    }
+    $pageNum = $_GET['page'];
+}
+
+
+$offset = ($pageNum - 1) * $row_per_page;
+
+function is_valid_pagination(){
+    global $row_per_page, $courses_number;
+    if(isset($_GET['page'])){
+        if($_GET['page'] > ceil(($courses_number['courses_number']/$row_per_page)) || $_GET['page'] <= 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+}
+
+
+
+$next_page = $pageNum + 1;
+$back_page = $pageNum - 1;
+
+
+$query="select * from courses  LIMIT {$offset},{$row_per_page}";
 $get_id = "select id from students where student_id = '" . $_SESSION['student_id'] . "' ";
 
 $get_id_result=mysqli_query($con,$get_id);
@@ -59,7 +101,14 @@ $courses_data= mysqli_fetch_assoc($student_courses_result);
         padding: 2em;
     }
     
-
+    .pagination a{
+        color: rgb(0,0,0);
+        text-decoration: none;
+    }
+    .pagination a:hover{
+        color:darkcyan;
+        text-decoration: none;
+    }
     .registered-courses{
         position: absolute;
         margin-left:25em;
@@ -85,18 +134,22 @@ $courses_data= mysqli_fetch_assoc($student_courses_result);
     tr:hover td{
         background-color: #ccc;
     }
+    .close_section_btn:hover{
+        color: crimson;
+    }
 </style>
 </head>
 <body>
 <form>
     <?php
 
+if(Is_valid_pagination()){
 if($courses_data <= 0){
     echo <<< _END
             <div class="student_data" style="
                 position: absolute;
                 margin-left:25em;
-                margin-top:12em;
+                margin-top:7em;
                 background: white;
                 border-radius: 10px;
                 opacity: .85;  
@@ -134,11 +187,10 @@ if($courses_data <= 0){
                         </tr>
         _END;
 }
-                ?>
-                <?php
+             
                     $result=mysqli_query($con,$query);
                     while($row= mysqli_fetch_assoc($result) ){
-                        $price = number_format($row['course_price']);
+                        $price = number_format($row['course_price'], 2);
                         
                         // $get_all_teachers = "SELECT teachers.* FROM teachers JOIN courses ON teachers.id = courses.tutor_id WHERE courses.tutor_id = '" . $row['tutor_id'] . "' ";
                         $get_all_teachers_by_course = "SELECT teachers.* FROM teachers JOIN teachers_courses ON teachers.id = teachers_courses.tutor_id WHERE teachers_courses.course_id = '" . $row['id'] . "' ";
@@ -157,13 +209,67 @@ if($courses_data <= 0){
                         _END;
                     }
                     
-
+                }
             ?>
 
         </table>
         </div>
 
-        <?php
+
+     <div class="pagination" style="margin-top: -2em;">
+
+<?php
+    if($pageNum <= 0){
+        echo <<< _END
+            <a href="courses.php?page={$next_page}">
+                <i class="fa fa-arrow-left"></i>
+                Next
+            </a>
+        _END;
+    } else if($pageNum > $courses_number['courses_number']/$row_per_page) {
+        echo <<< _END
+                <a href="courses.php?page={$back_page}">
+                    Back
+                    <i class="fa fa-arrow-right"></i>
+                </a>
+            _END;
+        
+    } else if ($pageNum == 1){
+        echo <<< _END
+        <a href="courses.php?page={$next_page}">
+            <i class="fa fa-arrow-left"></i>
+            Next
+        </a>
+    _END;
+    }
+    else if ($pageNum == $courses_number['courses_number']/$row_per_page){
+        echo <<< _END
+                <a href="courses.php?page={$back_page}">
+                    Back
+                    <i class="fa fa-arrow-right"></i>
+                </a>
+            _END;
+    }
+    else {
+        echo <<< _END
+                <a href="courses.php?page={$next_page}">
+                    <i class="fa fa-arrow-left"></i>
+                    Next
+                </a>
+                <a href="courses.php?page={$back_page}" style='margin-left: 2em'>
+                    Back
+                    <i class="fa fa-arrow-right"></i>
+                </a>
+            _END;
+    }
+
+
+?>
+
+
+</div>
+<?php
+if(is_valid_pagination()){
         $get_all_price_query = "
             SELECT  SUM(courses.course_price) as total_price
             FROM `enrolled`
@@ -191,13 +297,14 @@ if($courses_data <= 0){
             _END;
         }
         
-
+    }
     ?>
         </div>
 
 </form>
 <div class="view-sections"> 
             <?php
+            if(Is_valid_pagination()){
                 $result=mysqli_query($con,$query);
                 while($row= mysqli_fetch_assoc($result) ){
                     $price = number_format($row['course_price']);
@@ -217,13 +324,13 @@ if($courses_data <= 0){
                             <div class="view-section viewSections" id="{$row['id']}" style="    
                                 display: none;
                                 position: absolute;
-                                margin-left:25em;
-                                margin-top:38em;
+                                margin-left:30em;
+                                margin-top:25em;
                                 background: white;
                                 border-radius: 10px;
-                                opacity: .85;
+                                opacity: 1;
                             ">
-                            <p class="super-box-title">Section for Course {$row['course_id']}</p>
+                            <p class="super-box-title">Section for Course {$row['course_id']} <span class="close_section_btn" style='float:right;transform: scale(1.25);cursor:pointer;' onclick="this.parentNode.parentNode.style.display='none'">&times;</span></p>
                             <div class="row">
                             <table>
                             <tr>
@@ -285,7 +392,23 @@ if($courses_data <= 0){
 
                    
                 }
-                
+            }else{
+                echo <<< _END
+                <div class="student_data" style="
+                    position: absolute;
+                    margin-left:25em;
+                    margin-top:7em;
+                    background: white;
+                    border-radius: 10px;
+                    opacity: .85;  
+                ">
+                <p class="super-box-title">Offered Courses</p>
+                    <div class="row" style="
+                        padding: 2em 10em;
+                    ">
+                     <p style='color: crimson'>No data available</p>
+            _END;
+            }
 
             ?>
 
@@ -326,7 +449,7 @@ if($courses_data > 0){
     $student_courses_result = mysqli_query($con, $get_all_student_courses);
 
     while( $courses_data= mysqli_fetch_assoc($student_courses_result) ){
-        $price = number_format($courses_data['course_price']);
+        $price = number_format($courses_data['course_price'], 2);
 
         echo <<< _END
             <tr>
