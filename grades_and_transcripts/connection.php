@@ -1,6 +1,6 @@
 <?php
-
-    $academic_con=mysqli_connect('localhost','root','123456','academic_plan');
+     require_once('../env.php');
+    $academic_con=mysqli_connect('localhost','root',$password,'academic_plan');
 
     if(!$academic_con)
     {

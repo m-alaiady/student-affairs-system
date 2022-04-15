@@ -1,6 +1,6 @@
 <?php
-
-    $exam_con=mysqli_connect('localhost','root','123456','examination');
+     require_once('../env.php');
+    $exam_con=mysqli_connect('localhost','root',$password,'examination');
 
     if(!$exam_con)
     {

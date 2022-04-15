@@ -1,6 +1,6 @@
 <?php
-
-    $con=mysqli_connect('localhost','root','123456','sis project');
+    require_once('env.php');
+    $con=mysqli_connect('localhost','root',$password,'sis project');
 
     if(!$con)
     {

@@ -1,6 +1,6 @@
 <?php
-
-    $services_con=mysqli_connect('localhost','root','123456','services');
+    require_once('../env.php');
+    $services_con=mysqli_connect('localhost','root',$password,'services');
 
     if(!$services_con)
     {
