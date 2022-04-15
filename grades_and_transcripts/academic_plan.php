@@ -2,6 +2,8 @@
 session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once('../connection.php');
+require_once('connection.php');
+
 
 if(!isset($_SESSION['student_id']))
 {
@@ -22,28 +24,67 @@ $get_id = "select id from students where student_id = '" . $_SESSION['student_id
 $get_id_result=mysqli_query($con,$get_id);
 $student_id= mysqli_fetch_assoc($get_id_result);
 
-$get_all_student_courses = "
-        SELECT  enrolled.grade, enrolled.absences, courses.*, sections.id as section_id, courses_time.time, teachers.teacher_name
-        FROM enrolled
-        JOIN sections
-            ON enrolled.section_id = sections.id
-        JOIN courses
-            ON sections.course_id = courses.id
-        JOIN courses_time
-            ON courses_time.id = sections.time_id
-        JOIN teachers
-            ON teachers.id = sections.tutor_id
-        WHERE enrolled.student_id = '" . $student_id['id']  . "'";    
+$get_foundation_program = "SELECT * FROM foundation_program";  
+$get_general_requirement = "SELECT * FROM general_requirement";    
+$get_university_requirement = "SELECT * FROM university_requirement";    
+$get_faculty_requirement_in_major = "SELECT * FROM faculty_requirement_in_major"; 
+$get_faculty_requirement_mandatory = "SELECT * FROM faculty_requirement_mandatory"; 
+$get_spec_faculty = "SELECT * FROM spec_faculty"; 
+$get_faculty_requirement_electives= "SELECT * FROM faculty_requirement_electives"; 
+
+
+
+
+
         
 $faculty_data=mysqli_query($con,$sql);
 $faculty= mysqli_fetch_assoc($faculty_data);
+
+function print_courses(mysqli_result $result, string $title) : void {
+    global $html;
+
+    $html .= "
+        <h3 class='table-title' style='margin-top: 2em'>{$title}</h3>
+        <table class='bordered-table' style='margin-top: 5em'>
+        <tr>
+            <th>Course</th> 
+            <th>Course title</th>
+            <th>Credits</th>
+        </tr>
+    ";
+    while( $courses_data= mysqli_fetch_assoc($result)){
+        $html .= "
+            <tr>
+                <td>{$courses_data['course_id']}</td> 
+                <td>{$courses_data['course_name']}</td>
+                <td class='credits'>{$courses_data['credits']}</td>
+            </tr>";
+    }
+    // $html .= "</table>";
+    $html .= "
+        </table>
+        ";
+
+
+}
 
 $head = "
     <style>
         table{
             width: 100%;
         }
-        table, th, td{
+        .bordered-table,.bordered-table th, .bordered-table td {
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+            border-collapse: collapse;
+        }
+        .table-title{
+            text-align:center;
+            background: #ccc;
+            border: 1px solid black;
+        }
+        .credits{
+            text-align: center;
         }
         th{
             text-align: left;
@@ -105,91 +146,33 @@ $html .= "
 
 
 $html .= "</table>";
-$html .= "
-    <h3 style='margin-top: 2em'>Courses Information:</h3>
-    <table style='margin-top: 5em'>
-        <tr>
-            <th>Course</th> 
-            <th>Course title</th>
-            <th>Credits</th>
-            <th>Grade</th>
-            <th>Points</th>
-        </tr>
-";
-$student_courses_result = mysqli_query($con, $get_all_student_courses);
-function grade_details($grade)
-{
-    switch ($grade) {
-        case 0:
-            return '';
-            break;
-        case $grade >= 0 && $grade < 50:
-            return 'F';
-            break;
-        case $grade >= 50 && $grade < 58:
-            return 'D';
-            break;
-        case $grade >= 58 && $grade < 66:
-            return 'C';
-            break;
-        case $grade >= 66 && $grade < 74:
-            return 'C+';
-            break;
-        case $grade >= 74 && $grade < 82:
-            return 'B';
-            break;
-        case $grade >= 82 && $grade < 90:
-            return 'B+';
-            break;
-        case $grade >= 90 && $grade <= 100:
-            return 'A';
-            break;
-       
-    }
-}
-function get_points($grade){
-    switch ($grade) {
-        case 'A':
-            return 4;
-            break;
-        case 'B+':
-            return 3.5;
-            break;
-        case 'B':
-            return 3;
-            break;
-        case 'C+':
-            return 2.5;
-            break;
-        case 'C':
-            return 2;
-            break;
-        case 'D':
-            return 1.5;
-            break;
-        case 'F':
-            return 0;
-            break;
-    }
-}
-while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
-    $grade = grade_details($courses_data['grade']);
-    $points = "";
-    if($grade){
-        $points = get_points($grade) * $courses_data['credits'];
-    }
-    $html .= "
-        <tr>
-            <td>{$courses_data['course_id']}</td> 
-            <td>{$courses_data['course_name']}</td>
-            <td>{$courses_data['credits']}</td>
-            <td>{$grade}</td>
-            <td>{$points}</td>
-        </tr>";
-}
+
+$get_faculty_requirement_in_major = "SELECT * FROM faculty_requirement_in_major"; 
+$get_faculty_requirement_mandatory = "SELECT * FROM faculty_requirement_mandatory"; 
+$get_spec_faculty = "SELECT * FROM spec_faculty"; 
+$get_faculty_requirement_electives= "SELECT * FROM faculty_requirement_electives"; 
+
+$foundation_program_result = mysqli_query($academic_con, $get_foundation_program);
+$general_requirement_result = mysqli_query($academic_con, $get_general_requirement);
+$university_requirement_result = mysqli_query($academic_con, $get_university_requirement);
+$faculty_requirement_in_major_result = mysqli_query($academic_con, $get_faculty_requirement_in_major);
+$faculty_requirement_mandatory_result = mysqli_query($academic_con, $get_faculty_requirement_mandatory);
+$spec_faculty_result = mysqli_query($academic_con, $get_spec_faculty);
+$faculty_requirement_electives_result = mysqli_query($academic_con, $get_faculty_requirement_electives);
+
+
+
+print_courses($foundation_program_result, 'Foundation Program Requirement');
+print_courses($general_requirement_result, 'General Requirement (Credits Needed = 18)');
+print_courses($university_requirement_result, 'University Requirements/Electives (Credits Needed = 3)');
+print_courses($faculty_requirement_in_major_result, 'Faculty Requirements in IT (Credits Needed = 4)');
+print_courses($faculty_requirement_mandatory_result, 'Faculty Requirements/Mandatory (Credits Needed = 4)');
+print_courses($spec_faculty_result, 'Spec. Requirements/Mandatory (Credits Needed = 96)');
+print_courses($faculty_requirement_electives_result, 'Faculty Requirements/Electives (Credits Needed = 6)');
+
+
 
 $html .= "
-</table>
 <br><br><br><br>
 <div class='footer'>
     <div class='signature'>
@@ -207,7 +190,6 @@ $html .= "
 
 
 // echo $html;
-
 $mpdf = new \Mpdf\Mpdf();
 $mpdf->WriteHTML($html);
 $mpdf->Output();
