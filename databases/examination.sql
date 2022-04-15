@@ -65,20 +65,12 @@ CREATE TABLE `exam_schedule` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `change_exam_location` (`id`, `student_id`, `course`, `branch`, `center`, `status`, `feedback`) VALUES
-(1, 3, 'Java Programming', 'kuwait', 'kuwait', 'Processing', NULL);
-INSERT INTO `change_exam_location` (`id`, `student_id`, `course`, `branch`, `center`, `status`, `feedback`) VALUES
-(2, 3, 'Data Science', 'lebanon', 'lebanon', 'Processing', NULL);
 
 
 
 
-INSERT INTO `exam_objection` (`id`, `student_id`, `course`, `details`, `feedback`, `status`) VALUES
-(1, 3, 'Java Programming', 'aa', '', 'Processing');
 
 
-INSERT INTO `exam_postpone` (`id`, `student_id`, `course`, `file_name`, `status`, `feedback`) VALUES
-(1, 3, 'Java Programming', '625392fed671b2.63590532.png', 'Processing', NULL);
 
 
 

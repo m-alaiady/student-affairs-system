@@ -37,7 +37,7 @@ CREATE TABLE `courses` (
   `course_price` decimal(10,2) DEFAULT NULL,
   `allowed_absences` int(128) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `courses_time`;
 CREATE TABLE `courses_time` (
@@ -59,8 +59,8 @@ CREATE TABLE `enrolled` (
   KEY `student_id` (`student_id`),
   KEY `section_id` (`section_id`),
   CONSTRAINT `enrolled_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `enrolled_ibfk_2` FOREIGN KEY (`section_id`) REFERENCES `sections` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
+  CONSTRAINT `enrolled_ibfk_2` FOREIGN KEY (`section_id`) REFERENCES `sections` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `faculties`;
 CREATE TABLE `faculties` (
@@ -69,6 +69,16 @@ CREATE TABLE `faculties` (
   `branch` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `offered_courses`;
+CREATE TABLE `offered_courses` (
+  `id` int(11) NOT NULL DEFAULT 0,
+  `course_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `course_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `credits` int(128) DEFAULT NULL,
+  `course_price` decimal(10,2) DEFAULT NULL,
+  `allowed_absences` int(128) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `payment_support`;
 CREATE TABLE `payment_support` (
@@ -106,9 +116,9 @@ CREATE TABLE `sections` (
   KEY `tutor_id` (`tutor_id`),
   KEY `time_id` (`time_id`),
   KEY `course_id` (`course_id`) USING BTREE,
-  CONSTRAINT `sections_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`),
   CONSTRAINT `sections_ibfk_2` FOREIGN KEY (`tutor_id`) REFERENCES `teachers` (`id`),
-  CONSTRAINT `sections_ibfk_3` FOREIGN KEY (`time_id`) REFERENCES `courses_time` (`id`)
+  CONSTRAINT `sections_ibfk_3` FOREIGN KEY (`time_id`) REFERENCES `courses_time` (`id`),
+  CONSTRAINT `sections_ibfk_4` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `students`;
@@ -144,7 +154,7 @@ CREATE TABLE `students` (
 DROP TABLE IF EXISTS `teachers`;
 CREATE TABLE `teachers` (
   `id` int(11) NOT NULL,
-  `teacher_name` varchar(255) NOT NULL,
+  `teacher_name` varchar(255) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -181,15 +191,41 @@ INSERT INTO `complaints` (`id`, `student_id`, `details`, `status`, `feedback`) V
 
 
 INSERT INTO `courses` (`id`, `course_id`, `course_name`, `credits`, `course_price`, `allowed_absences`) VALUES
-(1, 'CS423', 'System Programming', 4, 2500.00, 4);
+(31, 'TM111', 'Introduction to computing and information Technology (I)', 8, 2400.00, 4);
 INSERT INTO `courses` (`id`, `course_id`, `course_name`, `credits`, `course_price`, `allowed_absences`) VALUES
-(2, 'IT352', 'Data Science', 8, 3750.00, 3);
+(32, 'TM112', 'Introduction to computing and information Technology (II)', 8, 2400.00, 4);
 INSERT INTO `courses` (`id`, `course_id`, `course_name`, `credits`, `course_price`, `allowed_absences`) VALUES
-(3, 'CS101', 'Java Programming', 10, 1580.00, 8);
+(33, 'MT131', 'Discrete Mathematics', 4, 1250.00, 4);
 INSERT INTO `courses` (`id`, `course_id`, `course_name`, `credits`, `course_price`, `allowed_absences`) VALUES
-(4, 'ACC300', 'Accounting Information system', 4, 1622.40, 4),
-(5, 'ACC302', 'auditing theory and practice', 4, 1622.40, 4),
-(6, 'ACCT201', 'principles of accounting (1)', 4, 2340.00, 4),
+(34, 'MT132', 'Linear Algebra', 4, 1250.00, 4);
+
+INSERT INTO `courses_time` (`id`, `section_id`, `time`) VALUES
+(1, 1, 'Mon 18:30 Wed 18:00');
+INSERT INTO `courses_time` (`id`, `section_id`, `time`) VALUES
+(2, 1, 'Mon 20:00 Wed  20:00 ');
+INSERT INTO `courses_time` (`id`, `section_id`, `time`) VALUES
+(3, 2, 'Sun 17:00 Tue 17:30');
+INSERT INTO `courses_time` (`id`, `section_id`, `time`) VALUES
+(4, 2, 'Tue 09:30 Thu 09:45'),
+(5, 3, 'Sun 19:00 Mon 19:10'),
+(6, 3, 'Sun 18:00 Wed 18:30');
+
+
+
+INSERT INTO `faculties` (`id`, `name`, `branch`) VALUES
+(1, 'computer', 'Riyadh');
+INSERT INTO `faculties` (`id`, `name`, `branch`) VALUES
+(2, 'computer', 'Jeddah');
+INSERT INTO `faculties` (`id`, `name`, `branch`) VALUES
+(3, 'Mechanical Engineering', 'Bahrain');
+
+INSERT INTO `offered_courses` (`id`, `course_id`, `course_name`, `credits`, `course_price`, `allowed_absences`) VALUES
+(4, 'ACC300', 'Accounting Information system', 4, 1622.40, 4);
+INSERT INTO `offered_courses` (`id`, `course_id`, `course_name`, `credits`, `course_price`, `allowed_absences`) VALUES
+(5, 'ACC302', 'auditing theory and practice', 4, 1622.40, 4);
+INSERT INTO `offered_courses` (`id`, `course_id`, `course_name`, `credits`, `course_price`, `allowed_absences`) VALUES
+(6, 'ACCT201', 'principles of accounting (1)', 4, 2340.00, 4);
+INSERT INTO `offered_courses` (`id`, `course_id`, `course_name`, `credits`, `course_price`, `allowed_absences`) VALUES
 (7, 'ACCT202', 'principles of accounting (2)', 3, 2340.00, 4),
 (8, 'ACCT250', 'computer applications in accounting', 3, 2340.00, 4),
 (9, 'ACCT301', 'Accounting Information Systems', 3, 2340.00, 4),
@@ -215,47 +251,18 @@ INSERT INTO `courses` (`id`, `course_id`, `course_name`, `credits`, `course_pric
 (29, 'B326', 'Advanced financial accounting', 8, 3244.80, 4),
 (30, 'B392', 'Advanced management accounting', 8, 3244.80, 4);
 
-INSERT INTO `courses_time` (`id`, `section_id`, `time`) VALUES
-(1, 1, 'Mon 18:30 Wed 18:00');
-INSERT INTO `courses_time` (`id`, `section_id`, `time`) VALUES
-(2, 1, 'Mon 20:00 Wed  20:00 ');
-INSERT INTO `courses_time` (`id`, `section_id`, `time`) VALUES
-(3, 2, 'Sun 17:00 Tue 17:30');
-INSERT INTO `courses_time` (`id`, `section_id`, `time`) VALUES
-(4, 2, 'Tue 09:30 Thu 09:45'),
-(5, 3, 'Sun 19:00 Mon 19:10'),
-(6, 3, 'Sun 18:00 Wed 18:30');
-
-INSERT INTO `enrolled` (`id`, `student_id`, `section_id`, `absences`, `grade`, `notes`) VALUES
-(3, 4, 3, 2, NULL, NULL);
-INSERT INTO `enrolled` (`id`, `student_id`, `section_id`, `absences`, `grade`, `notes`) VALUES
-(4, 5, 1, 0, NULL, NULL);
-INSERT INTO `enrolled` (`id`, `student_id`, `section_id`, `absences`, `grade`, `notes`) VALUES
-(5, 5, 3, 0, NULL, NULL);
-INSERT INTO `enrolled` (`id`, `student_id`, `section_id`, `absences`, `grade`, `notes`) VALUES
-(70, 3, 5, 2, NULL, NULL),
-(71, 3, 4, 1, NULL, NULL);
-
-INSERT INTO `faculties` (`id`, `name`, `branch`) VALUES
-(1, 'computer', 'Riyadh');
-INSERT INTO `faculties` (`id`, `name`, `branch`) VALUES
-(2, 'computer', 'Jeddah');
-INSERT INTO `faculties` (`id`, `name`, `branch`) VALUES
-(3, 'Mechanical Engineering', 'Bahrain');
-
 
 
 
 
 INSERT INTO `sections` (`id`, `course_id`, `tutor_id`, `time_id`, `status`, `exam_date`, `exam_time`, `room`, `lecture_type`, `lab_type`) VALUES
-(1, 1, 1, 1, 1, '2022-04-22', '20:30:00', 'RF034', 'Class', 'Virtual');
+(1, 31, 1, 1, 1, '2022-05-01', '12:35:00', 'RF011', 'Class', 'Virtual');
 INSERT INTO `sections` (`id`, `course_id`, `tutor_id`, `time_id`, `status`, `exam_date`, `exam_time`, `room`, `lecture_type`, `lab_type`) VALUES
-(2, 1, 2, 2, 1, '2022-04-27', '17:45:00', 'RF035', 'Virtual', 'Class');
+(2, 32, 2, 2, 1, '2022-05-27', '08:00:00', 'RF021', 'Class', 'Class');
 INSERT INTO `sections` (`id`, `course_id`, `tutor_id`, `time_id`, `status`, `exam_date`, `exam_time`, `room`, `lecture_type`, `lab_type`) VALUES
-(3, 2, 3, 3, 0, '2022-04-20', '15:30:00', 'RF036', 'Virtual', 'Virtual');
+(3, 33, 3, 3, 1, '2022-06-11', '10:00:00', 'RF031', 'Class', 'Virtual');
 INSERT INTO `sections` (`id`, `course_id`, `tutor_id`, `time_id`, `status`, `exam_date`, `exam_time`, `room`, `lecture_type`, `lab_type`) VALUES
-(4, 2, 2, 4, 1, '2022-05-01', '14:00:00', 'RF037', 'Class', 'Virtual'),
-(5, 3, 2, 6, 1, '2022-05-05', '18:30:00', 'RF038', 'Class', 'Virtual');
+(4, 34, 3, 2, 0, '2022-06-11', '10:00:00', 'RF032', 'Class', 'Class');
 
 INSERT INTO `students` (`id`, `student_id`, `national_id`, `s_name`, `email`, `mobile2`, `mobile`, `blood`, `password`, `GPA`, `term_credits`, `status`, `acceptance_term`, `major`, `faculty_id`, `birth_date`, `nationality`, `degree`, `level`, `gender`, `mother`, `birth_place`) VALUES
 (3, 123456789, 987654321, 'mohammed', 's@a.c22', 553401234, 553409834, 'O+', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 2.41, 0, 1, 'First Semester 2017-2018', 'Computer Science', 1, '1990-01-01', 'Saudi', 'Bachelors', 'One', 'male', '', '');
@@ -265,21 +272,20 @@ INSERT INTO `students` (`id`, `student_id`, `national_id`, `s_name`, `email`, `m
 (5, 123654897, 987412563, 'Ali', 'z@y.x', 0, 0, '', '96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e', 0.00, 0, 0, '', '', 1, '1984-07-30', 'Jordanian', 'PhD', 'One', 'male', NULL, NULL);
 
 INSERT INTO `teachers` (`id`, `teacher_name`) VALUES
-(1, 'Ali Khan');
+(1, 'شيخان');
 INSERT INTO `teachers` (`id`, `teacher_name`) VALUES
-(2, 'Othman Mohammed');
+(2, 'Areej Alqhtani');
 INSERT INTO `teachers` (`id`, `teacher_name`) VALUES
-(3, 'Mustafa Qamar');
+(3, 'Lamia');
 
 INSERT INTO `teachers_courses` (`id`, `tutor_id`, `course_id`) VALUES
-(1, 1, 1);
+(1, 1, 31);
 INSERT INTO `teachers_courses` (`id`, `tutor_id`, `course_id`) VALUES
-(2, 1, 2);
+(3, 2, 32);
 INSERT INTO `teachers_courses` (`id`, `tutor_id`, `course_id`) VALUES
-(3, 2, 3);
+(4, 3, 33);
 INSERT INTO `teachers_courses` (`id`, `tutor_id`, `course_id`) VALUES
-(4, 3, 2),
-(5, 3, 3);
+(5, 3, 34);
 
 INSERT INTO `tuition_fees_exemption` (`id`, `file_name`, `student_id`, `request_date`, `semester`, `status`, `feedback`) VALUES
 (20, '625365f85e98e4.77254680.png', 3, '2022-04-11 02:19:20', 'Spring term 21-22', 'Processing', NULL);
