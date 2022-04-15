@@ -93,12 +93,14 @@ $courses_data= mysqli_fetch_assoc($student_courses_result);
     body{
         overflow: auto;
         z-index: 20;
+        background-size: 250vh;
+
     }
     .logo, .foot{
         z-index: 1;
     }
     .student_data div,.view-section div, .registered-courses div{
-        padding: 2em;
+        padding: 0.5em 2em;
     }
     
     .pagination a{
@@ -112,7 +114,7 @@ $courses_data= mysqli_fetch_assoc($student_courses_result);
     .registered-courses{
         position: absolute;
         margin-left:25em;
-        margin-top:10em;
+        margin-top:7em;
         background: white;
         border-radius: 10px;
         opacity: .85;
@@ -216,7 +218,7 @@ if($courses_data <= 0){
         </div>
 
 
-     <div class="pagination" style="margin-top: -2em;">
+     <div class="pagination" style="margin-top: -em;">
 
 <?php
     if($pageNum <= 0){
@@ -283,11 +285,11 @@ if(is_valid_pagination()){
         $price = mysqli_fetch_assoc($get_all_price_result);
         if($price['total_price'] > 0){
             echo <<< _END
-                <div class="invoice" style="margin-left: 1em">
+                <div class="invoice" style="margin 0 0 5em 1em">
                     <p>Total price: {$price['total_price']} SAR </p>
                     <br />
                     <a href="../financial/index.php">Go to step 2 (Financial)</a><br />
-                    <a href="../home.php">Cancel my requests and take me to dashboard</a>
+                    <a href="../home.php" style='padding-bottom: 5em'>Cancel my requests and take me to dashboard</a>
                 </div>
             _END;
         }
@@ -346,13 +348,13 @@ if(is_valid_pagination()){
                             <div class="view-section viewSections" id="{$row['id']}" style="    
                                 display: none;
                                 position: absolute;
-                                margin-left:25em;
-                                margin-top:65em;
+                                margin-left:30em;
+                                margin-top:50em;
                                 background: white;
                                 border-radius: 10px;
-                                opacity: .85;
+                                opacity: 1;
                             ">
-                            <p class="super-box-title">Section for Course {$row['course_id']}</p>
+                            <p class="super-box-title">Section for Course {$row['course_id']} <span class="close_section_btn" style='float:right;transform: scale(1.25);cursor:pointer;' onclick="this.parentNode.parentNode.style.display='none'">&times;</span> </p>
                             <div class="row">
                             <table>
                             <tr>
@@ -402,7 +404,7 @@ if(is_valid_pagination()){
                     border-radius: 10px;
                     opacity: .85;  
                 ">
-                <p class="super-box-title">Offered Courses</p>
+                <p class="super-box-title">Courses Advised</p>
                     <div class="row" style="
                         padding: 2em 10em;
                     ">

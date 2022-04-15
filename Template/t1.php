@@ -115,7 +115,7 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
     margin: 0;
     padding: 0;
     background-image: url("<?php echo $path; ?>/image/pexels-johannes-plenio-1103970.jpg"); 
-    background-repeat: no-repeat;
+    background-repeat: repeat-y;
     background-size: cover;
     height: 100vh;
     overflow: hidden;
@@ -170,7 +170,7 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
         <ul class="fi-show">
             <li><a href="<?php echo $path ?>/financial/financial.php">Fees payment</a></li>
             <li><a href="<?php echo $path ?>/financial/tuition_fees_exemption.php">Tuition fees exemption</a></li>
-            <li><a href="#">View balance</a></li>
+            <li><a href="<?php echo $path ?>/financial/view_balance.php">View balance</a></li>
         </ul>
     </li>
         
