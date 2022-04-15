@@ -199,10 +199,9 @@ if (mysqli_num_rows($student_courses_result) > 0) {
     }
     $html .= "</table>";
 } else {
-    $html .= '   
-    
-        <p> No Courses Registered </p>    
-    ';
+    $html .= "   
+        <p style='color: crimson'>No courses registered</p> 
+    ";
 }
 $html .= "
 

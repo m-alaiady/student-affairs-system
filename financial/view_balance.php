@@ -76,55 +76,6 @@ $get_all_student_courses = "
     WHERE enrolled.student_id = '" . $student['id'] . "'";
 $student_courses_result = mysqli_query($con, $get_all_student_courses);
 $courses_data= mysqli_fetch_assoc($student_courses_result);
-?>
-<div class="student_data">
-<?php
-if($courses_data > 0){
-    echo <<< _END
-        <div class="header">
-            <div class="registered-courses">
-        </div>
-       
-    _END;
-
-    $get_all_student_courses = "
-        SELECT  courses.*, sections.id as section_id, courses_time.time, teachers.teacher_name
-        FROM enrolled
-        JOIN sections
-            ON enrolled.section_id = sections.id
-        JOIN courses
-            ON sections.course_id = courses.id
-        JOIN courses_time
-            ON courses_time.id = sections.time_id
-        JOIN teachers
-            ON teachers.id = sections.tutor_id
-        WHERE enrolled.student_id = '" . $student['id'] . "'";
-
-    $student_courses_result = mysqli_query($con, $get_all_student_courses);
-
-    while( $courses_data= mysqli_fetch_assoc($student_courses_result) ){
-        $price = number_format($courses_data['course_price']);
-
-      
-    }
-                
-    echo <<< _END
-            </table>
-        </fieldset>
-    </div>
-    _END;
-}
-// no courses registered
-else{
-    echo <<< _END
-        <div class="row">
-            <div class="student box">
-            <p style="color: crimson">No courses registered</p>
-            </div>
-        </div>
-     _END;
-}
-
 
 $get_all_price_query = "
     SELECT  SUM(courses.course_price) as total_price
@@ -140,8 +91,9 @@ $price = mysqli_fetch_assoc($get_all_price_result);
 
 $price['total_price'] = $price['total_price'] ? 0 - $price['total_price'] : 0;
 
-?>
 
+?>
+<div class="student_data">
 <div>
     <p class="super-box-title">View Balance</p>
     <!-- <p>Listed below is a view of your tuition summary for this semester</p> -->
@@ -151,7 +103,7 @@ $price['total_price'] = $price['total_price'] ? 0 - $price['total_price'] : 0;
             <td>
             <?php 
             
-            if($price['total_price'] > 0){
+            if($price['total_price'] >= 0){
                 echo "<strong style='color:green'>{$price['total_price']}</strong> ";
             } else {
                 echo "<strong style='color:red'>{$price['total_price']}</strong> ";

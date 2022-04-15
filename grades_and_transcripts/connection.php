@@ -6,4 +6,5 @@
     {
         die(' Please Check Your Connection'.  mysqli_connect_error());
     }
+    mysqli_set_charset($con,'utf8');
 ?>

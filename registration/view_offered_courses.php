@@ -7,7 +7,7 @@ include("../template/t1.php");
 const ROW_PER_PAGE = 9;
 const DEFAULT_PAGE = 1;
 
-$get_courses_number="select COUNT(*) AS courses_number from courses";
+$get_courses_number="select COUNT(*) AS courses_number from offered_courses";
 $corses_numbers_result = mysqli_query($con, $get_courses_number);
 $courses_number = mysqli_fetch_assoc($corses_numbers_result);
 // echo  die;
@@ -45,7 +45,7 @@ function is_valid_pagination(){
 $next_page = $pageNum + 1;
 $back_page = $pageNum - 1;
 
-$query="select * from courses LIMIT {$offset},{$row_per_page}";
+$query="select * from offered_courses LIMIT {$offset},{$row_per_page}";
 $get_id = "select id from students where student_id = '" . $_SESSION['student_id'] . "' ";
 
 $get_id_result=mysqli_query($con,$get_id);

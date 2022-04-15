@@ -217,7 +217,7 @@ $overall_price = 90 + $price['total_price'] + 469 + 23 + 848;
         </tr>
         <tr>
             <td>Course Fees</td>
-            <td><?php echo $price['total_price'] ?> SAR</td>
+            <td><?php echo $price['total_price'] > 0 ? $price['total_price'] : 0 ?> SAR</td>
         </tr>
         <tr>
             <td>Registeration Fees</td>

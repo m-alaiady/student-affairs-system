@@ -128,7 +128,11 @@ $html .= "
 ";
 
 
-$html .= "</table>";
+$html .= "
+  </table><br />
+  <h4>Course Schedule</h4>
+  ";
+
 $student_courses_result = mysqli_query($con, $get_all_student_courses);
 if (mysqli_num_rows($student_courses_result) > 0) {
     $html .= "
@@ -191,6 +195,9 @@ if (mysqli_num_rows($student_courses_result) > 0) {
     $html .= "
     </table> 
 ";
+}
+else{
+    $html .= "<p style='color: crimson'>No courses registered</p>";
 }
 $html .= "   
     <p></p>
