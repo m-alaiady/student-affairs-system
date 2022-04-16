@@ -43,15 +43,57 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/box.css" />
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/alert-box.css" />
     <style>
-        .student_data_print_btn {
+        .student_data{
+            position: absolute;
+            margin-left:25vw;
+            margin-top:7em;
+            background: white;
+            border-radius: 10px;
+            opacity: .85;
+            transform: scale(0.85);
+            /* transform: translate(35%, 50%); */
+            
+        }
+        .student_data_print_btn{
             all: unset;
+            position: relative;
+            margin-top: 2vh;
+            margin-left: 45%;
             background-color: dodgerblue;
             border-radius: 10px;
-            padding: 0.25em 1em;
+            padding: 0.5em 2em;
             border: none;
             cursor: pointer;
             color: white;
-        }
+         }
+        .row{
+                display: flex;
+                padding: 0 2em;
+                /* justify-content: ; */
+                flex-wrap: wrap;
+                flex-direction: row;      
+                align-items: stretch; 
+            }
+        .box{
+            all: unset;
+            background: #fff;
+            margin: 10px;
+            border-radius: 5px;
+            min-width: 17em;
+            border: 1px solid #eee;
+            box-shadow: 2px 2px #eee;
+            /* padding: 0 3em; */
+         }
+         #services{
+             all:unset;
+            position: absolute;
+            margin-left:20vw;
+            margin-top:7em;
+            background: white;
+            border-radius: 10px;
+            opacity: .85;
+            transform: scale(0.85);
+         }
     </style>
 </head>
 <body>
@@ -132,7 +174,9 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
                             <p><?php echo $registered_hours['SUM(credits)'] ?></p>
                         </div>
                     </div>
+                    <div class="row">
                 <a href="print_registered_hours.php" class="student_data_print_btn" style="text-decoration: none;" target="_blank"><span class="fa fa-print"></span> Print </a>
+                </div>
                 `;
                 break;
             case 'center_transfer':
@@ -179,7 +223,9 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
                             <p><?php echo $faculty['branch']; ?></p>
                         </div>
                     </div>
+                    <div class="row">
                 <a href="print_schedule_statement.php" class="student_data_print_btn" style="text-decoration: none;" target="_blank"><span class="fa fa-print"></span> Print </a>
+                </div>
                     `;
                 break;
             case 'semester_postponing':
@@ -227,7 +273,9 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
                         </div>
                     </div>
                     <br />
+                    <div class="row">
                 <a href="print_duration_statement.php" class="student_data_print_btn" style="text-decoration: none;" target="_blank"><span class="fa fa-print"></span> Print </a>
+                </div>
                 `;
                 break;
             case 'semester_excuse':
@@ -275,12 +323,14 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
                         </div>
                     </div>
                     <br />
+                    <div class="row">
                 <a href="print_definition_statement.php" class="student_data_print_btn" style="text-decoration: none;" target="_blank"><span class="fa fa-print"></span> Print </a>
+                </div>
                `;
                 break;
         }
         document.getElementById('service').innerHTML = `
-            <div class="student_data" style='margin-top: 25em !important'>
+            <div class="student_data" style='margin-top: 15em !important; margin-left: 22vw !important'>
                 <p class="super-box-title">${select.options[select.selectedIndex].text}</p>
                 <div class="row">
                     <div class="box">

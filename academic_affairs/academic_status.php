@@ -25,6 +25,32 @@ $faculty= mysqli_fetch_assoc($faculty_data);
 <head>
     <title>SIS | Academic Affairs</title>
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css//box.css" />
+    <style>
+    .student_data{
+        position: absolute;
+        margin-left:23vw;
+        margin-top: 10em;
+        margin-bottom: 2em;
+        background: white;
+        border-radius: 10px;
+        opacity: .85;
+        /* transform: translate(35%, 50%); */
+        /* padding: 20px;  */
+                
+    }
+        
+    .student_data_print_btn{
+        position: relative;
+        margin-top: 2vh;
+        margin-left: 45%;
+        background-color: dodgerblue;
+        border-radius: 10px;
+        padding: 0.5em 2em;
+        border: none;
+        cursor: pointer;
+        color: white;
+    }
+    </style>
 </head>
 
 
@@ -73,7 +99,11 @@ $faculty= mysqli_fetch_assoc($faculty_data);
                 <p><?php echo $faculty['branch']; ?></p>
             </div>
         </div>
-        <a href="print_student_data.php" class="student_data_print_btn" style="text-decoration: none;" target="_blank"><span class="fa fa-print"></span> Print </a>
+        <div class="row">
+            <a href="print_student_data.php" class="student_data_print_btn" style="text-decoration: none;" target="_blank"><span class="fa fa-print"></span> Print </a>
+        </div>
+        <br />
+        </div>
 
     </div>
 

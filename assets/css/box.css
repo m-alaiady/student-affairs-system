@@ -37,12 +37,12 @@
          }
             .student_data{
                 position: absolute;
-                /* margin-left:20vw;
-                margin-top:200px; */
+                margin-left:20vw;
+                margin-top:200px;
                 background: white;
                 border-radius: 10px;
                 opacity: .85;
-                transform: translate(35%, 50%);
+                /* transform: translate(35%, 50%); */
                 /* padding: 20px;  */
                 
             }
@@ -53,8 +53,6 @@
                 flex-wrap: wrap;
                 flex-direction: row;      
                 align-items: stretch; 
-
-    
             }
             .student_data_print_btn{
                 position: absolute;
