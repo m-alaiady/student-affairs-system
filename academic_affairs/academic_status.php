@@ -73,8 +73,9 @@ $faculty= mysqli_fetch_assoc($faculty_data);
                 <p><?php echo $faculty['branch']; ?></p>
             </div>
         </div>
+        <a href="print_student_data.php" class="student_data_print_btn" style="text-decoration: none;" target="_blank"><span class="fa fa-print"></span> Print </a>
+
     </div>
-    <a href="print_student_data.php" class="student_data_print_btn" style="text-decoration: none;" target="_blank"><span class="fa fa-print"></span> Print </a>
 
 </body>
 

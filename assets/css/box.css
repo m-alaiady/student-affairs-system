@@ -1,4 +1,6 @@
-
+        body{
+            overflow: auto;
+        }
         table, td{
         
             border-top: 1px solid #fff;
@@ -15,7 +17,7 @@
             background: #fff;
             margin: 10px;;
             border-radius: 5px;
-            min-width: 17em;
+            min-width: 20em;
             border: 1px solid #eee;
             box-shadow: 2px 2px #eee;
             padding: 0 3em 0 1em;
@@ -35,11 +37,12 @@
          }
             .student_data{
                 position: absolute;
-                margin-left:525px;
-                margin-top:200px;
+                /* margin-left:20vw;
+                margin-top:200px; */
                 background: white;
                 border-radius: 10px;
                 opacity: .85;
+                transform: translate(35%, 50%);
                 /* padding: 20px;  */
                 
             }
@@ -55,8 +58,8 @@
             }
             .student_data_print_btn{
                 position: absolute;
-                margin-left:525px;
-                margin-top:500px;
+                margin-top: 2vh;
+                margin-left: 45%;
                 background-color: dodgerblue;
                 border-radius: 10px;
                 padding: 0.5em 2em;

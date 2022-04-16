@@ -22,22 +22,50 @@ $data = mysqli_fetch_assoc($result);
 <head>
     <title>Updating information</title>
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css//alert-box.css" />
+    <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/box.css" />
+
+    
+    <style>
+        table, td{
+            border-top: 1px solid #fff;
+            padding: 1em 2.5em;
+        }
+        tr:nth-child(odd) {
+            background: #eee;
+        }
+        form td input{
+            width: 114%;
+            text-align: center;
+        }
+        
+        .update{
+            position: absolute;
+            margin-left:525px;
+            margin-top:200px;
+            background: white;
+            border-radius: 10px;
+            opacity: .85;
+            padding: 0; 
+        }
+    </style>
 </head>
 <body>
     <div class="update">
+    <p class="super-box-title">Update Information</p>
+  <h2 style="text-align: center; padding-bottom: 5px;"></h2>
     <form method="post">
     <table>
       <tr>
         <td> Current password: </td>
-        <td><input type="text" name="old_password" placeholder="current password" /><br /></td>
+        <td><input type="text" name="old_password" placeholder="current password" required /><br /></td>
         </tr>
         <tr>
         <td>New password:  </td>
-        <td><input type="text" name="new_password" placeholder="New password" /></td>
+        <td><input type="text" name="new_password" placeholder="New password"  required /></td>
         </tr>
         <tr>
         <td>  Retype new password:  </td>
-        <td> <input type="text" name="password_confirm" placeholder="Retype new password" /><br /><br /></td>
+        <td> <input type="text" name="password_confirm" placeholder="Retype new password"  required /><br /><br /></td>
         </tr>
     </table>
     <br>
@@ -57,30 +85,6 @@ $data = mysqli_fetch_assoc($result);
     </form>
     </div>
 
-    <style>
-        table, td{
-        
-        border-top: 1px solid #fff;
-        padding: 1em 2.5em;
-    }
-    tr:nth-child(odd) {
-        background: #eee;
-      }
-      form td input{
-          width: 114%;
-          text-align: center;
-      }
-     
-        .update{
-            position: absolute;
-        margin-left:525px;
-        margin-top:200px;
-        background: white;
-        border-radius: 10px;
-        opacity: .85;
-        padding: 20px; 
-        }
-    </style>
 </body>
 </html>
 <?php 

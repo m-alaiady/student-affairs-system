@@ -19,7 +19,31 @@ if( !isset($_SESSION['student_id']))
     
     <title>SIS | Update Information</title>
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css//alert-box.css" />
-
+    <link rel="stylesheet" href="<?php echo $path  ?>/assets/css//box.css" />
+    <style>
+        table, td{
+        
+        border-top: 1px solid #fff;
+        padding: 1em 2.5em;
+        }
+        tr:nth-child(odd) {
+            background: #eee;
+        }
+        form td input{
+            width: 114%;
+            text-align: center;
+        }
+     
+        .update{
+            position: absolute;
+            margin-left:525px;
+            margin-top:200px;
+            background: white;
+            border-radius: 10px;
+            opacity: .85;
+            padding: 0; 
+        }
+    </style>
 </head>
 
 
@@ -27,6 +51,8 @@ if( !isset($_SESSION['student_id']))
 
 
     <div class="update">
+    <p class="super-box-title">Update Information</p>
+  <h2 style="text-align: center; padding-bottom: 5px;"></h2>
     <form method="post">
     <table>
       <tr>
@@ -75,30 +101,7 @@ if( !isset($_SESSION['student_id']))
     </form>
     </div>
 
-    <style>
-        table, td{
-        
-        border-top: 1px solid #fff;
-        padding: 1em 2.5em;
-    }
-    tr:nth-child(odd) {
-        background: #eee;
-      }
-      form td input{
-          width: 114%;
-          text-align: center;
-      }
-     
-        .update{
-            position: absolute;
-        margin-left:525px;
-        margin-top:200px;
-        background: white;
-        border-radius: 10px;
-        opacity: .85;
-        padding: 20px; 
-        }
-    </style>
+    
 
 
 
