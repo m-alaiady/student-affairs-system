@@ -99,6 +99,7 @@ if( !isset($_SESSION['paid']) ){
         cursor: pointer;
         font-size: 1em;
         text-decoration: none;
+        margin-left: 35%;
     }
     .foot{
         position: fixed;
