@@ -45,19 +45,42 @@ $faculty= mysqli_fetch_assoc($faculty_data);
 <head>
     <title>SIS | Student Absences</title>
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/box.css" />
+    <style>
+         .student_data{
+                position: absolute;
+                margin-left:15vw;
+                margin-top:100px;
+                background: white;
+                border-radius: 10px;
+                opacity: .85;
+                /* transform: translate(35%, 50%); */
+                /* padding: 20px;  */
+                transform: scale(0.80);
+            }
+            .row{
+                all: unset;
+                display: flex;
+                padding: 0 2em;
+                /* justify-content: ; */
+                flex-direction: row;      
+                align-items: stretch; 
+            }
+    </style>
 </head>
 
 
 <body>
-    <div class="student_data">
-     <p class="super-box-title">Student Absences</p>
-    
+
             <?php
                 $student_courses_result = mysqli_query($con, $get_all_student_courses);
                 $count_absences = 0;
                 if(mysqli_num_rows($student_courses_result) > 0){
+                    echo <<< _END
+                        <div class="student_data">
+                        <p class="super-box-title">Student Absences</p>
+                    _END;
                     while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
-                        if($courses_data['absences'] > 0){
+                        // if($courses_data['absences'] > 0){
                             $count_absences++;
                             echo <<< _END
                                 <div class="row">
@@ -71,16 +94,16 @@ $faculty= mysqli_fetch_assoc($faculty_data);
                                     </div>
                                     <div class="SSN box">
                                         <p class="box-title">Allowed Absences</p>
-                                        <p>{$courses_data['allowed_absences']}</p>
+                                        <p>{$courses_data['allowed_absences']} hrs </p>
                                     </div>
                                     <div class="SSN box">
                                         <p class="box-title">Student's Absences</p>
-                                        <p>{$courses_data['absences']}</p>
+                                        <p>{$courses_data['absences']} hrs</p>
                                     </div>
                                 </div>
                             
                             _END;
-                        }
+                        // }
                     }
                     // no absences
                     if($count_absences == 0){
@@ -95,11 +118,24 @@ $faculty= mysqli_fetch_assoc($faculty_data);
                 } 
                 else{ // no courses 
                     echo <<< _END
-                        <div class="row">
-                            <div class="student box">
-                            <p style="color: crimson">No courses registered</p>
+                        <div class="student_data" style="
+                            all: unset;
+                            position: absolute;
+                            margin-left:20vw;
+                            margin-top:100px;
+                            background: white;
+                            border-radius: 10px;
+                            opacity: .85;
+                            /* transform: translate(35%, 50%); */
+                            /* padding: 20px;  */
+                            transform: scale(0.80);        
+                        " >
+                            <p class="super-box-title">Student Absences</p>
+                            <div class="row">
+                                <div class="student box">
+                                <p style="color: crimson">No courses registered</p>
+                                </div>
                             </div>
-                        </div>
                      _END;
                 }
 

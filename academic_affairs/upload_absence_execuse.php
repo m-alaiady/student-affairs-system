@@ -124,6 +124,25 @@ function store_file($file, $course_id, $uploaded_file_result){
             margin-top: -12em !important;
             margin-left: -25em !important;
         }
+        .student_data{
+                position: absolute;
+                margin-left:12.5vw;
+                margin-top:100px;
+                background: white;
+                border-radius: 10px;
+                opacity: .85;
+                /* transform: translate(35%, 50%); */
+                /* padding: 20px;  */
+                transform: scale(0.80);
+            }
+            .row{
+                all: unset;
+                display: flex;
+                padding: 0 2em;
+                /* justify-content: ; */
+                flex-direction: row;      
+                align-items: stretch; 
+            }
         .student_data_print_btn{
             all: unset;
             background-color: dodgerblue;
@@ -140,19 +159,22 @@ function store_file($file, $course_id, $uploaded_file_result){
 
 <body>
 
-<div class="student_data">
-     <p class="super-box-title">Upload student excuse</p>
+
             <?php
                 $courses = array();
                 $student_courses_result = mysqli_query($con, $get_all_student_courses);
                 if(mysqli_num_rows($student_courses_result) > 0){
+                    echo <<< _END
+                        <div class="student_data">
+                        <p class="super-box-title">Student Absences</p>
+                     _END;
                     $count_absences = 0;
                     while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
                         $get_uploaded_file = "SELECT * FROM absence_excuses WHERE student_id = '" . $student_id['id'] ."' AND course_id = '" . $courses_data['course_id'] ."' LIMIT 1"; 
                         $uploaded_file_result = mysqli_query($con, $get_uploaded_file);
                         $uploaded_file = mysqli_fetch_assoc($uploaded_file_result);
 
-                        if($courses_data['absences'] > 0){
+                        // if($courses_data['absences'] > 0){
                             array_push($courses, $courses_data['course_id']);
                             $count_absences++;
                             $field_name = $courses_data['course_id'] . "_excuse_file";
@@ -165,7 +187,7 @@ function store_file($file, $course_id, $uploaded_file_result){
                                         </div>
                                         <div class="box">
                                             <p class="box-title">Student's Absences</p>
-                                            <p>{$courses_data['absences']}</p>
+                                            <p>{$courses_data['absences']} hrs </p>
                                         </div>
                             _END;
                             if(mysqli_num_rows($uploaded_file_result) > 0){
@@ -198,7 +220,7 @@ function store_file($file, $course_id, $uploaded_file_result){
 
                                 _END;
                             }
-                        }
+                        // }
                     }
                     if($count_absences == 0){
                         echo <<< _END
@@ -212,11 +234,24 @@ function store_file($file, $course_id, $uploaded_file_result){
                 }
                 else{
                     echo <<< _END
-                        <div class="row">
-                            <div class="student box">
-                            <p style="color: crimson">No courses registered</p>
+                            <div class="student_data" style="
+                            all: unset;
+                            position: absolute;
+                            margin-left:20vw;
+                            margin-top:100px;
+                            background: white;
+                            border-radius: 10px;
+                            opacity: .85;
+                            /* transform: translate(35%, 50%); */
+                            /* padding: 20px;  */
+                            transform: scale(0.80);        
+                        ">
+                        <p class="super-box-title">Student Absences</p>
+                            <div class="row">
+                                <div class="student box">
+                                <p style="color: crimson">No courses registered</p>
+                                </div>
                             </div>
-                        </div>
                      _END;
                 }
 

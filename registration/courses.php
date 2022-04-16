@@ -70,11 +70,16 @@ $courses_data= mysqli_fetch_assoc($student_courses_result);
     }
     .registered-courses{
         position: absolute;
-        margin-left:25em;
-        margin-top:7em;
+        margin-left:15.25em;
+        margin-top:25em;
         background: white;
         border-radius: 10px;
         opacity: .85;
+        transform: scale(0.85);
+    }
+    .registered-courses::after{
+       content: "";
+       padding: 5em;
     }
     .foot{
         position: fixed;
@@ -108,11 +113,12 @@ if($courses_data <= 0){
     echo <<< _END
             <div class="student_data" style="
                 position: absolute;
-                margin-left:25em;
-                margin-top:7em;
+                margin-left:15em;
+                margin-top:5em;
                 background: white;
                 border-radius: 10px;
                 opacity: .85;  
+                transform: scale(0.85);
             ">
             <p class="super-box-title">Courses Advised</p>
                 <div class="row">
@@ -126,14 +132,20 @@ if($courses_data <= 0){
                         </tr>
         _END;
 }else{
+    /*
+                    position: absolute;
+                margin-left:15.25em;
+                margin-top:27ema;
+                */
     echo <<< _END
             <div class="student_data" style="
                 position: absolute;
-                margin-left:25em;
-                margin-top:31em;
+                margin-left:15.25em;
+                margin-top:5em;
                 background: white;
                 border-radius: 10px;
                 opacity: .85;  
+                transform: scale(0.85);
             ">
             <p class="super-box-title">Courses Advised</p>
                 <div class="row">
@@ -172,29 +184,6 @@ if($courses_data <= 0){
 
         </table>
         </div>
-<?php
-
-        $get_all_price_query = "
-            SELECT  SUM(courses.course_price) as total_price
-            FROM `enrolled`
-            JOIN `sections`
-                ON enrolled.section_id = sections.id 
-            JOIN `courses`
-                ON sections.course_id = courses.id
-            WHERE enrolled.student_id = '" . $student_id['id'] . "'"; 
-        $get_all_price_result = mysqli_query($con, $get_all_price_query); 
-
-        $price = mysqli_fetch_assoc($get_all_price_result);
-        if($price['total_price'] > 0){
-            echo <<< _END
-                <div class="invoice" style="margin 0 0 5em 1em">
-                    <p>Total price: {$price['total_price']} SAR </p>
-                    <br />
-                </div>
-            _END;
-        }
-        
-    ?>
 </div>
 
         </div>
@@ -221,12 +210,13 @@ if($courses_data <= 0){
                             <div class="view-section viewSections" id="{$row['id']}" style="    
                                 display: none;
                                 position: absolute;
-                                margin-left:40em;
-                                margin-top:15em;
+                                margin-left:25em;
+                                margin-top:10em;
                                 background: white;
                                 border-radius: 10px;
                                 opacity: 1;
                                 border: 1px solid black;
+                                transform: scale(0.85);
                             ">
                             <p class="super-box-title">Section for Course {$row['course_id']} <span class="close_section_btn" style='float:right;transform: scale(1.25);cursor:pointer;' onclick="this.parentNode.parentNode.style.display='none'">&times;</span></p>
                             <div class="row">
@@ -242,14 +232,15 @@ if($courses_data <= 0){
                     }else{
                         echo <<< _END
                             <div class="view-section viewSections" id="{$row['id']}" style="    
-                                display: none;
-                                position: absolute;
-                                margin-left:40em;
-                                margin-top:40em;
-                                background: white;
-                                border-radius: 10px;
-                                opacity: 1;
-                                border: 1px solid black;
+                            display: none;
+                            position: absolute;
+                            margin-left:25em;
+                            margin-top:12em;
+                            background: white;
+                            border-radius: 10px;
+                            opacity: 1;
+                            border: 1px solid black;
+                            transform: scale(0.85);
                             ">
                             <p class="super-box-title">Section for Course {$row['course_id']} <span class="close_section_btn" style='float:right;transform: scale(1.25);cursor:pointer;' onclick="this.parentNode.parentNode.style.display='none'">&times;</span> </p>
                             <div class="row">
@@ -351,6 +342,7 @@ if($courses_data > 0){
             </table>
         </div>
         </div>
+        &nbsp;
     </div>
     _END;
 }
@@ -381,9 +373,6 @@ function showViewSections(id){
 
 if (location.href.indexOf("#") != -1) {
     alert(decodeURI(location.href.substr(location.href.indexOf("#")+1)));
-    // document.getElementById('status').innerHTML = `
-    //    aasdsadsadsadsadsadsad
-    // `;
     location.href = '';
 }
 

@@ -23,6 +23,7 @@ if( basename(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH)) == "courses.php"
     $get_course_credit_result = mysqli_query($con,$get_course_credit);
     $course_credit= mysqli_fetch_assoc($get_course_credit_result);
     
+
     $drop_section = "		
         INSERT
             INTO `enrolled`
@@ -61,6 +62,9 @@ if( basename(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH)) == "courses.php"
         if($already_enrolled){
             header('location: ' . $_SERVER['HTTP_REFERER'] . "#section already enrolled");
         }
+        else if($_GET['id'] == 2){
+            header('location: ' . $_SERVER['HTTP_REFERER'] . "#You must complete TM111 first");
+        }
         else{
             $drop_section_result = mysqli_query($con,$drop_section);
             $student_id= mysqli_fetch_assoc($get_id_result);
@@ -68,7 +72,7 @@ if( basename(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH)) == "courses.php"
         }
     }
     else{
-        header('location: ' . $_SERVER['HTTP_REFERER'] . "#You cannot register more than 20 hours");
+        header('location: ' . $_SERVER['HTTP_REFERER'] . "#You cannot register more than 20 hrs");
     }
 
 

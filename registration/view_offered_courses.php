@@ -89,22 +89,16 @@ if( !isset($_SESSION['paid']) ){
     .student_data div,.view-section div, .registered-courses div{
         padding: 2em;
     }
-    
     .pagination a{
-        color: rgb(0,0,0);
+        color: #fff;
+        background-color: #2691d9;
         text-decoration: none;
-    }
-    .pagination a:hover{
-        color:darkcyan;
+        border: none;
+        border-radius: 25px;
+        padding: 5px 2em;
+        cursor: pointer;
+        font-size: 1em;
         text-decoration: none;
-    }
-    .registered-courses{
-        position: absolute;
-        margin-left:25em;
-        margin-top:10em;
-        background: white;
-        border-radius: 10px;
-        opacity: .85;
     }
     .foot{
         position: fixed;
@@ -133,11 +127,12 @@ if( !isset($_SESSION['paid']) ){
         echo <<< _END
                 <div class="student_data" style="
                     position: absolute;
-                    margin-left:25em;
-                    margin-top:7em;
+                    margin-left:15em;
+                    margin-top:0em;
                     background: white;
                     border-radius: 10px;
                     opacity: .85;  
+                    transform: scale(0.70);
                 ">
                 <p class="super-box-title">Offered Courses</p>
                     <div class="row">
@@ -166,12 +161,13 @@ if( !isset($_SESSION['paid']) ){
     }else{
         echo <<< _END
             <div class="student_data" style="
-                position: absolute;
-                margin-left:25em;
-                margin-top:7em;
-                background: white;
-                border-radius: 10px;
-                opacity: .85;  
+            position: absolute;
+            margin-left:20em;
+            margin-top:5em;
+            background: white;
+            border-radius: 10px;
+            opacity: .85;  
+            transform: scale(0.70);
             ">
             <p class="super-box-title">Offered Courses</p>
                 <div class="row" style="
