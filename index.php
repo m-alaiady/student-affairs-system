@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=1024">
   <link rel="stylesheet" href="css/bootstrap.css">
   <title>AOU | SIS</title>
   <!-- Start of the logo coding -->
@@ -13,6 +12,17 @@
     <img src="image/ministry.jpg" height="90" width="200" style="float: left">
   </div>
   <style>
+    @media all and (max-width: 1000px){
+      .word{
+        display: none;
+      }
+    }
+    @media all and (max-width: 300px){
+      .container{
+        display: none;
+      }
+    }
+
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Poppins:wght@400;500;600&display=swap');
     * {
       margin: 0;
