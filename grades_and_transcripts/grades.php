@@ -30,6 +30,16 @@ $get_all_grades_data = "SELECT  enrolled.notes, enrolled.grade,enrolled.absences
         .box{
             min-width: 10em !important;
         }
+        .student-data{
+            all:unset;
+            position: absolute;
+            margin-left:17em;
+            margin-top:25em;
+            background: white;
+            border-radius: 10px;
+            opacity: .85;
+            transform: scale(0.85);
+        }
     </style>
 </head>
 <body>
