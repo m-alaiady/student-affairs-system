@@ -48,7 +48,7 @@ $faculty= mysqli_fetch_assoc($faculty_data);
     <style>
          .student_data{
                 position: absolute;
-                margin-left:15vw;
+                margin-left:13vw;
                 margin-top:100px;
                 background: white;
                 border-radius: 10px;
@@ -64,6 +64,24 @@ $faculty= mysqli_fetch_assoc($faculty_data);
                 /* justify-content: ; */
                 flex-direction: row;      
                 align-items: stretch; 
+            }
+            .box{
+                background: #fff;
+                margin: 10px;;
+                border-radius: 5px;
+                min-width: 5em;
+                border: 1px solid #eee;
+                box-shadow: 2px 2px #eee;
+                padding: 0 3em 0 1em;
+            }
+            .student_id{
+                background: #fff;
+                margin: 10px;;
+                border-radius: 5px;
+                min-width: 40em;
+                border: 1px solid #eee;
+                box-shadow: 2px 2px #eee;
+                padding: 0 3em 0 1em;
             }
     </style>
 </head>

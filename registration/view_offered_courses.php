@@ -192,42 +192,42 @@ if( !isset($_SESSION['paid']) ){
                 if($pageNum <= 0){
                     echo <<< _END
                         <a href="view_offered_courses.php?page={$next_page}">
-                            <i class="fa fa-arrow-left"></i>
                             Next
+                            <i class="fa fa-arrow-right"></i>
                         </a>
                     _END;
                 } else if($pageNum > $courses_number['courses_number']/$row_per_page) {
                     echo <<< _END
                             <a href="view_offered_courses.php?page={$back_page}">
                                 Back
-                                <i class="fa fa-arrow-right"></i>
+                                <i class="fa fa-arrow-left"></i>
                             </a>
                         _END;
                     
                 } else if ($pageNum == 1){
                     echo <<< _END
-                    <a href="view_offered_courses.php?page={$next_page}">
-                        <i class="fa fa-arrow-left"></i>
+                    <a href="view_offered_courses.php?page={$next_page}" style='margin-left: 50%'>
                         Next
+                        <i class="fa fa-arrow-right"></i>
                     </a>
                 _END;
                 }
                 else if ($pageNum == $courses_number['courses_number']/$row_per_page){
                     echo <<< _END
                             <a href="view_offered_courses.php?page={$back_page}">
+                                <i class="fa fa-arrow-left"></i>
                                 Back
-                                <i class="fa fa-arrow-right"></i>
                             </a>
                         _END;
                 }
                 else {
                     echo <<< _END
-                            <a href="view_offered_courses.php?page={$next_page}">
+                            <a href="view_offered_courses.php?page={$back_page}">
                                 <i class="fa fa-arrow-left"></i>
-                                Next
-                            </a>
-                            <a href="view_offered_courses.php?page={$back_page}" style='margin-left: 2em'>
                                 Back
+                            </a>
+                            <a href="view_offered_courses.php?page={$next_page}" style='margin-left: 2em'>
+                                Next
                                 <i class="fa fa-arrow-right"></i>
                             </a>
                         _END;

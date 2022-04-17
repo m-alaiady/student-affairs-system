@@ -28,7 +28,7 @@ $faculty= mysqli_fetch_assoc($faculty_data);
     <style>
     .student_data{
         position: absolute;
-        margin-left:23vw;
+        margin-left:30vw;
         margin-top: 10em;
         margin-bottom: 2em;
         background: white;

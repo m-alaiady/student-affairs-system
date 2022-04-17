@@ -70,7 +70,7 @@ $courses_data= mysqli_fetch_assoc($student_courses_result);
     }
     .registered-courses{
         position: absolute;
-        margin-left:15.25em;
+        margin-left:17.5em;
         margin-top:25em;
         background: white;
         border-radius: 10px;
@@ -113,7 +113,7 @@ if($courses_data <= 0){
     echo <<< _END
             <div class="student_data" style="
                 position: absolute;
-                margin-left:15em;
+                margin-left:17em;
                 margin-top:5em;
                 background: white;
                 border-radius: 10px;
@@ -140,7 +140,7 @@ if($courses_data <= 0){
     echo <<< _END
             <div class="student_data" style="
                 position: absolute;
-                margin-left:15.25em;
+                margin-left:17.5em;
                 margin-top:5em;
                 background: white;
                 border-radius: 10px;
@@ -210,7 +210,7 @@ if($courses_data <= 0){
                             <div class="view-section viewSections" id="{$row['id']}" style="    
                                 display: none;
                                 position: absolute;
-                                margin-left:25em;
+                                margin-left:30em;
                                 margin-top:10em;
                                 background: white;
                                 border-radius: 10px;
@@ -234,7 +234,7 @@ if($courses_data <= 0){
                             <div class="view-section viewSections" id="{$row['id']}" style="    
                             display: none;
                             position: absolute;
-                            margin-left:25em;
+                            margin-left:30em;
                             margin-top:12em;
                             background: white;
                             border-radius: 10px;

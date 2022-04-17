@@ -124,9 +124,28 @@ function store_file($file, $course_id, $uploaded_file_result){
             margin-top: -12em !important;
             margin-left: -25em !important;
         }
+        
+        .box{
+                background: #fff;
+                margin: 10px;;
+                border-radius: 5px;
+                min-width: 5em;
+                border: 1px solid #eee;
+                box-shadow: 2px 2px #eee;
+                padding: 0 3em 0 1em;
+            }
+            .student_id{
+                background: #fff;
+                margin: 10px;;
+                border-radius: 5px;
+                min-width: 40em;
+                border: 1px solid #eee;
+                box-shadow: 2px 2px #eee;
+                padding: 0 3em 0 1em;
+            }
         .student_data{
                 position: absolute;
-                margin-left:12.5vw;
+                margin-left:16vw;
                 margin-top:100px;
                 background: white;
                 border-radius: 10px;
