@@ -35,15 +35,36 @@ if( !isset($_SESSION['student_id']))
             overflow-y: scroll !important;
         }
         .box{
-            min-width: 10em !important;
+            min-width: 5em !important;
         }
         .student_data{
-            margin-top: 100px;
-            margin-left:400px;
-            z-index: 1;
-            transform: scale(0.85);
+            all: unset;
+            position: absolute;
+            margin-left:18vw;
+            margin-top:7em;
+            background: white;
+            border-radius: 10px;
+            opacity: .85;
+            transform: scale(0.80);
         }
-        .student_data:last-child{
+        .student_data_2{
+                position: absolute;
+                margin-left:21vw;
+                margin-top:18em;
+                background: white;
+                border-radius: 10px;
+                opacity: .85;
+            transform: scale(0.80);
+
+                /* transform: translate(35%, 50%); */
+                /* padding: 20px;  */
+                
+        }
+        .student_data_2::after{
+            content: "";
+            padding-bottom: 50em;
+        }
+        .student_data_2:last-child{
             padding-bottom: 5em;
         }
         .foot{
@@ -201,8 +222,9 @@ $price = mysqli_fetch_assoc($get_all_price_result);
 $overall_price = 90 + $price['total_price'] + 469 + 23 + 848;
 
 ?>
+</div>
 
-
+<div class="student_data_2">
 <div>
     <p class="super-box-title">Listed below is a view of your tuition summary for this semester</p>
     <!-- <p>Listed below is a view of your tuition summary for this semester</p> -->

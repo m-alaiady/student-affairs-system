@@ -35,9 +35,6 @@ if( !isset($_SESSION['student_id']))
         }
      
         .update{
-            position: absolute;
-            margin-left:525px;
-            margin-top:175px;
             background: white;
             border-radius: 10px;
             opacity: .85;
@@ -108,6 +105,11 @@ if( !isset($_SESSION['student_id']))
 
 
 </body>
+
+<script src="../centerBox.js"></script>
+<script>
+$('.update').center();
+  </script>
 
 
 </html>

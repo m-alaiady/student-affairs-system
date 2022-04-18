@@ -21,9 +21,6 @@ include('template/t1.php');
         background: #eee;
       }
       .hom{
-        position: absolute;
-        margin-left:525px;
-        margin-top:200px;
         background: white;
         border-radius: 10px;
         opacity: .85;
@@ -92,7 +89,10 @@ include('template/t1.php');
    
 </body>
 
-
+<script src="centerBox.js"></script>
+<script>
+$('.hom').center();
+  </script>
 
 
 

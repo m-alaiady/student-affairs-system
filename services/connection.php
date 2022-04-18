@@ -6,5 +6,5 @@
     {
         die('There is an error in the services DB, please Check Your Connection'.  mysqli_connect_error());
     }
-    mysqli_set_charset($con,'utf8');
+    mysqli_set_charset($services_con,'utf8');
 ?>

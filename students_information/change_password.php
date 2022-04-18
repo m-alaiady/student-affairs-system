@@ -39,9 +39,6 @@ $data = mysqli_fetch_assoc($result);
         }
         
         .update{
-            position: absolute;
-            margin-left:525px;
-            margin-top:200px;
             background: white;
             border-radius: 10px;
             opacity: .85;
@@ -86,6 +83,10 @@ $data = mysqli_fetch_assoc($result);
     </div>
 
 </body>
+<script src="../centerBox.js"></script>
+<script>
+$('.update').center();
+  </script>
 </html>
 <?php 
 
