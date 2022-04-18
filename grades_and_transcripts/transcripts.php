@@ -37,6 +37,42 @@ $get_all_student_courses = "
 $faculty_data = mysqli_query($con, $sql);
 $faculty = mysqli_fetch_assoc($faculty_data);
 
+function print_courses(mysqli_result $result, string $title) : void {
+    global $html;
+    $html .= "<h3 class='table-title' style='margin-top: 2em'>{$title}</h3>";
+    if(mysqli_num_rows($result) > 0){
+        $html .= "
+            <table class='bordered-table' style='margin-top: 5em'>
+            <tr>
+                <th>Course</th> 
+                <th style='padding-left: 2em'>Course title</th>
+                <th>Credits</th>
+                <th style='padding-left: 2em'>Grade</th>
+            </tr>
+        ";
+        while( $courses_data= mysqli_fetch_assoc($result)){
+            $grade = grade_details($courses_data['grade']);
+            $html .= "
+                <tr>
+                    <td>{$courses_data['course_id']}</td> 
+                    <td style='padding-left: 2em'>{$courses_data['course_name']}</td>
+                    <td class='credits'>{$courses_data['credits']}</td>
+                    <td style='padding-left: 2em' class='grade'>{$grade}</td>
+                </tr>";
+        }
+        // $html .= "</table>";
+        $html .= "
+            </table>
+            ";
+    }
+    else {
+        $html .= "   
+            <p style='color: crimson;'>No courses registered</p> 
+        ";
+    }
+
+}
+
 function grade_details($grade)
 {
     switch ($grade) {
@@ -95,12 +131,30 @@ function get_points($grade)
 
 $head = "
     <style>
-        table,tr, td, th{
-            border: 1px solid black;
+        table{
+            width: 100%;
+        }
+        .bordered-table,.bordered-table th, .bordered-table td {
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
             border-collapse: collapse;
         }
-        th, td{
-            padding: 2em;
+        .table-title{
+            text-align:center;
+            background: #ccc;
+            border: 1px solid black;
+        }
+        .credits{
+            text-align: center;
+        }
+        .grade{
+            margin-left: 2em;
+        }
+        th{
+            text-align: left;
+        }
+        td.grade{
+            margin: 1.25em;
         }
         .footer{
             display:flex;
@@ -126,100 +180,128 @@ $head = "
 ";
 
 $html = $head;
-$html .= "
-    <div class='header'>
-        <div class='text'>
-            <p>Statement of Credits Hours Completed by Students</p>
-        </div>
-        <div class='logo'>
-            <img src='logo.png' alt='logo' width='250'/>
-        </div>
-    </div>
-    ";
+
+/* if you want a header (logo and title) uncomment the following code */
 // $html .= "
 //     <div class='header'>
-//         <p>OFFICAL TRANSCRIPT / Saudi Arabia 2030 Brar</p>
-//         <p style='margin-left: 2em'>Divsion of Admissions and Registration</p>
-//         <h3>Student Information:</h3>
+//         <div class='text'>
+//             <p>Statement of Credits Hours Completed by Students</p>
+//         </div>
+//         <div class='logo'>
+//             <img src='logo.png' alt='logo' width='250'/>
+//         </div>
 //     </div>
 //     ";
 
-$html .= "<table>";
+
+// $html .= "<table>";
+// $html .= "
+//         <tr>
+//             <th>Student Name</th> <td colspan='5'>" . $data['s_name'] . "</td>
+//         </tr>
+//         <tr>
+//             <th>Stundent Number</th> <td colspan='2'>" . $data['national_id'] . "</td>
+//             <th>Date of Birth</th> <td colspan='2'>" . date('M d, Y', strtotime($data['birth_date'])) . "</td>
+//         </tr>
+//         <tr>
+//             <th>Program of Study</th> <td colspan='2'>" . $data['major'] . "</td>
+//             <th>Nationality</th> <td colspan='2'>" . $data['nationality'] . "</td>
+//         </tr>
+//         <tr>
+//             <th>Admission Date</th> <td colspan='2'>" . $data['acceptance_term'] . "</td>
+//             <th>Basis of Admission</th> <td colspan='2'>" . $faculty['name'] . "</td>
+//          </tr>
+//         ";
+
+
+// $html .= "</table>";
+
+$html .= "<table class='no-border'>";
 $html .= "
         <tr>
-            <th>Student Name</th> <td colspan='5'>" . $data['s_name'] . "</td>
+            <th>Stundent Code</th> <td colspan='4'>" . $data['national_id'] . "</td>
+            <th>Branch</th> <td>" . $data['national_id'] . "</td>
         </tr>
         <tr>
-            <th>Stundent Number</th> <td colspan='2'>" . $data['national_id'] . "</td>
-            <th>Date of Birth</th> <td colspan='2'>" . date('M d, Y', strtotime($data['birth_date'])) . "</td>
+            <th>Student Name</th> <td colspan='4'>" . ucwords($data['s_name']) . "</td>
+            <th>Birth Date</th> <td>" . date('M d, Y', strtotime($data['birth_date'])) . "</td>
         </tr>
         <tr>
-            <th>Program of Study</th> <td colspan='2'>" . $data['major'] . "</td>
-            <th>Nationality</th> <td colspan='2'>" . $data['nationality'] . "</td>
+            <th>Mother name</th> <td colspan='4'>" . ucwords($data['mother']) . "</td>
+            <th>Birth Place</th> <td>" . ucwords($data['birth_place']) . "</td>
         </tr>
         <tr>
-            <th>Admission Date</th> <td colspan='2'>" . $data['acceptance_term'] . "</td>
-            <th>Basis of Admission</th> <td colspan='2'>" . $faculty['name'] . "</td>
+            <th></th> <td colspan='4'></td>
+            <th>Gender</th> <td>" . ucwords($data['gender']) . "</td>
+        </tr>
+         <tr>
+            <th>Track</th> <td colspan='4'>" . ucwords($data['major']) . "</td>
+            <th>Nationality</th> <td>" . ucwords($data['nationality']) . "</td>
          </tr>
+         <tr>
+            <th>Degree</th> <td colspan='4'>" . $data['degree'] . "</td>
+            <th>GPA</th> <td>" . $data['GPA'] . "</td>
+        </tr>
         ";
 
 
-$html .= "</table>
-        <h3 style='margin-top: 2em'>Courses Information:</h3>
-";
+$html .= "</table>";
+
+
+
 $student_courses_result = mysqli_query($con, $get_all_student_courses);
 
-if (mysqli_num_rows($student_courses_result) > 0) {
+// if (mysqli_num_rows($student_courses_result) > 0) {
 
-    $html .= "
-    <table style='margin-top: 5em'>
-        <tr>
-            <th>Course</th> 
-            <th>Course title</th>
-            <th>Credits</th>
-            <th>Grade</th>
-            <th>Points</th>
-        </tr>
-    ";
+//     $html .= "
+//     <table style='margin-top: 5em'>
+//         <tr>
+//             <th>Course</th> 
+//             <th>Course title</th>
+//             <th>Credits</th>
+//             <th>Grade</th>
+//             <th>Points</th>
+//         </tr>
+//     ";
 
-    while ($courses_data = mysqli_fetch_assoc($student_courses_result)) {
-        $grade = grade_details($courses_data['grade']);
-        $points = "";
-        if ($grade) {
-            $points = get_points($grade) * $courses_data['credits'];
-        }
-        $html .= "
-        <tr>
-            <td>{$courses_data['course_id']}</td> 
-            <td>{$courses_data['course_name']}</td>
-            <td>{$courses_data['credits']}</td>
-            <td>{$grade}</td>
-            <td>{$points}</td>
-        </tr>";
-    }
-    $html .= "</table>";
-} else {
-    $html .= "   
-        <p style='color: crimson'>No courses registered</p> 
-    ";
-}
-$html .= "
+//     while ($courses_data = mysqli_fetch_assoc($student_courses_result)) {
+//         $grade = grade_details($courses_data['grade']);
+//         $points = "";
+//         if ($grade) {
+//             $points = get_points($grade) * $courses_data['credits'];
+//         }
+//         $html .= "
+//         <tr>
+//             <td>{$courses_data['course_id']}</td> 
+//             <td>{$courses_data['course_name']}</td>
+//             <td>{$courses_data['credits']}</td>
+//             <td>{$grade}</td>
+//             <td>{$points}</td>
+//         </tr>";
+//     }
+//     $html .= "</table>";
+// } else {
+//     $html .= "   
+//         <p style='color: crimson'>No courses registered</p> 
+//     ";
+// }
+// $html .= "
 
-<br><br><br><br>
-<div class='footer'>
-    <div class='signature'>
-        <p>
-            Deanship of admission & Students Affairs<br>
-                    <p class='deanship'>Name here</p>
-        </p>
-    </div>
-    <div class='stamp'>
-        <p>Stamp</p>
-    </div>
-</div>
-";
+// <br><br><br><br>
+// <div class='footer'>
+//     <div class='signature'>
+//         <p>
+//             Deanship of admission & Students Affairs<br>
+//                     <p class='deanship'>Name here</p>
+//         </p>
+//     </div>
+//     <div class='stamp'>
+//         <p>Stamp</p>
+//     </div>
+// </div>
+// ";
 
-
+print_courses($student_courses_result, 'Unoffical Transcript');
 
 // echo $html;
 
