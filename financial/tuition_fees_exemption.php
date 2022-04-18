@@ -48,8 +48,18 @@ $faculty= mysqli_fetch_assoc($faculty_data);
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/box.css" />
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css//alert-box.css" />
     <style>
-        .student_data{
-            margin-top:15em !important;
+          .student_data{
+            all:unset;
+            position: absolute;
+            margin-top: 7em;
+            margin-left: 24em;
+            margin-bottom: 2em;
+            background: white;
+            border-radius: 10px;
+            opacity: .85;
+            transform: scale(0.80);
+            /* transform: translate(35%, 50%); */
+            /* padding: 20px;  */        
         }
         .student_data form{
             padding: 2em;
@@ -65,11 +75,12 @@ $faculty= mysqli_fetch_assoc($faculty_data);
         }
         .request_data{
             position: absolute;
-            margin-left:525px;
-            margin-top:40em !important;
+            margin-left:19em;
+            margin-top: 30em;
             background: white;
             border-radius: 10px;
             opacity: .85;
+            transform: scale(0.80);
         }
     </style>
 </head>

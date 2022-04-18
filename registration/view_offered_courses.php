@@ -129,11 +129,11 @@ if( !isset($_SESSION['paid']) ){
                 <div class="student_data" style="
                     position: absolute;
                     margin-left:15em;
-                    margin-top:0em;
+                    margin-top:2em;
                     background: white;
                     border-radius: 10px;
                     opacity: .85;  
-                    transform: scale(0.70);
+                    transform: scale(0.75);
                 ">
                 <p class="super-box-title">Offered Courses</p>
                     <div class="row">
@@ -162,13 +162,14 @@ if( !isset($_SESSION['paid']) ){
     }else{
         echo <<< _END
             <div class="student_data" style="
+            all:unset;
             position: absolute;
-            margin-left:20em;
+            margin-left:0em;
             margin-top:5em;
             background: white;
             border-radius: 10px;
             opacity: .85;  
-            transform: scale(0.70);
+            transform: scale(0.75);
             ">
             <p class="super-box-title">Offered Courses</p>
                 <div class="row" style="

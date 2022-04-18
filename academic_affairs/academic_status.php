@@ -27,9 +27,7 @@ $faculty= mysqli_fetch_assoc($faculty_data);
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css//box.css" />
     <style>
     .student_data{
-        position: absolute;
-        margin-left:30vw;
-        margin-top: 10em;
+        all:unset;
         margin-bottom: 2em;
         background: white;
         border-radius: 10px;
@@ -108,6 +106,9 @@ $faculty= mysqli_fetch_assoc($faculty_data);
     </div>
 
 </body>
-
+<script src="../centerBox.js"></script>
+<script>
+$('.student_data').center();
+  </script>
 </html>
 
