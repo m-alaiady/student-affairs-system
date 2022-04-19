@@ -36,14 +36,26 @@ $get_all_student_courses = "
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/box.css" />
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/alert-box.css" />
     <style>
-        .student_data_print_btn {
+        .student_data{
             all: unset;
             position: absolute;
-            background-color: dodgerblue;
-            margin-left:33em;
-            margin-top:30em;
+            margin-left:20vw;
+            margin-top:200px;
+            background: white;
             border-radius: 10px;
-            padding: 0.25em 1em;
+            padding-bottom: 2em;
+            opacity: .85;
+            transform: scale(0.85);
+           
+        }
+        .student_data_print_btn {
+            all: unset;
+            position: relative;
+            margin-top: 2vh;
+            margin-left: 45%;
+            background-color: dodgerblue;
+            border-radius: 10px;
+            padding: 0.5em 2em;
             border: none;
             cursor: pointer;
             color: white;
@@ -92,8 +104,8 @@ $get_all_student_courses = "
                                     </tr>
                                     </table>             
                                 </div>
-                            </div>
                             <a href="print_exam_schedule.php" class="student_data_print_btn" style="text-decoration: none;" target="_blank"><span class="fa fa-print"></span> Print </a>
+                            </div>
                             _END;
                         }else{
                             echo <<< _END

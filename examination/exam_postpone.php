@@ -63,7 +63,6 @@ function store_file($file, $course)
                                     <p>File Uploaded Successfully!</p>
                                 </div>
                             _END;
-                        // header('Refresh: 2');
                     } else {
                         $err = mysqli_error($exam_con);
                         echo <<< _END
@@ -104,14 +103,48 @@ function store_file($file, $course)
             cursor: pointer;
             color: white;
         }
-        
-        .request_data{
+        .student_data{
+            all: unset;
             position: absolute;
-            margin-left:525px;
-            margin-top:30em !important;
+            margin-left:20vw;
+            margin-top:10em;
             background: white;
             border-radius: 10px;
+            padding-bottom: 2em;
             opacity: .85;
+            transform: scale(0.85);
+        }
+        .request_data{
+            all: unset;
+            position: absolute;
+            margin-left:20vw;
+            margin-top:22em;
+            background: white;
+            border-radius: 10px;
+            padding-bottom: 2em;
+            opacity: .85;
+            transform: scale(0.85);
+        }
+        .delete{
+            margin-top: 1.025em;
+            
+            /* transform: scale(1.25); */
+        }
+        .delete input[type='submit']{
+            border: none;
+            background: crimson;
+            color: #fff;
+            padding: 0.5em 1em;
+            cursor: pointer;
+        }
+        .alert {
+            position: absolute;
+            top: 7em;
+            left: 21em;
+            padding: 20px;
+            color: white;
+            width: 50%;
+            transform: scale(0.75);
         }
     </style>
 </head>
@@ -176,7 +209,7 @@ function store_file($file, $course)
 
 <?php
 // show requedted file
-$get_requested = "SELECT * FROM `exam_postpone` WHERE student_id = {$student_id['id']} LIMIT 1";
+$get_requested = "SELECT * FROM `exam_postpone` WHERE student_id = {$student_id['id']}";
 $requested_result = mysqli_query($exam_con, $get_requested);
 if(mysqli_num_rows($requested_result) > 0){
     echo '<div class="request_data">
@@ -184,7 +217,7 @@ if(mysqli_num_rows($requested_result) > 0){
     while( $requested= mysqli_fetch_assoc($requested_result)){
         echo <<<_END
             <div class="row">
-                <div class="student box">
+                <div class="student box" style="min-width: 35em">
                     <p class="box-title">Course</p>
                     <p>{$requested['course']}</p>
                 </div>
@@ -192,9 +225,15 @@ if(mysqli_num_rows($requested_result) > 0){
                     <p class="box-title">Status</p>
                     <p>{$requested['status']}</p>
                 </div>
-                <div class="SSN box">
+                <div class="SSN box" style="min-width: 2.5em">
                     <p class="box-title">Feedback</p>
                     <p>{$requested['feedback']}</p>
+                </div>
+                <div class="delete">
+                    <form method="post">
+                        <input type="hidden" name="id" value="{$requested['id']}" />
+                        <input type="submit" name="delete" value="Delete" />
+                    </form>
                 </div>
             </div>
         _END;
@@ -206,6 +245,17 @@ if(isset($_POST['submit'])){
     $file = $_FILES['file'];
     $course = $_POST['course'];
     store_file($file, $course);
+}
+
+if(isset($_POST['delete'])){
+    $id = $_POST['id'];
+    $query = "DELETE FROM `exam_postpone` WHERE id = $id";
+    $delete_result = mysqli_query($exam_con, $query);
+    if(mysqli_affected_rows($exam_con)){
+        echo "<script>alert('Deleted Successfully')</script>";
+    }else{
+        echo "Unable to delete";
+    }
 }
 
 ?>

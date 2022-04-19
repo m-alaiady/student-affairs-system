@@ -36,6 +36,17 @@ $get_all_student_courses = "
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/box.css" />
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/alert-box.css" />
     <style>
+        .student_data{
+            all: unset;
+            position: absolute;
+            margin-left:20vw;
+            margin-top:10em;
+            background: white;
+            border-radius: 10px;
+            padding-bottom: 2em;
+            opacity: .85;
+            transform: scale(0.90);
+        }
         .student_data_print_btn {
             all: unset;
             background-color: dodgerblue;
@@ -47,12 +58,36 @@ $get_all_student_courses = "
         }
 
         .request_data {
+            all: unset;
             position: absolute;
-            margin-left: 525px;
-            margin-top: 33em !important;
+            margin-left:18vw;
+            margin-top:30em;
             background: white;
             border-radius: 10px;
+            padding-bottom: 2em;
             opacity: .85;
+            transform: scale(0.85);
+        }
+        .delete{
+            margin-top: 1.025em;
+            
+            /* transform: scale(1.25); */
+        }
+        .delete input[type='submit']{
+            border: none;
+            background: crimson;
+            color: #fff;
+            padding: 0.5em 1em;
+            cursor: pointer;
+        }
+        .alert {
+            position: absolute;
+            top: 7em;
+            left: 21em;
+            padding: 20px;
+            color: white;
+            width: 50%;
+            transform: scale(0.75);
         }
     </style>
 </head>
@@ -84,7 +119,7 @@ $get_all_student_courses = "
                                         <form method="post">
                                             <td>{$courses['course_name']}</td>
                                             <input type="hidden" name="course_name" value="{$courses['course_name']}">
-                                            <td>
+                                            <td style="padding-bottom: 2em">
                                                 <select name="country" id="branchList" onchange="get_centers(this, {$counter});" required>
                                                     <option value="" selected disabled hidden >-- Select branch --</option>
                                                     <option value="saudi_arabia">Saudi Arabia</option>
@@ -98,12 +133,14 @@ $get_all_student_courses = "
                                                     <option value="lebanon">Lebanon</option>
                                                 </select>
                                             </td>
-                                            <td>
+                                            <td style="padding-bottom: 2em">
                                                 <select name="city" id="facultiesResult{$counter}" required>
                                                     <option selected disabled hidden >-- Select Branch First --</option>
                                                 </select>
                                             </td>
-                                            <td><input type="submit" name="submit" class="student_data_print_btn" value="Submit"></td>
+                                            <td>
+                                                <input type="submit" name="submit" class="student_data_print_btn" value="Submit">
+                                            </td>
                                             <input type="hidden" name="service_type" value="center_transfer">
                                         </form>
                                     </tr>
@@ -252,17 +289,23 @@ if (mysqli_num_rows($requested_result) > 0) {
     while ($requested = mysqli_fetch_assoc($requested_result)) {
         echo <<<_END
             <div class="row">
-                <div class="student box">
+                <div class="student box" style="min-width: 35em">
                     <p class="box-title">Course</p>
                     <p>{$requested['course']}</p>
                 </div>
-                <div class="student_id box">
+                <div class="student_id box" style="min-width: 2.5em">
                     <p class="box-title">Status</p>
                     <p>{$requested['status']}</p>
                 </div>
-                <div class="SSN box">
+                <div class="SSN box" style="min-width: 2.5em">
                     <p class="box-title">Feedback</p>
                     <p>{$requested['feedback']}</p>
+                </div>
+                <div class="delete">
+                    <form method="post">
+                        <input type="hidden" name="id" value="{$requested['id']}" />
+                        <input type="submit" name="delete" value="Delete" />
+                    </form>
                 </div>
             </div>
         _END;
@@ -270,11 +313,15 @@ if (mysqli_num_rows($requested_result) > 0) {
     echo "</div>";
 }
 
-if (isset($_POST['submit'])) {
-    $file = $_FILES['file'];
-    $course = $_POST['course'];
-    store_file($file, $course);
+
+if(isset($_POST['delete'])){
+    $id = $_POST['id'];
+    $query = "DELETE FROM `change_exam_location` WHERE id = $id";
+    $delete_result = mysqli_query($exam_con, $query);
+    if(mysqli_affected_rows($exam_con)){
+        echo "<script>alert('Deleted Successfully')</script>";
+    }else{
+        echo "Unable to delete";
+    }
 }
-
-
 ?>

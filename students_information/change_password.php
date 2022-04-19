@@ -54,15 +54,15 @@ $data = mysqli_fetch_assoc($result);
     <table>
       <tr>
         <td> Current password: </td>
-        <td><input type="text" name="old_password" placeholder="current password" required /><br /></td>
+        <td><input type="password" name="old_password" placeholder="current password" required /><br /></td>
         </tr>
         <tr>
         <td>New password:  </td>
-        <td><input type="text" name="new_password" placeholder="New password"  required /></td>
+        <td><input type="password" name="new_password" placeholder="New password"  required /></td>
         </tr>
         <tr>
         <td>  Retype new password:  </td>
-        <td> <input type="text" name="password_confirm" placeholder="Retype new password"  required /><br /><br /></td>
+        <td> <input type="password" name="password_confirm" placeholder="Retype new password"  required /><br /><br /></td>
         </tr>
     </table>
     <br>

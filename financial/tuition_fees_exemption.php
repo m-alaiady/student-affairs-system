@@ -51,15 +51,25 @@ $faculty= mysqli_fetch_assoc($faculty_data);
           .student_data{
             all:unset;
             position: absolute;
-            margin-top: 7em;
+            margin-top: 10em;
             margin-left: 24em;
             margin-bottom: 2em;
             background: white;
             border-radius: 10px;
             opacity: .85;
             transform: scale(0.80);
-            /* transform: translate(35%, 50%); */
-            /* padding: 20px;  */        
+        }
+        .box{
+            min-width: 10em !important;
+        }
+        .alert {
+            position: absolute;
+            top: 7em;
+            left: 21em;
+            padding: 20px;
+            color: white;
+            width: 50%;
+            transform: scale(0.75);
         }
         .student_data form{
             padding: 2em;
@@ -75,12 +85,24 @@ $faculty= mysqli_fetch_assoc($faculty_data);
         }
         .request_data{
             position: absolute;
-            margin-left:19em;
+            margin-left:21.5em;
             margin-top: 30em;
             background: white;
             border-radius: 10px;
             opacity: .85;
             transform: scale(0.80);
+        }
+        .delete{
+            margin-top: 1.025em;
+            
+            /* transform: scale(1.25); */
+        }
+        .delete input[type='submit']{
+            border: none;
+            background: crimson;
+            color: #fff;
+            padding: 0.5em 1em;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -115,7 +137,7 @@ $faculty= mysqli_fetch_assoc($faculty_data);
 <?php
 
 // show requedted file
-$get_requested = "SELECT * FROM `tuition_fees_exemption` WHERE student_id = {$student_id['id']} LIMIT 1";
+$get_requested = "SELECT * FROM `tuition_fees_exemption` WHERE student_id = {$student_id['id']}";
 $requested_result = mysqli_query($con, $get_requested);
 if(mysqli_num_rows($requested_result) > 0){
     echo '<div class="request_data">
@@ -138,6 +160,12 @@ if(mysqli_num_rows($requested_result) > 0){
                 <div class="SSN box">
                     <p class="box-title">feedback</p>
                     <p>{$requested['feedback']}</p>
+                </div>
+                <div class="delete">
+                    <form method="post">
+                        <input type="hidden" name="id" value="{$requested['id']}" />
+                        <input type="submit" name="delete" value="Delete" />
+                    </form>
                 </div>
             </div>
         _END;
@@ -169,7 +197,7 @@ if(isset($_POST['submit'])){
     }
 
     function store_file($file){
-        global $con, $student_id;
+        global $student_id;
         $file_name = $file['name'];
         $file_tmp = $file['tmp_name'];
         $file_size = $file['size'];
@@ -179,7 +207,6 @@ if(isset($_POST['submit'])){
         $file_ext = strtolower(end($file_ext));
 
         $allowed = array('jpg', 'pdf', 'png', 'jpeg', 'doc');
-        $std_id = $student_id['id'];
 
         if(in_array($file_ext, $allowed)){
             if($file_error === 0){
@@ -193,26 +220,7 @@ if(isset($_POST['submit'])){
                     }
 
                     if(move_uploaded_file($file_tmp, $file_destination)){
-                        $today = new DateTime();
-                        $semester = get_season($today) . ' term ' . (date("y")-1) . '-' . date("y");
-                        $insert_file = "INSERT INTO `tuition_fees_exemption` (semester, file_name, student_id) VALUES ('$semester', '$file_name_new', '$std_id')";
-                        if(mysqli_query($con,$insert_file)){
-                            echo <<< _END
-                                <div class="alert success">
-                                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                                    <p>Files Uploaded Successfully!</p>
-                                </div>
-                            _END;
-                        }
-                        else{
-                            $err = mysqli_error($con);
-                            echo <<< _END
-                                <div class="alert error">
-                                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                                    <p>Something Went Wrong in the database: {$err}</p>
-                                </div>
-                            _END;
-                        }
+                        return $file_name_new;
                     }
                 }
             }
@@ -220,12 +228,51 @@ if(isset($_POST['submit'])){
 
 
     }
-    store_file($social_security_file);
-    store_file($salary_certifiacte_file);
-    store_file($electricity_bill_file);
-    store_file($account_statement_file);
+    $std_id = $student_id['id'];
+
+    $social_file = store_file($social_security_file);
+    $salary_file = store_file($salary_certifiacte_file);
+    $electricity_file = store_file($electricity_bill_file);
+    $account_file = store_file($account_statement_file);
+
+    $today = new DateTime();
+    $semester = get_season($today) . ' term ' . (date("y")-1) . '-' . date("y");
+    $insert_file = "INSERT INTO `tuition_fees_exemption` (semester, student_id, social_file, salary_file, electricity_file, account_file) 
+        VALUES ('$semester', '$std_id', '$social_file', '$salary_file', '$electricity_file', '$account_file')";
+    if(mysqli_query($con,$insert_file)){
+        echo <<< _END
+            <div class="alert success">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <p>Files Uploaded Successfully!</p>
+            </div>
+        _END;
+        header("Refresh:2");
+    }
+    else{
+        $err = mysqli_error($con);
+        echo <<< _END
+            <div class="alert error">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <p>Something Went Wrong in the database: {$err}</p>
+            </div>
+        _END;
+    }
+    
 
 
 }
+
+if(isset($_POST['delete'])){
+    $id = $_POST['id'];
+    $query = "DELETE FROM `tuition_fees_exemption` WHERE id = $id";
+    $delete_result = mysqli_query($con, $query);
+    if(mysqli_affected_rows($con)){
+        echo "<script>alert('Deleted Successfully')</script>";
+        header("Refresh:0");
+    }else{
+        echo "Unable to delete";
+    }
+}
+
 ?>
 

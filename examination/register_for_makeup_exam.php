@@ -13,14 +13,16 @@ include("../template/t1.php");
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/box.css" />
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/alert-box.css" />
     <style>
-        .student_data_print_btn {
+        .student_data{
             all: unset;
-            background-color: dodgerblue;
+            position: absolute;
+            margin-left:25vw;
+            margin-top:10em;
+            background: white;
             border-radius: 10px;
-            padding: 0.25em 1em;
-            border: none;
-            cursor: pointer;
-            color: white;
+            padding-bottom: 2em;
+            opacity: .85;
+            transform: scale(0.90);
         }
     </style>
 </head>

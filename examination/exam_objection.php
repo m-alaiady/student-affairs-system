@@ -49,14 +49,48 @@ $get_all_student_courses = "
             cursor: pointer;
             color: white;
         }
-        
-        .request_data{
+        .student_data{
+            all: unset;
             position: absolute;
-            margin-left:525px;
-            margin-top:30em !important;
+            margin-left:20vw;
+            margin-top:10em;
             background: white;
             border-radius: 10px;
+            padding-bottom: 2em;
             opacity: .85;
+            transform: scale(0.90);
+        }
+        .request_data{
+            all: unset;
+            position: absolute;
+            margin-left:17.5vw;
+            margin-top:25em;
+            background: white;
+            border-radius: 10px;
+            padding-bottom: 2em;
+            opacity: .85;
+            transform: scale(0.85);
+        }
+        .delete{
+            margin-top: 1.025em;
+            
+            /* transform: scale(1.25); */
+        }
+        .delete input[type='submit']{
+            border: none;
+            background: crimson;
+            color: #fff;
+            padding: 0.5em 1em;
+            cursor: pointer;
+        }
+        .alert {
+            position: absolute;
+            top: 7em;
+            left: 21em;
+            padding: 20px;
+            color: white;
+            width: 50%;
+            transform: scale(0.75);
         }
     </style>
 </head>
@@ -94,7 +128,7 @@ $get_all_student_courses = "
                         </select>
                     </td>
                     <td>
-                        <textarea name="details" placeholder="write more details .." rows="3" cols="25" style="resize: none" required></textarea>
+                        <textarea name="details" placeholder="write more details .." rows="3" cols="25" style="resize: none" required style="margin-top: 5em;"></textarea>
                     </td>
                     <td>
                         <input type="submit" name="submit" class="student_data_print_btn" value="Submit">
@@ -121,7 +155,7 @@ $get_all_student_courses = "
 
 <?php
 // show requedted file
-$get_requested = "SELECT * FROM `exam_objection` WHERE student_id = {$student_id['id']} LIMIT 1";
+$get_requested = "SELECT * FROM `exam_objection` WHERE student_id = {$student_id['id']}";
 $requested_result = mysqli_query($exam_con, $get_requested);
 if(mysqli_num_rows($requested_result) > 0){
     echo '<div class="request_data">
@@ -129,7 +163,7 @@ if(mysqli_num_rows($requested_result) > 0){
     while( $requested= mysqli_fetch_assoc($requested_result)){
         echo <<<_END
             <div class="row">
-                <div class="student box">
+                <div class="student box"  style="min-width: 35em">
                     <p class="box-title">Course</p>
                     <p>{$requested['course']}</p>
                 </div>
@@ -137,9 +171,15 @@ if(mysqli_num_rows($requested_result) > 0){
                     <p class="box-title">Status</p>
                     <p>{$requested['status']}</p>
                 </div>
-                <div class="SSN box">
+                <div class="SSN box"  style="min-width: 2.5em">
                     <p class="box-title">Feedback</p>
                     <p>{$requested['feedback']}</p>
+                </div>
+                <div class="delete">
+                    <form method="post">
+                        <input type="hidden" name="id" value="{$requested['id']}" />
+                        <input type="submit" name="delete" value="Delete" />
+                    </form>
                 </div>
             </div>
         _END;
@@ -169,6 +209,16 @@ if(isset($_POST['submit'])){
                     <p>Something Went Wrong in the database: {$err}</p>
                 </div>
             _END;
+    }
+}
+if(isset($_POST['delete'])){
+    $id = $_POST['id'];
+    $query = "DELETE FROM `exam_objection` WHERE id = $id";
+    $delete_result = mysqli_query($exam_con, $query);
+    if(mysqli_affected_rows($exam_con)){
+        echo "<script>alert('Deleted Successfully')</script>";
+    }else{
+        echo "Unable to delete";
     }
 }
 

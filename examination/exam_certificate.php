@@ -36,14 +36,25 @@ $get_all_student_courses = "
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/box.css" />
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/alert-box.css" />
     <style>
-        .student_data_print_btn {
+       .student_data{
             all: unset;
             position: absolute;
-            background-color: dodgerblue;
-            margin-left: 33em;
-            margin-top: 34em;
+            margin-left:20vw;
+            margin-top:200px;
+            background: white;
             border-radius: 10px;
-            padding: 0.25em 1em;
+            padding-bottom: 2em;
+            opacity: .85;
+            transform: scale(0.85);
+        }
+        .student_data_print_btn {
+            all: unset;
+            position: relative;
+            margin-top: 2vh;
+            margin-left: 45%;
+            background-color: dodgerblue;
+            border-radius: 10px;
+            padding: 0.5em 2em;
             border: none;
             cursor: pointer;
             color: white;
@@ -54,7 +65,7 @@ $get_all_student_courses = "
 
 <body>
 
-    <form action="print_exam_certificate.php" method="post">
+    <form action="print_exam_certificate.php" method="post" target="_blank">
         <div class="student_data">
             <p class="super-box-title">Exam Certificate</p> 
 
@@ -64,7 +75,7 @@ $get_all_student_courses = "
                             echo <<< _END
                                     <div style="margin-left: 5em;padding: 1em 0">
                                     <label for="company_name">To: </label>
-                                    <input type="text" name="company_name" placeholder="company name .. " required style="padding: 0.5em" />
+                                    <input type="text" name="company_name" placeholder="company name .. " required style="padding:0 0.25em" />
                                 </div>
                                 <div class="row">
                                 <table>
@@ -93,8 +104,8 @@ $get_all_student_courses = "
                                     </tr>
                                     </table>  
                                 </div>
+                            <button type="submit" class="student_data_print_btn" style="text-decoration: none;");"><span class="fa fa-print"></span> Print </button>
                             </div>
-                            <button type="submit" class="student_data_print_btn" style="text-decoration: none;"><span class="fa fa-print"></span> Print </button>
                             _END;
                         }else{
                             echo <<< _END
