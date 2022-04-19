@@ -2,6 +2,14 @@
 
 require_once('../connection.php');
 include("../template/t1.php");
+
+const ADMINISTRATIVE_FEES = 90;
+const REGISTRATION_FEES = 469; 
+const STUDENT_AID_SUPPORT_FEES = 23; 
+const TECHNICAL_SERVICES_AND_ELECTRONIC_RESOURCES = 848; 
+
+
+
 $query="select * from courses";
 $get_id = "select * from students where student_id = '" . $_SESSION['student_id'] . "' ";
 
@@ -89,7 +97,7 @@ $get_all_price_result = mysqli_query($con, $get_all_price_query);
 
 $price = mysqli_fetch_assoc($get_all_price_result);
 
-$price['total_price'] = $price['total_price'] ? 0 - $price['total_price'] : 0;
+$price['total_price'] = $price['total_price'] ? 0  -  ADMINISTRATIVE_FEES - REGISTRATION_FEES - STUDENT_AID_SUPPORT_FEES - TECHNICAL_SERVICES_AND_ELECTRONIC_RESOURCES  - $price['total_price'] : 0;
 
 
 ?>
@@ -104,6 +112,7 @@ $price['total_price'] = $price['total_price'] ? 0 - $price['total_price'] : 0;
             <?php 
             
             if($price['total_price'] >= 0){
+                $all_price = $price['total_price'];
                 echo "<strong style='color:green'>{$price['total_price']}</strong> ";
             } else {
                 echo "<strong style='color:red'>{$price['total_price']}</strong> ";
