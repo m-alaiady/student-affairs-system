@@ -112,6 +112,20 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/box.css" />
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/alert-box.css" />
     <style>
+         .student_data{
+            all: unset;
+            position: absolute;
+            margin-left:22vw;
+            margin-top:10em;
+            background: white;
+            border-radius: 10px;
+            padding-bottom: 2em;
+            opacity: .85;
+            transform: scale(0.75);
+        }
+        select{
+            border: 1px solid black;
+        }
         .student_data_print_btn {
             all: unset;
             background-color: dodgerblue;
@@ -120,6 +134,37 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
             border: none;
             cursor: pointer;
             color: white;
+        }
+        
+        .request_data{
+            position: absolute;
+            margin-left:17em;
+            margin-top:25em !important;
+            background: white;
+            border-radius: 10px;
+            opacity: .85;
+            transform: scale(0.75);
+        }
+        .delete{
+            margin-top: 1.025em;
+            
+            /* transform: scale(1.25); */
+        }
+        .delete input[type='submit']{
+            border: none;
+            background: crimson;
+            color: #fff;
+            padding: 0.5em 1em;
+            cursor: pointer;
+        }
+        .alert {
+            position: absolute;
+            top: 7em;
+            left: 21em;
+            padding: 20px;
+            color: white;
+            width: 50%;
+            transform: scale(0.75);
         }
     </style>
 </head>
@@ -423,7 +468,7 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
                 break;
         }
         document.getElementById('service').innerHTML = `
-            <div class="student_data" style='margin-top: 25em !important'>
+            <div class="student_data" style='margin-top: 20em !important; margin-left: 16em !important'>
                 <p class="super-box-title">${select.options[select.selectedIndex].text}</p>
                 
                 <div class="row">

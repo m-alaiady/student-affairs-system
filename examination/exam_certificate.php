@@ -104,7 +104,7 @@ $get_all_student_courses = "
                                     </tr>
                                     </table>  
                                 </div>
-                            <button type="submit" class="student_data_print_btn" style="text-decoration: none;");"><span class="fa fa-print"></span> Print </button>
+                            <button type="submit" class="student_data_print_btn" style="text-decoration: none;transform:scale(1)"><span class="fa fa-print"></span> Print </button>
                             </div>
                             _END;
                         }else{
@@ -126,7 +126,6 @@ $get_all_student_courses = "
     </form>
 
     <div id="service"></div>
-
 
 
 </body>

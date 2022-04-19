@@ -7,6 +7,10 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+CREATE DATABASE `academic_plan`;
+
+USE `academic_plan`;
+
 DROP TABLE IF EXISTS `faculty_requirement_electives`;
 CREATE TABLE `faculty_requirement_electives` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

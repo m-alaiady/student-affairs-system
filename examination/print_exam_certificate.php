@@ -65,7 +65,7 @@ $head = "
             width: 50%;
         }
         .text p{
-            margin-bottom: -50px;
+            margin-bottom: -65px;
             z-index: -5;
         }
         .stamp{

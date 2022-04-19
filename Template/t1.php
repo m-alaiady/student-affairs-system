@@ -376,6 +376,7 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
   height: 86.45%;
   background: white;
   opacity: .7;
+  padding-bottom: 2em;
 }
 nav ul{
 height: 100%;
@@ -480,6 +481,7 @@ nav ul li a span.rotate{
   position: absolute;
   width: 100%;
   bottom: 0px;
+  padding: 1px;
   text-align: center;
   background: white;
   opacity: .7;

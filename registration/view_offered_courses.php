@@ -164,8 +164,8 @@ if( !isset($_SESSION['paid']) ){
             <div class="student_data" style="
             all:unset;
             position: absolute;
-            margin-left:0em;
-            margin-top:5em;
+            margin-left:20em;
+            margin-top:7em;
             background: white;
             border-radius: 10px;
             opacity: .85;  

@@ -27,6 +27,20 @@ $get_all_student_courses = "
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/box.css" />
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/alert-box.css" />
     <style>
+ .student_data{
+            all: unset;
+            position: absolute;
+            margin-left:22vw;
+            margin-top:10em;
+            background: white;
+            border-radius: 10px;
+            padding-bottom: 2em;
+            opacity: .85;
+            transform: scale(0.75);
+        }
+        textarea{
+            border: 1px solid black;
+        }
         .student_data_print_btn {
             all: unset;
             background-color: dodgerblue;
@@ -36,13 +50,36 @@ $get_all_student_courses = "
             cursor: pointer;
             color: white;
         }
+        
         .request_data{
             position: absolute;
-            margin-left:525px;
-            margin-top:30em !important;
+            margin-left:17em;
+            margin-top:25em !important;
             background: white;
             border-radius: 10px;
             opacity: .85;
+            transform: scale(0.75);
+        }
+        .delete{
+            margin-top: 1.025em;
+            
+            /* transform: scale(1.25); */
+        }
+        .delete input[type='submit']{
+            border: none;
+            background: crimson;
+            color: #fff;
+            padding: 0.5em 1em;
+            cursor: pointer;
+        }
+        .alert {
+            position: absolute;
+            top: 7em;
+            left: 21em;
+            padding: 20px;
+            color: white;
+            width: 50%;
+            transform: scale(0.75);
         }
     </style>
 </head>
@@ -71,7 +108,7 @@ $get_all_student_courses = "
 </html>
 <?php
 // show requedted file
-$get_requested = "SELECT * FROM `payment_support` WHERE student_id = {$student_id['id']} LIMIT 1";
+$get_requested = "SELECT * FROM `payment_support` WHERE student_id = {$student_id['id']}";
 $requested_result = mysqli_query($con, $get_requested);
 if(mysqli_num_rows($requested_result) > 0){
     echo '<div class="request_data">
@@ -79,7 +116,7 @@ if(mysqli_num_rows($requested_result) > 0){
     while( $requested= mysqli_fetch_assoc($requested_result)){
         echo <<<_END
             <div class="row">
-                <div class="student box">
+                <div class="student box" style="min-width: 35em">
                     <p class="box-title">Details</p>
                     <p>{$requested['details']}</p>
                 </div>
@@ -87,9 +124,15 @@ if(mysqli_num_rows($requested_result) > 0){
                     <p class="box-title">Status</p>
                     <p>{$requested['status']}</p>
                 </div>
-                <div class="SSN box">
+                <div class="SSN box" style="min-width: 2.5em">
                     <p class="box-title">Feedback</p>
                     <p>{$requested['feedback']}</p>
+                </div>
+                <div class="delete">
+                    <form method="post">
+                        <input type="hidden" name="id" value="{$requested['id']}" />
+                        <input type="submit" name="delete" value="Delete" />
+                    </form>
                 </div>
             </div>
         _END;
@@ -107,6 +150,7 @@ if(isset($_POST['submit'])){
                 <div class="alert success">
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
                     <p>File Uploaded Successfully!</p>
+                   <meta http-equiv="refresh" content="2">
                 </div>
             _END;
         // header('Refresh: 2');
@@ -121,4 +165,15 @@ if(isset($_POST['submit'])){
     }
 }
 
+if(isset($_POST['delete'])){
+    $id = $_POST['id'];
+    $query = "DELETE FROM `payment_support` WHERE id = $id";
+    $delete_result = mysqli_query($con, $query);
+    if(mysqli_affected_rows($con)){
+        echo "<script>alert('Deleted Successfully')</script>";
+        echo '<meta http-equiv="refresh" content="0">';
+    }else{
+        echo "Unable to delete";
+    }
+}
 ?>
