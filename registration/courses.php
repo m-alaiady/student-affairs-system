@@ -71,7 +71,7 @@ $courses_data= mysqli_fetch_assoc($student_courses_result);
     .registered-courses{
         position: absolute;
         margin-left:17.5em;
-        margin-top:25em;
+        margin-top:32em;
         background: white;
         border-radius: 10px;
         opacity: .85;
@@ -105,7 +105,8 @@ $courses_data= mysqli_fetch_assoc($student_courses_result);
 </head>
 <body>
 <form>
-    <div id="status"></div>
+    <div id="status">
+    </div>
     <?php
 
 
@@ -114,7 +115,7 @@ if($courses_data <= 0){
             <div class="student_data" style="
                 position: absolute;
                 margin-left:17em;
-                margin-top:5em;
+                margin-top:10em;
                 background: white;
                 border-radius: 10px;
                 opacity: .85;  
@@ -141,7 +142,7 @@ if($courses_data <= 0){
             <div class="student_data" style="
                 position: absolute;
                 margin-left:17.5em;
-                margin-top:5em;
+                margin-top:10em;
                 background: white;
                 border-radius: 10px;
                 opacity: .85;  
@@ -211,7 +212,7 @@ if($courses_data <= 0){
                                 display: none;
                                 position: absolute;
                                 margin-left:30em;
-                                margin-top:10em;
+                                margin-top:16em;
                                 background: white;
                                 border-radius: 10px;
                                 opacity: 1;
@@ -235,7 +236,7 @@ if($courses_data <= 0){
                             display: none;
                             position: absolute;
                             margin-left:30em;
-                            margin-top:12em;
+                            margin-top:16em;
                             background: white;
                             border-radius: 10px;
                             opacity: 1;
@@ -372,8 +373,29 @@ function showViewSections(id){
 
 
 if (location.href.indexOf("#") != -1) {
-    alert(decodeURI(location.href.substr(location.href.indexOf("#")+1)));
-    location.href = '';
+    // alert();
+    // document.window(decodeURI(location.href.substr(location.href.indexOf("#")+1)));
+    let message = decodeURI(location.href.substr(location.href.indexOf("#")+1));
+    if(message.includes('flag1')){
+        message = message.replace('flag1','');
+        document.getElementById('status').innerHTML = `
+        <div class="alert success">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <p>${message}</p>
+        </div>
+        `;
+    }else{
+        message = message.replace('flag2','');
+        document.getElementById('status').innerHTML = `
+        <div class="alert error">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <p>${message}</p>
+        </div>
+        `;
+    }
+    setTimeout(function(){
+        location.href = "";
+    }, 3000);
 }
 
 

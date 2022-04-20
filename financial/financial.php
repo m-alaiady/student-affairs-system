@@ -50,8 +50,8 @@ if( !isset($_SESSION['student_id']))
         .student_data_2{
             all: unset;
             position: absolute;
-            margin-left:19.5em;
-            margin-top:15em;
+            margin-left:18em;
+            margin-top:16.5em;
             background: white;
             border-radius: 10px;
             opacity: .85;
@@ -127,6 +127,15 @@ if($courses_data > 0){
             <span> {$student['s_name']} -  {$student['student_id']} - {$student['email']} </span><br />
             <div class="registered-courses">
         </div>
+        <table class="table">
+        <tr>
+           <th>Course Code</th>
+           <th>Section ID</th>
+           <th>Credits</th>
+           <th>Teacher</th>
+           <th>Price</th>
+           <th>Time</th>
+        </tr>
        
     _END;
 
@@ -147,36 +156,28 @@ if($courses_data > 0){
 
     while( $courses_data= mysqli_fetch_assoc($student_courses_result) ){
         $price = number_format($courses_data['course_price']);
-
         echo <<< _END
-            <div class="row">
-                <div class="box">
-                    <p class="box-title">Course Code</p>
-                    <p>{$courses_data['course_id']}</p>
-                </div>
-                <div class="box">
-                    <p class="box-title">Section ID</p>
-                    <p>{$courses_data['section_id']}</p>
-                </div>
-                <div class="box">
-                    <p class="box-title">Credits</p>
-                    <p>{$courses_data['credits']}</p>
-                </div>
-                <div class="box">
-                    <p class="box-title">Teacher</p>
-                    <p>{$courses_data['teacher_name']}</p>
-                </div>
-                <div class="box">
-                    <p class="box-title">Price</p>
-                    <p>{$price} SAR </p>
-                </div>
-                <div class="box">
-                    <p class="box-title">Time</p>
-                    <p>{$courses_data['time']}</p>
-                </div>
-            </div>
-
-        _END;
+        <tr>
+            <td>
+                {$courses_data['course_id']}
+            </td>
+            <td>
+                {$courses_data['section_id']}
+            </td>
+            <td>
+                {$courses_data['credits']} hrs 
+            </td>
+            <td>
+                {$courses_data['teacher_name']}
+            </td>
+            <td>
+                {$price} SAR
+            </td>
+            <td>
+                {$courses_data['time']}
+            </td>
+        </tr>
+    _END;
     }
                 
     echo <<< _END

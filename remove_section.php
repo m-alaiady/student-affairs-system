@@ -23,7 +23,7 @@ if( basename(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH))  == "courses.php
     $drop_section_result = mysqli_query($con,$drop_section);
     $student_id= mysqli_fetch_assoc($get_id_result);
 
-    header('location: ' . $_SERVER['HTTP_REFERER'] . "#section removed");
+    header('location: ' . $_SERVER['HTTP_REFERER'] . "#section removed flag1");
 
     
 }

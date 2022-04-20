@@ -28,10 +28,14 @@ $faculty= mysqli_fetch_assoc($faculty_data);
     <style>
     .student_data{
         all:unset;
+        position: absolute;
+        margin-top: 10em;
+        margin-left: 20em;
         margin-bottom: 2em;
         background: white;
         border-radius: 10px;
         opacity: .85;
+        transform: scale(0.85);
         /* transform: translate(35%, 50%); */
         /* padding: 20px;  */
                 
@@ -106,9 +110,5 @@ $faculty= mysqli_fetch_assoc($faculty_data);
     </div>
 
 </body>
-<script src="../centerBox.js"></script>
-<script>
-$('.student_data').center();
-  </script>
 </html>
 

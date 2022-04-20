@@ -48,7 +48,7 @@ $faculty= mysqli_fetch_assoc($faculty_data);
     <style>
          .student_data{
                 position: absolute;
-                margin-left:13vw;
+                margin-left:20vw;
                 margin-top:100px;
                 background: white;
                 border-radius: 10px;
@@ -57,31 +57,8 @@ $faculty= mysqli_fetch_assoc($faculty_data);
                 /* padding: 20px;  */
                 transform: scale(0.80);
             }
-            .row{
-                all: unset;
-                display: flex;
-                padding: 0 2em;
-                /* justify-content: ; */
-                flex-direction: row;      
-                align-items: stretch; 
-            }
-            .box{
-                background: #fff;
-                margin: 10px;;
-                border-radius: 5px;
-                min-width: 5em;
-                border: 1px solid #eee;
-                box-shadow: 2px 2px #eee;
-                padding: 0 3em 0 1em;
-            }
-            .student_id{
-                background: #fff;
-                margin: 10px;;
-                border-radius: 5px;
-                min-width: 40em;
-                border: 1px solid #eee;
-                box-shadow: 2px 2px #eee;
-                padding: 0 3em 0 1em;
+            th:nth-child(4){
+                padding: 0 1em;
             }
     </style>
 </head>
@@ -96,30 +73,31 @@ $faculty= mysqli_fetch_assoc($faculty_data);
                     echo <<< _END
                         <div class="student_data">
                         <p class="super-box-title">Student Absences</p>
+                         <table class="table">
+                         <tr>
+                            <th>Course Code</th>
+                            <th>Course Name</th>
+                            <th>Allowed Absences</th>
+                            <th>Student's Absences</th>
+                         </tr>
                     _END;
                     while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
-                        // if($courses_data['absences'] > 0){
                             $count_absences++;
                             echo <<< _END
-                                <div class="row">
-                                    <div class="student box">
-                                        <p class="box-title">Course Code</p>
-                                        <p>{$courses_data['course_id']}</p>
-                                    </div>
-                                    <div class="student_id box">
-                                        <p class="box-title">Course Name</p>
-                                        <p>{$courses_data['course_name']}</p>
-                                    </div>
-                                    <div class="SSN box">
-                                        <p class="box-title">Allowed Absences</p>
-                                        <p>{$courses_data['allowed_absences']} hrs </p>
-                                    </div>
-                                    <div class="SSN box">
-                                        <p class="box-title">Student's Absences</p>
-                                        <p>{$courses_data['absences']} hrs</p>
-                                    </div>
-                                </div>
-                            
+                                <tr>
+                                    <td>
+                                        {$courses_data['course_id']}
+                                    </td>
+                                    <td>
+                                        {$courses_data['course_name']}
+                                    </td>
+                                    <td>
+                                        {$courses_data['allowed_absences']} hrs 
+                                    </td>
+                                    <td>
+                                        {$courses_data['absences']} hrs
+                                    </td>
+                                </tr>
                             _END;
                         // }
                     }

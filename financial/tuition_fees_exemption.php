@@ -93,8 +93,6 @@ $faculty= mysqli_fetch_assoc($faculty_data);
             transform: scale(0.80);
         }
         .delete{
-            margin-top: 1.025em;
-            
             /* transform: scale(1.25); */
         }
         .delete input[type='submit']{
@@ -140,37 +138,38 @@ $faculty= mysqli_fetch_assoc($faculty_data);
 $get_requested = "SELECT * FROM `tuition_fees_exemption` WHERE student_id = {$student_id['id']}";
 $requested_result = mysqli_query($con, $get_requested);
 if(mysqli_num_rows($requested_result) > 0){
-    echo '<div class="request_data">
-        <p  class="super-box-title">Submitted request summary</p>';
+    echo <<< _END
+        <div class="request_data">
+            <p class="super-box-title">Submitted request summary</p>
+            <table class="table">
+            <tr>
+                <th>Semester</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Feedback</th>
+                <th>Action</th>
+            </tr>
+    _END;
     while( $requested= mysqli_fetch_assoc($requested_result)){
-        echo <<<_END
-            <div class="row">
-                <div class="student box">
-                    <p class="box-title">Semester</p>
-                    <p>{$requested['semester']}</p>
-                </div>
-                <div class="student_id box">
-                    <p class="box-title">Date</p>
-                    <p>{$requested['request_date']}</p>
-                </div>
-                <div class="SSN box">
-                    <p class="box-title">Status</p>
-                    <p>{$requested['status']}</p>
-                </div>
-                <div class="SSN box">
-                    <p class="box-title">feedback</p>
-                    <p>{$requested['feedback']}</p>
-                </div>
+        $requested['feedback'] = $requested['feedback'] ? $requested['feedback'] : 'No feedback'; 
+        echo <<< _END
+            <tr>
+                <td>{$requested['semester']}</td>
+                <td>{$requested['request_date']}</td>
+                <td>{$requested['status']}</td>
+                <td>{$requested['feedback']}</td>
+                <td>
                 <div class="delete">
                     <form method="post">
                         <input type="hidden" name="id" value="{$requested['id']}" />
                         <input type="submit" name="delete" value="Delete" />
                     </form>
-                </div>
-            </div>
+                 </div>
+                </td>
+            </tr>
         _END;
     }
-    echo "</div>";
+    echo "</table></div>";
 }
 
 
@@ -267,8 +266,13 @@ if(isset($_POST['delete'])){
     $query = "DELETE FROM `tuition_fees_exemption` WHERE id = $id";
     $delete_result = mysqli_query($con, $query);
     if(mysqli_affected_rows($con)){
-        echo "<script>alert('Deleted Successfully')</script>";
-        header("Refresh:0");
+        echo <<< _END
+        <div class="alert success">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <p>Files Deleted Successfully!</p>
+        </div>
+    _END;
+        header("Refresh:2");
     }else{
         echo "Unable to delete";
     }

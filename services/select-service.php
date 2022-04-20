@@ -121,7 +121,7 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
             border-radius: 10px;
             padding-bottom: 2em;
             opacity: .85;
-            transform: scale(0.75);
+            transform: scale(0.85);
         }
         select{
             border: 1px solid black;
@@ -160,7 +160,7 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
         .alert {
             position: absolute;
             top: 7em;
-            left: 21em;
+            left: 17.5em;
             padding: 20px;
             color: white;
             width: 50%;
@@ -408,7 +408,7 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
                                         <textarea name="details" style="resize: none;" placeholder="Explain .. " required ></textarea>
                                     </td>
                                     <td><input type="submit" name="submit" class="student_data_print_btn" value="Submit"></td>
-                                    <input type="hidden" name="service_type" value="withdraw_from_university">
+                                    <input type="hidden" name="service_type" value="social_reward">
                                 </tr>
                             </table>
                         </form>
@@ -468,7 +468,7 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
                 break;
         }
         document.getElementById('service').innerHTML = `
-            <div class="student_data" style='margin-top: 20em !important; margin-left: 16em !important'>
+            <div class="student_data" style='margin-top: 20em !important; margin-left: 18.5em !important'>
                 <p class="super-box-title">${select.options[select.selectedIndex].text}</p>
                 
                 <div class="row">
@@ -621,7 +621,7 @@ if (isset($_POST['submit'])) {
             }
             break;
 
-        case 'change_branch':
+        case 'center_transfer':
             $country = $_POST['country'];
             $city = $_POST['city'];
             $insert = "INSERT INTO `change_branch` (student_id, branch, center) VALUES ('$stid', '$country', '$city')";

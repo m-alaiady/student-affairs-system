@@ -1,6 +1,6 @@
 <?php
 error_reporting(E_ALL);
-ini_set("display_errors", 0);
+ini_set("display_errors", 1);
 
 session_start();
 
@@ -33,6 +33,7 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="pragma" content="no-cache" />
     <link rel="stylesheet" href="css/bootstrap.css">
 
      <div class="logo">
@@ -111,6 +112,7 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
     text-align: center;
     padding: 5px;
     background: white;
+      /* background: #D6DEDB;  */
     opacity: .7;
   }
   
@@ -356,7 +358,27 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
 
 
 <style>
+::-webkit-scrollbar {
+  width: 20px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #EEEDEA; 
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #EEEDEA; 
+}
 @keyframes slide_Down{  
   0%
   {
@@ -377,8 +399,8 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
   bottom: 0;
   width: 320px;
   height: 86.45%;
-  background: white;
-  opacity: .7;
+  background: #E7EDEA;
+  /* opacity: .7; */
   padding-bottom: 2em;
 }
 nav ul{

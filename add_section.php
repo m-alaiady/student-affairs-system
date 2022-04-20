@@ -60,15 +60,15 @@ if( basename(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH)) == "courses.php"
         }
     
         if($already_enrolled){
-            header('location: ' . $_SERVER['HTTP_REFERER'] . "#section already enrolled");
+            header('location: ' . $_SERVER['HTTP_REFERER'] . "#section already enrolled flag2");
         }
         else if($_GET['id'] == 2){
-            header('location: ' . $_SERVER['HTTP_REFERER'] . "#You must complete TM111 first");
+            header('location: ' . $_SERVER['HTTP_REFERER'] . "#You must complete TM111 first flag2");
         }
         else{
             $drop_section_result = mysqli_query($con,$drop_section);
             $student_id= mysqli_fetch_assoc($get_id_result);
-            header('location: ' . $_SERVER['HTTP_REFERER'] . "#New section added");
+            header('location: ' . $_SERVER['HTTP_REFERER'] . "#New section added flag1");
         }
     }
     else{

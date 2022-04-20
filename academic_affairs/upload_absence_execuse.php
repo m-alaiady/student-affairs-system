@@ -76,7 +76,7 @@ function store_file($file, $course_id, $uploaded_file_result){
                                     <p>File Uploaded Successfully!</p>
                                 </div>
                             _END;
-                            header('Refresh: 2');
+                            // header('Refresh: 2');
                         }
                         else{
                             $err = mysqli_error($con);
@@ -121,10 +121,21 @@ function store_file($file, $course_id, $uploaded_file_result){
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css//alert-box.css" />
     <style>
         .alert{
-            margin-top: -12em !important;
-            margin-left: -25em !important;
+            position: absolute;
+            top: 7em;
+            left: 19em;
+            padding: 20px;
+            color: white;
+            width: 50%;
+            transform: scale(0.75);
         }
-        
+        .delete input[type='submit']{
+            border: none;
+            background: crimson;
+            color: #fff;
+            padding: 0.5em 1em;
+            cursor: pointer;
+        }
         .box{
                 background: #fff;
                 margin: 10px;;
@@ -145,8 +156,8 @@ function store_file($file, $course_id, $uploaded_file_result){
             }
         .student_data{
                 position: absolute;
-                margin-left:16vw;
-                margin-top:100px;
+                margin-left:20vw;
+                margin-top:10em;
                 background: white;
                 border-radius: 10px;
                 opacity: .85;
@@ -172,6 +183,16 @@ function store_file($file, $course_id, $uploaded_file_result){
             color: white;
             margin: 0.25em;
         }
+        .request_data{
+            all: unset;
+            position: absolute;
+            margin-left:22vw;
+            margin-top:25em;
+            background: white;
+            border-radius: 10px;
+            opacity: .85;
+            transform: scale(0.80);
+        }
     </style>
 </head>
 
@@ -186,6 +207,13 @@ function store_file($file, $course_id, $uploaded_file_result){
                     echo <<< _END
                         <div class="student_data">
                         <p class="super-box-title">Student Absences</p>
+                        <table class="table">
+                        <tr>
+                           <th>Course Code</th>
+                           <th>Student's Absences</th>
+                           <th>File</th>
+                           <th>Action</th>
+                        </tr>
                      _END;
                     $count_absences = 0;
                     while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
@@ -198,47 +226,41 @@ function store_file($file, $course_id, $uploaded_file_result){
                             $count_absences++;
                             $field_name = $courses_data['course_id'] . "_excuse_file";
                             echo <<< _END
-                                <form method="post" enctype="multipart/form-data">
-                                    <div class="row">
-                                        <div class="box">
-                                            <p class="box-title">Course Code</p>
-                                            <p>{$courses_data['course_id']}</p>
-                                        </div>
-                                        <div class="box">
-                                            <p class="box-title">Student's Absences</p>
-                                            <p>{$courses_data['absences']} hrs </p>
-                                        </div>
+                                    <tr>
+                                        <form method="post" enctype="multipart/form-data">
+                                            <td>
+                                                {$courses_data['course_id']}
+                                            </td>
+                                            <td>
+                                                {$courses_data['absences']} hrs
+                                            </td>
                             _END;
                             if(mysqli_num_rows($uploaded_file_result) > 0){
                                 echo <<< _END
-                                            <div class="box">
-                                                <p class="box-title">Uploaded Date</p>
-                                                <p> {$uploaded_file['request_date']} </p>
-                                            </div>
-                                            <div class="box">
-                                                <p class="box-title">Action</p>
-                                                <p>Processing .. </p>
-                                            </div>
-                                        </div>
-                                    </form>
+                                            <td>
+                                                {$uploaded_file['file_name']}
+                                            </td>
+                                            <td>
+                                                Processing ..
+                                            </td>
+                                        </form>
+                                    </tr>
                                 _END;
                             }
                             else{
                                 echo <<< _END
-                                            <div class="box">
-                                                <p class="box-title">Action</p>
-                                                <p><input name="{$courses_data['course_id']}[file]" type="file" accept='image/*, .doc, .pdf' required /></p>
-                                            </div>
-                                            <div class="box">
-                                                <p class="box-title">Submit</p>
-                                                <p><input type="submit" name="{$courses_data['course_id']}[submit]" class="student_data_print_btn" value="Upload Excuse"></p>
+                                            <td>
+                                                <input name="{$courses_data['course_id']}[file]" type="file" accept='image/*, .doc, .pdf' required />
+                                            </td>
+                                            <td>
+                                                <input type="submit" name="{$courses_data['course_id']}[submit]" class="student_data_print_btn" value="Upload Excuse">
                                                 <input type="hidden" name="{$courses_data['course_id']}[course_id]" value="{$courses_data['course_id']}">
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                _END;
+                                            </td>
+                                        </form>
+                                    </tr>
+                            _END;
                             }
+                            // echo "</form>";
                         // }
                     }
                     if($count_absences == 0){
@@ -278,18 +300,52 @@ function store_file($file, $course_id, $uploaded_file_result){
 
 
 
-</form>
+</table>
                                
+<?php
+// show requedted file
+$get_requested = "SELECT * FROM `absence_excuses` WHERE student_id = {$student_id['id']}";
+$requested_result = mysqli_query($con, $get_requested);
+if(mysqli_num_rows($requested_result) > 0){
+    echo <<< _END
+    </div>
+        <div class="request_data">
+            <p class="super-box-title">Submitted request summary</p>'
+            <table class="table">
+            <tr>
+                <th>Course Code</th>
+                <th>Request Date</th>
+                <th>Action</th>
+            </tr>
+    _END;
+    while( $requested= mysqli_fetch_assoc($requested_result)){
+        echo <<<_END
+            <tr>
+                <td>
+                    {$requested['course_id']}
+                </td>
+                <td>
+                    {$requested['request_date']} 
+                </td>
+                <td>
+                    <div class="delete">
+                        <form method="post">
+                            <input type="hidden" name="id" value="{$requested['id']}" />
+                            <input type="submit" name="delete" value="Delete" />
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        _END;
+    }
+    echo "</table></div>";
+}
 
+?>
 </body>
 
 </html>
 <?php
-// print_r($courses);
-// foreach ($courses as $course) {
-//     echo $course . '[submit]';
-    
-// }
 
 foreach ($courses as $course) {
     if(isset($_POST[$course])){
@@ -306,5 +362,26 @@ foreach ($courses as $course) {
     }
 }
 
+if(isset($_POST['delete'])){
+    $id = $_POST['id'];
+    $query = "DELETE FROM `absence_excuses` WHERE id = $id";
+    $delete_result = mysqli_query($con, $query);
+    if(mysqli_affected_rows($con)){
+        echo <<< _END
+            <div class="alert success">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <p>File Deleted Successfully!</p>
+            </div>
+        _END;
+    }else{
+        echo <<< _END
+            <div class="alert error">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <p>Unable to delete file!</p>
+            </div>
+        _END;
+    }
+    echo '<meta http-equiv="refresh" content="2">';
+}
 
 ?>

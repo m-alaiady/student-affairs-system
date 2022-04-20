@@ -80,35 +80,40 @@ $get_all_grades_data = "SELECT  enrolled.notes, enrolled.grade,enrolled.absences
                 }
                 $grade_result = mysqli_query($con, $get_all_grades_data);
                 if(mysqli_num_rows($grade_result) > 0){
+                    echo <<< _END
+                        <table class="table">
+                        <tr>
+                            <th>Course Code</th>
+                            <th>Credits</th>
+                            <th>Grade</th>
+                            <th>Grade Details</th>
+                            <th>Notes</th>
+                        </tr>
+                    _END;
                     while( $grade_data= mysqli_fetch_assoc($grade_result)){
                         $grade_mark = grade_details($grade_data['grade']);
                         $notes = $grade_data['notes'] != null ? $grade_data['notes']: 'No notes available';
-                            echo <<< _END
-                                <div class="row">
-                                    <div class="box">
-                                        <p class="box-title">Course Code</p>
-                                        <p>{$grade_data['course_id']}</p>
-                                    </div>
-                                    <div class="box">
-                                        <p class="box-title">Credits</p>
-                                        <p>{$grade_data['credits']}</p>
-                                    </div>
-                                    <div class="box">
-                                        <p class="box-title">Grade</p>
-                                        <p>{$grade_data['grade']}</p>
-                                    </div>
-                                    <div class="box">
-                                        <p class="box-title">Grade Details</p>
-                                        <p>{$grade_mark}</p>
-                                    </div>
-                                    <div class="box">
-                                        <p class="box-title">Notes</p>
-                                        <p>{$notes}</p>
-                                    </div>
-                                </div>
-                            
-                            _END;
+                            echo <<<_END
+                            <tr>
+                                <td>
+                                    {$grade_data['course_id']}
+                                </td>
+                                <td>
+                                    {$grade_data['credits']} hrs 
+                                </td>
+                                <td>
+                                    {$grade_data['grade']}
+                                </td>
+                                <td>
+                                    {$grade_mark}
+                                </td>
+                                <td>
+                                    {$notes}
+                                </td>
+                            </tr>
+                        _END;
                     }
+                    echo "</table>";
                 }
                 else{
                     echo <<< _END

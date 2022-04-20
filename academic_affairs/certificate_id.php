@@ -85,10 +85,10 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
             /* padding: 0 3em; */
          }
          #services{
-             all:unset;
+            all:unset;
             position: absolute;
             margin-left:20vw;
-            margin-top:10em;
+            margin-top:5em;
             background: white;
             border-radius: 10px;
             opacity: .85;
@@ -330,7 +330,7 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
                 break;
         }
         document.getElementById('service').innerHTML = `
-            <div class="student_data" style='margin-top: 20em !important; margin-left: 25vw !important'>
+            <div class="student_data" style='margin-top: 17em !important; margin-left: 25vw !important'>
                 <p class="super-box-title">${select.options[select.selectedIndex].text}</p>
                 <div class="row">
                     <div class="box">
