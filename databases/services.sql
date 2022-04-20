@@ -7,10 +7,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE DATABASE `services`;
-
-USE `services`;
-
 DROP TABLE IF EXISTS `aid_request`;
 CREATE TABLE `aid_request` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -18,8 +14,10 @@ CREATE TABLE `aid_request` (
   `semester` varchar(255) NOT NULL,
   `details` varchar(255) DEFAULT '0',
   `status` varchar(255) DEFAULT 'Processing',
+  `feedback` varchar(255) DEFAULT NULL,
+  `request_date` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `change_branch`;
 CREATE TABLE `change_branch` (
@@ -28,8 +26,10 @@ CREATE TABLE `change_branch` (
   `branch` varchar(255) NOT NULL,
   `center` varchar(255) DEFAULT '0',
   `status` varchar(255) DEFAULT 'Processing',
+  `feedback` varchar(255) DEFAULT NULL,
+  `request_date` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `change_track`;
 CREATE TABLE `change_track` (
@@ -38,8 +38,10 @@ CREATE TABLE `change_track` (
   `faculty` varchar(255) NOT NULL,
   `track` varchar(255) DEFAULT '0',
   `status` varchar(255) DEFAULT 'Processing',
+  `feedback` varchar(255) DEFAULT NULL,
+  `request_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `courses_equalize`;
 CREATE TABLE `courses_equalize` (
@@ -47,8 +49,10 @@ CREATE TABLE `courses_equalize` (
   `student_id` int(11) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `status` varchar(255) DEFAULT 'Processing',
+  `feedback` varchar(255) DEFAULT NULL,
+  `request_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `english_equalize`;
 CREATE TABLE `english_equalize` (
@@ -56,8 +60,10 @@ CREATE TABLE `english_equalize` (
   `student_id` int(11) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `status` varchar(255) DEFAULT 'Processing',
+  `feedback` varchar(255) DEFAULT NULL,
+  `request_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `id_reissuing`;
 CREATE TABLE `id_reissuing` (
@@ -66,8 +72,10 @@ CREATE TABLE `id_reissuing` (
   `file_name` varchar(255) NOT NULL,
   `reason` varchar(255) NOT NULL,
   `status` varchar(255) DEFAULT 'Processing',
+  `feedback` varchar(255) DEFAULT NULL,
+  `request_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `semester_excuse`;
 CREATE TABLE `semester_excuse` (
@@ -76,8 +84,10 @@ CREATE TABLE `semester_excuse` (
   `semester` varchar(255) NOT NULL,
   `confirmation` varchar(255) DEFAULT '0',
   `status` varchar(255) DEFAULT 'Processing',
+  `feedback` varchar(255) DEFAULT NULL,
+  `request_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `semester_postponing`;
 CREATE TABLE `semester_postponing` (
@@ -86,8 +96,10 @@ CREATE TABLE `semester_postponing` (
   `semester` varchar(255) NOT NULL,
   `confirmation` varchar(255) DEFAULT '0',
   `status` varchar(255) DEFAULT 'Processing',
+  `feedback` varchar(255) DEFAULT NULL,
+  `request_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `social_reward`;
 CREATE TABLE `social_reward` (
@@ -96,8 +108,10 @@ CREATE TABLE `social_reward` (
   `semester` varchar(255) NOT NULL,
   `details` varchar(255) DEFAULT '0',
   `status` varchar(255) DEFAULT 'Processing',
+  `feedback` varchar(255) DEFAULT NULL,
+  `request_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `withdraw_from_university`;
 CREATE TABLE `withdraw_from_university` (
@@ -106,8 +120,10 @@ CREATE TABLE `withdraw_from_university` (
   `semester` varchar(255) NOT NULL,
   `confirmation` varchar(255) DEFAULT '0',
   `status` varchar(255) DEFAULT 'Processing',
+  `feedback` varchar(255) DEFAULT NULL,
+  `request_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 
 
@@ -115,19 +131,38 @@ CREATE TABLE `withdraw_from_university` (
 
 
 
+INSERT INTO `courses_equalize` (`id`, `student_id`, `file_name`, `status`, `feedback`, `request_date`) VALUES
+(4, 3, '625f992fe4d290.92997835.jpg', 'Processing', NULL, '0000-00-00 00:00:00');
 
 
+INSERT INTO `english_equalize` (`id`, `student_id`, `file_name`, `status`, `feedback`, `request_date`) VALUES
+(5, 3, '625f991e5ae1a4.83199172.jpg', 'Processing', NULL, '0000-00-00 00:00:00');
+INSERT INTO `english_equalize` (`id`, `student_id`, `file_name`, `status`, `feedback`, `request_date`) VALUES
+(6, 3, '625f9bfe4c3ce5.36618418.png', 'Processing', NULL, '0000-00-00 00:00:00');
 
 
+INSERT INTO `id_reissuing` (`id`, `student_id`, `file_name`, `reason`, `status`, `feedback`, `request_date`) VALUES
+(4, 3, '625f99912878b1.85982681.jpg', 'lost', 'Processing', NULL, '0000-00-00 00:00:00');
 
 
+INSERT INTO `semester_excuse` (`id`, `student_id`, `semester`, `confirmation`, `status`, `feedback`, `request_date`) VALUES
+(6, 3, 'Spring term 21-22', 'on', 'Processing', NULL, '0000-00-00 00:00:00');
 
 
+INSERT INTO `semester_postponing` (`id`, `student_id`, `semester`, `confirmation`, `status`, `feedback`, `request_date`) VALUES
+(5, 3, 'Spring term 21-22', 'on', 'Processing', NULL, '0000-00-00 00:00:00');
 
 
+INSERT INTO `social_reward` (`id`, `student_id`, `semester`, `details`, `status`, `feedback`, `request_date`) VALUES
+(2, 3, 'Spring term 21-22', 'aaa', 'Processing', NULL, '0000-00-00 00:00:00');
 
 
-
+INSERT INTO `withdraw_from_university` (`id`, `student_id`, `semester`, `confirmation`, `status`, `feedback`, `request_date`) VALUES
+(2, 3, 'Spring term 21-22', 'on', 'Processing', NULL, '0000-00-00 00:00:00');
+INSERT INTO `withdraw_from_university` (`id`, `student_id`, `semester`, `confirmation`, `status`, `feedback`, `request_date`) VALUES
+(3, 3, 'Spring term 21-22', '', 'Processing', NULL, '0000-00-00 00:00:00');
+INSERT INTO `withdraw_from_university` (`id`, `student_id`, `semester`, `confirmation`, `status`, `feedback`, `request_date`) VALUES
+(4, 3, 'Spring term 21-22', '', 'Processing', NULL, '0000-00-00 00:00:00');
 
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

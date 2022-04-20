@@ -221,35 +221,30 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
         <?php
 
         // show requedted file
-                echo <<< _END
-                <div id="requestData" class="request_data"
-                    style="
-                        position: absolute;
-                        margin-left:16em;
-                        margin-top:20em !important;
-                        background: white;
-                        border-radius: 10px;
-                        opacity: .85;
-                        transform: scale(0.75);
-                    ">
-                    <p  class="super-box-title">Submitted request summary</p>
-                    <table class="table">
-                    <tr>
-                        <th>Type of service</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Feedback</th>
-                        <th>Action</th>
-                    </tr>
-            _END;
-            $tables = array('aid_request', 'change_branch', 'change_track');
 
+            $tables = array('aid_request', 'change_branch', 'change_track');
+            $only_once = true;
             foreach ($tables as $table) {
                 $get_requested = "SELECT * FROM `$table` WHERE student_id = {$student_id['id']}";
             
                 $requested_result = mysqli_query($services_con, $get_requested);
                 if (mysqli_num_rows($requested_result) > 0) {
-
+                    if($only_once){
+                        echo <<< _END
+                        <div id="requestData" class="request_data">
+                            <p  class="super-box-title">Submitted request summary</p>
+                            <table class="table">
+                            <tr>
+                                <th>Type of service</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Feedback</th>
+                                <th>Action</th>
+                            </tr>
+                        _END;
+                        echo "<script>$('#requestData').attr('style', 'margin-left: 15.5em !important');</script>";
+                        $only_once = false;
+                    }
                     while ($requested = mysqli_fetch_assoc($requested_result)) {
                         $requested['feedback'] = $requested['feedback'] ? $requested['feedback'] : 'No feedback'; 
                         echo <<<_END
@@ -697,6 +692,7 @@ if (isset($_POST['submit'])) {
                     </div>
                 _END;
             }
+            
             break;
 
         case 'change_branch':
@@ -849,6 +845,8 @@ if (isset($_POST['submit'])) {
             # code...
             break;
     }
+    echo '<meta http-equiv="refresh" content="2">';
+
 }
 
 if(isset($_POST['delete'])){

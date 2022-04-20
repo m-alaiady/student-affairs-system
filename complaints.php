@@ -54,7 +54,7 @@ $get_all_student_courses = "
         
         .request_data{
             position: absolute;
-            margin-left:19em;
+            margin-left:20em;
             margin-top:25em !important;
             background: white;
             border-radius: 10px;
