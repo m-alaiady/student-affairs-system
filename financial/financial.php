@@ -40,27 +40,34 @@ if( !isset($_SESSION['student_id']))
         .student_data{
             all: unset;
             position: absolute;
-            margin-left:15em;
-            margin-top:5em;
+            margin-left:18em;
+            margin-top:7em;
             background: white;
             border-radius: 10px;
             opacity: .85;
-            transform: scale(0.70);
+            transform: scale(0.80);
         }
         .student_data_2{
             all: unset;
             position: absolute;
-            margin-left:18em;
-            margin-top:16.5em;
+            margin-left:19em;
+            margin-top:21em;
             background: white;
             border-radius: 10px;
             opacity: .85;
-            transform: scale(0.70);           
+            transform: scale(0.75);           
+        }
+        .student_data_2::after{
+            content: " ";
+            white-space: pre;
+            padding: 10em;
+        }
+        .logo, .foot{
+            z-index: 999;
         }
         .foot{
             position: fixed;
             opacity: 1;
-            z-index: 999;
         }
         .header{
             margin: 0 2em;

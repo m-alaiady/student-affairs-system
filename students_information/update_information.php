@@ -40,6 +40,15 @@ if( !isset($_SESSION['student_id']))
             opacity: .85;
             padding: 0; 
         }
+        .alert{
+            position: absolute;
+            top: 7em;
+            left: 19em;
+            padding: 20px;
+            color: white;
+            width: 50%;
+            transform: scale(0.85);
+        }
     </style>
 </head>
 
@@ -136,24 +145,30 @@ if(isset($_POST['submit'])){
     if(mysqli_affected_rows($con))
     {
         echo <<< _END
-            <div class="alert success">
+            <div id="alert" class="alert success">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
                 <p>Information updated successfully</p>
             </div>
         _END;
-        // after 2 second refresh the page (to view the new changes)
-        header("Refresh:2");
+        header('Refresh: 2');
     }
     else{
         echo <<< _END
-            <div class="alert error">
+            <div id="alert" class="alert error">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
                 <p>Sorry! We couldn't udpate the information, Try later!</p>
             </div>
         _END;
-        die;
     }
 
+    echo <<< _END
+        <script>
+            setTimeout(function(){
+                history.replaceState("", document.title, window.location.pathname);
+                document.getElementById('alert').style.display = 'none';
+            }, 3000);
+        </script>
+    _END;
 
 }
 

@@ -39,13 +39,13 @@ $get_all_student_courses = "
        .student_data{
             all: unset;
             position: absolute;
-            margin-left:20vw;
+            margin-left:23vw;
             margin-top:200px;
             background: white;
             border-radius: 10px;
             padding-bottom: 2em;
             opacity: .85;
-            transform: scale(0.85);
+            max-width: 70%;
         }
         .student_data_print_btn {
             all: unset;

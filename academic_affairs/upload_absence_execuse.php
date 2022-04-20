@@ -70,45 +70,47 @@ function store_file($file, $course_id, $uploaded_file_result){
                     if(move_uploaded_file($file_tmp, $file_destination)){
                         $insert_file = "INSERT INTO `absence_excuses` (file_name, student_id, course_id) VALUES ('$file_name_new', '$std_id', '$course_id')";
                         if(mysqli_query($con,$insert_file)){
-                            echo <<< _END
-                                <div class="alert success">
-                                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                                    <p>File Uploaded Successfully!</p>
-                                </div>
-                            _END;
+                            // echo <<< _END
+                            //     <div class="alert success">
+                            //         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                            //         <p>File Uploaded Successfully!</p>
+                            //     </div>
+                            // _END;
                             // header('Refresh: 2');
+                            return 1;
                         }
                         else{
                             $err = mysqli_error($con);
-                            echo <<< _END
-                                <div class="alert error">
-                                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                                    <p>Something Went Wrong in the database: {$err}</p>
-                                </div>
-                            _END;
+                            // echo <<< _END
+                            //     <div class="alert error">
+                            //         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                            //         <p>Something Went Wrong in the database: {$err}</p>
+                            //     </div>
+                            // _END;
+                            return 0;
                         }
                     }
                 }
-                else{
-                    // if file too large
-                    echo <<< _END
-                        <div class="alert error">
-                            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                            <p>File is too large!</p>
-                        </div>
-                    _END;
-                }
+                // else{
+                //     // if file too large
+                //     echo <<< _END
+                //         <div class="alert error">
+                //             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                //             <p>File is too large!</p>
+                //         </div>
+                //     _END;
+                // }
             }
         }
     }
-    else{
-        echo <<< _END
-            <div class="alert error">
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                <p>File already uploaded!</p>
-            </div>
-        _END;
-    }
+    // else{
+    //     echo <<< _END
+    //         <div class="alert error">
+    //             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+    //             <p>File already uploaded!</p>
+    //         </div>
+    //     _END;
+    // }
 
 }
 ?>
@@ -206,14 +208,14 @@ function store_file($file, $course_id, $uploaded_file_result){
                 if(mysqli_num_rows($student_courses_result) > 0){
                     echo <<< _END
                         <div class="student_data">
-                        <p class="super-box-title">Student Absences</p>
-                        <table class="table">
-                        <tr>
-                           <th>Course Code</th>
-                           <th>Student's Absences</th>
-                           <th>File</th>
-                           <th>Action</th>
-                        </tr>
+                            <p class="super-box-title">Student Absences</p>
+                            <table class="table">
+                            <tr>
+                                <th>Course Code</th>
+                                <th>Student's Absences</th>
+                                <th>File</th>
+                                <th>Action</th>
+                            </tr>
                      _END;
                     $count_absences = 0;
                     while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
@@ -295,6 +297,7 @@ function store_file($file, $course_id, $uploaded_file_result){
                             </div>
                      _END;
                 }
+            echo "</div>";
 
             ?>
 
@@ -358,7 +361,26 @@ foreach ($courses as $course) {
         $uploaded_file_result = mysqli_query($con, $get_uploaded_file);
 
         // print_r($file['name']['file']);
-        store_file($file, $course_id, $uploaded_file_result);
+        $flag = store_file($file, $course_id, $uploaded_file_result);
+        if($flag){
+            echo <<< _END
+                    </div>
+                    <div class="alert success">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                        <p>File Uploaded Successfully!</p>
+                    </div>
+                _END;
+            header('Refresh: 2');
+        }
+        else{
+            echo <<< _END
+                    </div>
+                    <div class="alert error">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                        <p>Something Went Wrong in the database: {$err}</p>
+                    </div>
+                _END;
+        }
     }
 }
 
@@ -368,6 +390,7 @@ if(isset($_POST['delete'])){
     $delete_result = mysqli_query($con, $query);
     if(mysqli_affected_rows($con)){
         echo <<< _END
+            </div>
             <div class="alert success">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
                 <p>File Deleted Successfully!</p>
@@ -375,6 +398,7 @@ if(isset($_POST['delete'])){
         _END;
     }else{
         echo <<< _END
+            </div>
             <div class="alert error">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
                 <p>Unable to delete file!</p>

@@ -115,7 +115,7 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
          .student_data{
             all: unset;
             position: absolute;
-            margin-left:22vw;
+            margin-left:22em;
             margin-top:10em;
             background: white;
             border-radius: 10px;
@@ -138,8 +138,8 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
         
         .request_data{
             position: absolute;
-            margin-left:17em;
-            margin-top:25em !important;
+            margin-left:20.5em;
+            margin-top:20em !important;
             background: white;
             border-radius: 10px;
             opacity: .85;
@@ -166,12 +166,26 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
             width: 50%;
             transform: scale(0.75);
         }
+        .logo, .foot{
+            z-index: 999;
+        }
+        .request_data::after{
+            content: "";
+            padding: 5em;
+        }
+        .foot{
+            position: fixed;
+        }
+        textarea{
+            border: 1px solid black;
+        }
     </style>
 </head>
 
 
 <body>
     <form method="post" enctype="multipart/form-data">
+    <div id="service"></div>
 
         <div class="student_data">
             <p class="super-box-title">Services</p>
@@ -184,7 +198,7 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
                         <select id="servicesList" onchange="services('<?php echo $semester ?>');">
                             <option selected disabled hidden>-- Select Service --</option>
                             <option value="change_track">Change Track</option>
-                            <option value="center_transfer">Branch - center transfer</option>
+                            <option value="change_branch">Branch - center transfer</option>
                             <option value="semester_postponing">Semester Postponing</option>
                             <option value="semester_excuse">Semester Excuse</option>
                             <option value="english_equalize">English Equalize</option>
@@ -203,9 +217,72 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
         </div>
     </form>
 
-    <div id="service"></div>
 
+        <?php
 
+        // show requedted file
+                echo <<< _END
+                <div id="requestData" class="request_data"
+                    style="
+                        position: absolute;
+                        margin-left:16em;
+                        margin-top:20em !important;
+                        background: white;
+                        border-radius: 10px;
+                        opacity: .85;
+                        transform: scale(0.75);
+                    ">
+                    <p  class="super-box-title">Submitted request summary</p>
+                    <table class="table">
+                    <tr>
+                        <th>Type of service</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Feedback</th>
+                        <th>Action</th>
+                    </tr>
+            _END;
+            $tables = array('aid_request', 'change_branch', 'change_track');
+
+            foreach ($tables as $table) {
+                $get_requested = "SELECT * FROM `$table` WHERE student_id = {$student_id['id']}";
+            
+                $requested_result = mysqli_query($services_con, $get_requested);
+                if (mysqli_num_rows($requested_result) > 0) {
+
+                    while ($requested = mysqli_fetch_assoc($requested_result)) {
+                        $requested['feedback'] = $requested['feedback'] ? $requested['feedback'] : 'No feedback'; 
+                        echo <<<_END
+                            <tr>
+                                <td>
+                                    {$table}
+                                </td>
+                                <td>
+                                    {$requested['request_date']} 
+                                </td>
+                                <td>
+                                    {$requested['status']} 
+                                </td>
+                                <td>
+                                    {$requested['feedback']} 
+                                </td>
+                                <td>
+                                    <div class="delete">
+                                        <form method="post">
+                                            <input type="hidden" name="id" value="{$requested['id']}" />
+                                            <input type="hidden" name="service_type" value="{$table}" />
+                                            <input type="submit" name="delete" value="Delete" />
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        _END;
+                    }
+                }
+            }
+        echo "</table></div>";
+
+        ?>
 
 </body>
 
@@ -246,7 +323,7 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
                     </form>
                 `;
                 break;
-            case 'center_transfer':
+            case 'change_branch':
                 table = `
                     <form method="post">
                         <table>
@@ -276,7 +353,7 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
                                     </select>
                                 </td>
                                 <td><input type="submit" name="submit" class="student_data_print_btn" value="Submit"></td>
-                                <input type="hidden" name="service_type" value="center_transfer">
+                                <input type="hidden" name="service_type" value="change_branch">
                             </tr>
                         </table>
                     </form>
@@ -468,7 +545,7 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
                 break;
         }
         document.getElementById('service').innerHTML = `
-            <div class="student_data" style='margin-top: 20em !important; margin-left: 18.5em !important'>
+            <div class="student_data" style='margin-top: 6em !important; margin-left: 40em !important; transform:scale(0.70)'>
                 <p class="super-box-title">${select.options[select.selectedIndex].text}</p>
                 
                 <div class="row">
@@ -518,7 +595,7 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
         }
         // document.write(options)
         document.getElementById('facultiesResult').innerHTML = options;
-
+        // $('#requestData').attr('style', 'margin-top: 27em !important');
     }
 
     function get_centers() {
@@ -588,6 +665,7 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
         }
         // document.write(options)
         document.getElementById('facultiesResult').innerHTML = options;
+        document.getElementsByClassName('request_data')[0].style.marginTop = '20em';
 
     }
 </script>
@@ -621,7 +699,7 @@ if (isset($_POST['submit'])) {
             }
             break;
 
-        case 'center_transfer':
+        case 'change_branch':
             $country = $_POST['country'];
             $city = $_POST['city'];
             $insert = "INSERT INTO `change_branch` (student_id, branch, center) VALUES ('$stid', '$country', '$city')";
@@ -771,6 +849,34 @@ if (isset($_POST['submit'])) {
             # code...
             break;
     }
+}
+
+if(isset($_POST['delete'])){
+    // print_r($_POST); die;
+    $id = $_POST['id'];
+    $table = $_POST['service_type'];
+    $query = "DELETE FROM `$table` WHERE id = $id";
+    $delete_result = mysqli_query($services_con, $query);
+    if(mysqli_affected_rows($services_con)){
+        echo <<< _END
+        </div>
+        <div class="alert success">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <p>File Deleted Successfully!</p>
+        </div>
+    _END;
+    // <meta http-equiv="refresh" content="2">
+
+    }else{
+        echo <<< _END
+        </div>
+        <div class="alert error">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <p>Unable to delete the file!</p>
+        </div>
+        _END;
+    }
+    echo '<meta http-equiv="refresh" content="2">';
 }
 
 ?>

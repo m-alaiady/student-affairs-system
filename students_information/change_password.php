@@ -108,18 +108,24 @@ if(isset($_POST['submit'])){
                 if(mysqli_affected_rows($con))
                 {
                     echo <<< _END
-                    <div class="alert success">
+                    <div id="alert" class="alert success">
                         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
                         <p>Password Changed Successfully!</p>
                     </div>
+                    <script>
+                        setTimeout(function(){
+                            history.replaceState("", document.title, window.location.pathname);
+                            document.getElementById('alert').style.display = 'none';
+                        }, 3000);
+                    </script>
                     _END;
                     // after 2 second refresh the page (to view the new changes)
-                    header("Refresh:2");
+                    // header("Refresh:2");
                 }
             }
             else{
                 echo <<< _END
-                <div class="alert error">
+                <div id="alert" class="alert error">
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
                     <p>New password do not match the confirmation!</p>
                 </div>
@@ -130,14 +136,14 @@ if(isset($_POST['submit'])){
         // old password doesnt match the the input
         else{
             echo <<< _END
-            <div class="alert error">
+            <div id="alert" class="alert error">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
                 <p>Invalid Current Password!</p>
             </div>
             _END;
             die;
         }
-       
+    
        
     }
    

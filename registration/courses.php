@@ -71,7 +71,7 @@ $courses_data= mysqli_fetch_assoc($student_courses_result);
     .registered-courses{
         position: absolute;
         margin-left:17.5em;
-        margin-top:32em;
+        margin-top:35em;
         background: white;
         border-radius: 10px;
         opacity: .85;
@@ -379,7 +379,7 @@ if (location.href.indexOf("#") != -1) {
     if(message.includes('flag1')){
         message = message.replace('flag1','');
         document.getElementById('status').innerHTML = `
-        <div class="alert success">
+        <div id="alert" class="alert success">
             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
             <p>${message}</p>
         </div>
@@ -387,14 +387,16 @@ if (location.href.indexOf("#") != -1) {
     }else{
         message = message.replace('flag2','');
         document.getElementById('status').innerHTML = `
-        <div class="alert error">
+        <div id="alert" class="alert error">
             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
             <p>${message}</p>
         </div>
         `;
     }
     setTimeout(function(){
-        location.href = "";
+        // window.location.replace('#','');
+        history.replaceState("", document.title, window.location.pathname);
+        document.getElementById('alert').style.display = 'none';
     }, 3000);
 }
 

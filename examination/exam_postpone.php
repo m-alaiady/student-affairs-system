@@ -146,6 +146,9 @@ function store_file($file, $course)
             width: 50%;
             transform: scale(0.75);
         }
+        select{
+            border: 1px solid black;
+        }
     </style>
 </head>
 

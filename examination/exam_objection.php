@@ -52,24 +52,24 @@ $get_all_student_courses = "
         .student_data{
             all: unset;
             position: absolute;
-            margin-left:20vw;
+            margin-left:23vw;
             margin-top:10em;
             background: white;
             border-radius: 10px;
             padding-bottom: 2em;
             opacity: .85;
-            transform: scale(0.90);
+            max-width: 70%;
         }
         .request_data{
             all: unset;
             position: absolute;
-            margin-left:17.5vw;
-            margin-top:25em;
+            margin-left:23vw;
+            margin-top:27em;
             background: white;
             border-radius: 10px;
             padding-bottom: 2em;
             opacity: .85;
-            transform: scale(0.85);
+            /* transform: scale(0.85); */
         }
         .delete{
             margin-top: 1.025em;
@@ -85,12 +85,24 @@ $get_all_student_courses = "
         }
         .alert {
             position: absolute;
-            top: 7em;
-            left: 21em;
+            top: 6em;
+            left: 19em;
             padding: 20px;
             color: white;
             width: 50%;
             transform: scale(0.75);
+        }
+        .foot{
+            position: fixed;
+            opacity: 1;
+        }
+        .request_data::after{
+            content: " ";
+            white-space: pre;
+            padding: 5em;
+        }
+        .logo, .foot{
+            z-index: 999;
         }
     </style>
 </head>
@@ -158,33 +170,42 @@ $get_all_student_courses = "
 $get_requested = "SELECT * FROM `exam_objection` WHERE student_id = {$student_id['id']}";
 $requested_result = mysqli_query($exam_con, $get_requested);
 if(mysqli_num_rows($requested_result) > 0){
-    echo '<div class="request_data">
-        <p  class="super-box-title">Submitted request summary</p>';
+    echo <<<  _END
+        <div class="request_data">
+            <p  class="super-box-title">Submitted request summary</p>
+            <table class="table">
+            <tr>
+                <th>Course</th>
+                <th>Status</th>
+                <th>Feedback</th>
+                <th>Action</th>
+            </tr>
+    _END;    
     while( $requested= mysqli_fetch_assoc($requested_result)){
+        $requested['feedback'] = $requested['feedback'] ? $requested['feedback'] : 'No feedback'; 
         echo <<<_END
-            <div class="row">
-                <div class="student box"  style="min-width: 35em">
-                    <p class="box-title">Course</p>
-                    <p>{$requested['course']}</p>
-                </div>
-                <div class="student_id box">
-                    <p class="box-title">Status</p>
-                    <p>{$requested['status']}</p>
-                </div>
-                <div class="SSN box"  style="min-width: 2.5em">
-                    <p class="box-title">Feedback</p>
-                    <p>{$requested['feedback']}</p>
-                </div>
-                <div class="delete">
-                    <form method="post">
-                        <input type="hidden" name="id" value="{$requested['id']}" />
-                        <input type="submit" name="delete" value="Delete" />
-                    </form>
-                </div>
-            </div>
+            <tr>
+                <td>
+                    {$requested['course']}
+                </td>
+                <td>
+                    {$requested['status']} 
+                </td>
+                <td>
+                    {$requested['feedback']} 
+                </td>
+                <td>
+                    <div class="delete">
+                        <form method="post">
+                            <input type="hidden" name="id" value="{$requested['id']}" />
+                            <input type="submit" name="delete" value="Delete" />
+                        </form>
+                     </div>
+                </td>
+            </tr>
         _END;
     }
-    echo "</div>";
+    echo "</table></div>";
 }
 
 if(isset($_POST['submit'])){
@@ -195,31 +216,45 @@ if(isset($_POST['submit'])){
     $insert = "INSERT INTO `exam_objection` (course, details, student_id) VALUES ('$course', '$details', '$std_id')";  
     if (mysqli_query($exam_con, $insert)) {
         echo <<< _END
+                </div>
                 <div class="alert success">
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
                     <p>File Uploaded Successfully!</p>
                 </div>
             _END;
-        // header('Refresh: 2');
     } else {
         $err = mysqli_error($exam_con);
         echo <<< _END
                 <div class="alert error">
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                    <p>Something Went Wrong in the database: {$err}</p>
+                    <p>Unable to upload the file!</p>
                 </div>
             _END;
     }
+    echo '<meta http-equiv="refresh" content="2">';
+
 }
 if(isset($_POST['delete'])){
     $id = $_POST['id'];
     $query = "DELETE FROM `exam_objection` WHERE id = $id";
     $delete_result = mysqli_query($exam_con, $query);
     if(mysqli_affected_rows($exam_con)){
-        echo "<script>alert('Deleted Successfully')</script>";
+        echo <<< _END
+            </div>
+            <div class="alert success">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <p>File Deleted Successfully!</p>
+            </div>
+        _END;
     }else{
-        echo "Unable to delete";
+        echo <<< _END
+            <div class="alert error">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <p>Unable to delete the file!</p>
+            </div>
+        _END;
     }
+    echo '<meta http-equiv="refresh" content="2">';
 }
 
 ?>

@@ -60,7 +60,7 @@ $get_all_student_courses = "
         .request_data {
             all: unset;
             position: absolute;
-            margin-left:18vw;
+            margin-left:19.5vw;
             margin-top:30em;
             background: white;
             border-radius: 10px;
@@ -88,6 +88,16 @@ $get_all_student_courses = "
             color: white;
             width: 50%;
             transform: scale(0.75);
+        }
+        .logo, .foot{
+            z-index: 999;
+        }
+        .request_data::after{
+            content: "";
+            padding: 5em;
+        }
+        .foot{
+            position: fixed;
         }
     </style>
 </head>
@@ -176,6 +186,106 @@ $get_all_student_courses = "
 
 
 
+
+
+<?php
+if (isset($_POST['submit'])) {
+    $stid = $student_id["id"];
+    $course = $_POST['course_name'];
+    $branch = $_POST['country'];
+    $center = $_POST['city'];
+
+    echo $center;
+
+    $insert = "INSERT INTO `change_exam_location` (student_id, course, branch, center) VALUES ('$stid', '$course', '$branch', '$center')";
+    $result = mysqli_query($exam_con, $insert);
+    if (mysqli_affected_rows($exam_con) > -1) {
+        echo <<< _END
+            <div class="alert success">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <p>Data submitted Successfully!</p>
+            </div>
+        _END;
+    } else {
+        $err =  mysqli_error($exam_con);
+        echo <<< _END
+            <div class="alert error">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <p>We could not save the data<br />Error message: {$err}</p>
+            </div>
+        _END;
+    }
+    echo '<meta http-equiv="refresh" content="2">';
+}
+
+// show requedted file
+$get_requested = "SELECT * FROM `change_exam_location` WHERE student_id = {$student_id['id']}";
+$requested_result = mysqli_query($exam_con, $get_requested);
+if (mysqli_num_rows($requested_result) > 0) {
+    echo <<< _END
+        <div class="request_data">
+            <p  class="super-box-title">Submitted request summary</p>
+            <table class="table">
+            <tr>
+                <th>Course</th>
+                <th>Status</th>
+                <th>Feedback</th>
+                <th>Action</th>
+            </tr>
+    _END;
+    while ($requested = mysqli_fetch_assoc($requested_result)) {
+        $requested['feedback'] = $requested['feedback'] ? $requested['feedback'] : 'No feedback'; 
+        echo <<<_END
+            <tr>
+                <td>
+                    {$requested['course']}
+                </td>
+                <td>
+                    {$requested['status']} 
+                </td>
+                <td>
+                    {$requested['feedback']} 
+                </td>
+                <td>
+                    <div class="delete">
+                        <form method="post">
+                            <input type="hidden" name="id" value="{$requested['id']}" />
+                            <input type="submit" name="delete" value="Delete" />
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        _END;
+    }
+    echo "</table></div>";
+}
+
+
+if(isset($_POST['delete'])){
+    $id = $_POST['id'];
+    $query = "DELETE FROM `change_exam_location` WHERE id = $id";
+    $delete_result = mysqli_query($exam_con, $query);
+    if(mysqli_affected_rows($exam_con)){
+        echo <<< _END
+            </div>
+            <div class="alert success">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <p>File Deleted Successfully!</p>
+            </div>
+        _END;
+    }else{
+        echo <<< _END
+            </div>
+            <div class="alert error">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <p>Unable to delete the file!</p>
+            </div>
+        _END;
+    }
+    echo '<meta http-equiv="refresh" content="2">';
+}
+?>
+
 </body>
 
 </html>
@@ -250,78 +360,3 @@ $get_all_student_courses = "
 
     }
 </script>
-
-<?php
-if (isset($_POST['submit'])) {
-    $stid = $student_id["id"];
-    $course = $_POST['course_name'];
-    $branch = $_POST['country'];
-    $center = $_POST['city'];
-
-    echo $center;
-
-    $insert = "INSERT INTO `change_exam_location` (student_id, course, branch, center) VALUES ('$stid', '$course', '$branch', '$center')";
-    $result = mysqli_query($exam_con, $insert);
-    if (mysqli_affected_rows($exam_con) > -1) {
-        echo <<< _END
-            <div class="alert success">
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                <p>Data submitted Successfully!</p>
-            </div>
-        _END;
-    } else {
-        $err =  mysqli_error($exam_con);
-        echo <<< _END
-            <div class="alert error">
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                <p>We could not save the data<br />Error message: {$err}</p>
-            </div>
-        _END;
-    }
-}
-
-// show requedted file
-$get_requested = "SELECT * FROM `change_exam_location` WHERE student_id = {$student_id['id']}";
-$requested_result = mysqli_query($exam_con, $get_requested);
-if (mysqli_num_rows($requested_result) > 0) {
-    echo '<div class="request_data">
-        <p  class="super-box-title">Submitted request summary</p>';
-    while ($requested = mysqli_fetch_assoc($requested_result)) {
-        echo <<<_END
-            <div class="row">
-                <div class="student box" style="min-width: 35em">
-                    <p class="box-title">Course</p>
-                    <p>{$requested['course']}</p>
-                </div>
-                <div class="student_id box" style="min-width: 2.5em">
-                    <p class="box-title">Status</p>
-                    <p>{$requested['status']}</p>
-                </div>
-                <div class="SSN box" style="min-width: 2.5em">
-                    <p class="box-title">Feedback</p>
-                    <p>{$requested['feedback']}</p>
-                </div>
-                <div class="delete">
-                    <form method="post">
-                        <input type="hidden" name="id" value="{$requested['id']}" />
-                        <input type="submit" name="delete" value="Delete" />
-                    </form>
-                </div>
-            </div>
-        _END;
-    }
-    echo "</div>";
-}
-
-
-if(isset($_POST['delete'])){
-    $id = $_POST['id'];
-    $query = "DELETE FROM `change_exam_location` WHERE id = $id";
-    $delete_result = mysqli_query($exam_con, $query);
-    if(mysqli_affected_rows($exam_con)){
-        echo "<script>alert('Deleted Successfully')</script>";
-    }else{
-        echo "Unable to delete";
-    }
-}
-?>
