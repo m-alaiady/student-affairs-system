@@ -36,11 +36,14 @@ $head = "
             justify-content: space-between;
         }
         .logo{
-            margin-top: -60x;
-            margin-left: 450px;
+            margin-top: -800px;
+            margin-left: 39%;
             width: 50%;
         }
         .text p{
+            font-size: 1.6em;
+            font-weight: bold;
+            text-align: center;
             margin-bottom: -50px;
             z-index: -5;
         }
@@ -58,11 +61,14 @@ $html = $head;
 
 $html .= "
     <div class='header'>
-        <div class='text'>
-            <p>Statement of Credits Hours Completed by Students</p>
-        </div>
+        
         <div class='logo'>
-            <img src='logo.png' alt='logo' width='250'/>
+            <img src='aou-logo.png' alt='logo' width='150'/>
+        </div>
+        <br>
+        <div class='text'>
+            <p>Academic Status</p>
+            <br><br><br><br>
         </div>
     </div>
     ";

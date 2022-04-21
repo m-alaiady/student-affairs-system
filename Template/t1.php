@@ -359,7 +359,7 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
 
 <style>
 ::-webkit-scrollbar {
-  width: 20px;
+  width: 10px;
 }
 
 /* Track */
