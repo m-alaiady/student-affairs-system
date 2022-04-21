@@ -64,7 +64,7 @@ $head = "
             border-width: 2px;
         }
         th, td{
-            padding: 1.4em;
+            padding: 1em;
         }
         .footer{
             display:flex;
@@ -119,10 +119,7 @@ $html .= "
             <th>College</th> <td colspan='3'>" . ucwords($faculty['name']) . "</td>
             <th>Major</th> <td colspan='1'>" . $data['major'] . "</td>
         </tr>
-        <tr>
-            <th>Level</th> <td colspan='3'>" . $data['level'] . "</td>
-            <th>Degree</th> <td colspan='1'>" . $data['degree'] . "</td>
-        </tr>
+        
         <tr>
             <th>Academic Status</th> <td colspan='3'>" . ($data['status'] == '1' ? 'Active' : 'Not active') . "</td>
             <th>Branch</th> <td colspan='1'>" . ucwords($faculty['branch']) . "</td>
@@ -144,8 +141,7 @@ if (mysqli_num_rows($student_courses_result) > 0) {
     <br />
     <table>
         <tr>
-            <th>No.</th>
-            <th>Reference No.</th>
+        
             <th>Course Code</th>
             <th>Course</th>
             <th>Time</th>
@@ -177,8 +173,7 @@ if (mysqli_num_rows($student_courses_result) > 0) {
 
             $html .= "
             <tr>
-                <td>{$counter}</td>
-                <td>{$courses_data['id']}</td>
+               
                 <td>{$courses_data['course_id']}</td>
                 <td style='width: 22%'>{$courses_data['course_name']}</td>
                 <td style='width: 22%'>{$time_format}</td>
