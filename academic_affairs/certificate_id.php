@@ -45,7 +45,7 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
     <style>
         .student_data{
             position: absolute;
-            margin-left:25vw;
+            margin-left:20vw;
             margin-top:7em;
             background: white;
             border-radius: 10px;
@@ -227,6 +227,91 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
                 <a href="print_schedule_statement.php" class="student_data_print_btn" style="text-decoration: none;" target="_blank"><span class="fa fa-print"></span> Print </a>
                 </div>
                     `;
+                table = `
+                    <table class="table">
+                         <tr>
+                            <th>Course Code</th>
+                            <th>Course Name</th>
+                            <th>Time</th>
+                            <th>Room</th>
+                            <th>Day</th>
+                            <th>Lecture Type</th>
+                         </tr>
+                    `;
+                <?php 
+                    $get_all_student_courses = "
+                    SELECT  
+                        enrolled.absences, courses.*, sections.*, sections.id as section_id, courses.course_id as course_id, courses_time.time, teachers.teacher_name
+                    FROM 
+                        enrolled
+                        JOIN sections ON enrolled.section_id = sections.id
+                        JOIN courses ON sections.course_id = courses.id
+                        JOIN courses_time ON courses_time.id = sections.time_id
+                        JOIN teachers ON teachers.id = sections.tutor_id
+                    WHERE 
+                        enrolled.student_id = '$std_id'";
+                    $student_courses_result = mysqli_query($con, $get_all_student_courses);
+
+                    while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
+                        $day_and_times = explode(' ', $courses_data['time']);
+                        $days = array();
+                        $times = array();
+
+                        // split time and day from string
+                        foreach ($day_and_times as $day_and_time) {
+                            if (DateTime::createFromFormat('H:i', $day_and_time) !== false) {
+                                array_push($times, $day_and_time);
+                            } else {
+                                array_push($days, $day_and_time);
+                            }
+                        }
+                        $lecture_or_lab = "lecture_type";
+                        $room = $courses_data['room'];
+                        foreach ($times as $index => $time) {
+                            if($lecture_or_lab == "lab_type"){
+                                $room = "Virtual";
+                            }
+                            $time_oo = strtotime($time);
+                            $time_format = date('H:i', strtotime($time));
+                            $time_format = $time_format . " - " . date('H:i', strtotime('+50 minutes', $time_oo));
+                ?>
+                               table +=`<tr>
+                                    <td>
+                                        <?php echo $courses_data['course_id'] ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $courses_data['course_name'] ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $time_format; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $room?>
+                                    </td>
+                                    <td>
+                                        <?php echo  $days[$index] ?>
+                                    </td>
+                                    <td>
+                                        <?php echo  $courses_data[$lecture_or_lab]  ?>
+                                    </td>
+                                </tr>
+                                `;
+                      <?php  
+                      
+                            if ($lecture_or_lab == "lecture_type") {
+                                $lecture_or_lab = "lab_type";
+                            } else {
+                                $lecture_or_lab = "lecture_type";
+                            }
+                        } 
+                      }
+                    ?>
+                    table += `
+                        </table>
+                        <div class="row">
+                            <a href="print_schedule_statement.php" class="student_data_print_btn" style="text-decoration: none;" target="_blank"><span class="fa fa-print"></span> Print </a>
+                        </div>
+                    `;
                 break;
             case 'semester_postponing':
                 table = `
@@ -330,7 +415,7 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
                 break;
         }
         document.getElementById('service').innerHTML = `
-            <div class="student_data" style='margin-top: 17em !important; margin-left: 25vw !important'>
+            <div class="student_data" style='margin-top: 17em !important; margin-left: 20vw !important'>
                 <p class="super-box-title">${select.options[select.selectedIndex].text}</p>
                 <div class="row">
                     <div class="box">
