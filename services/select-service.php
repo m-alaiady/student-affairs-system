@@ -222,7 +222,7 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
 
         // show requedted file
 
-            $tables = array('aid_request', 'change_branch', 'change_track');
+            $tables = array('aid_request', 'change_branch', 'change_track', 'courses_equalize', 'english_equalize','id_reissuing','semester_excuse','semester_postponing', 'social_reward', 'withdraw_from_university');
             $only_once = true;
             foreach ($tables as $table) {
                 $get_requested = "SELECT * FROM `$table` WHERE student_id = {$student_id['id']}";

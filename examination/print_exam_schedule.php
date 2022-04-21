@@ -23,7 +23,7 @@ $get_id_result=mysqli_query($con,$get_id);
 $student_id= mysqli_fetch_assoc($get_id_result);
 
 $get_all_student_courses = "
-        SELECT  enrolled.grade, enrolled.absences, courses.*, sections.id as section_id, sections.*, courses_time.time, teachers.teacher_name
+        SELECT  enrolled.grade, enrolled.absences, courses.*,courses.course_id as c_id, sections.id as section_id, sections.*, courses_time.time, teachers.teacher_name
         FROM enrolled
         JOIN sections
             ON enrolled.section_id = sections.id
@@ -104,7 +104,7 @@ while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
 
     $html .= "
         <tr>
-            <td>{$courses_data['course_id']}</td> 
+            <td>{$courses_data['c_id']}</td> 
             <td>{$courses_data['course_name']}</td>
             <td>{$courses_data['exam_date']}</td>
             <td>{$course_time}</td>

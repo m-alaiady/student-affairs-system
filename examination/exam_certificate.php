@@ -16,7 +16,7 @@ $get_id_result = mysqli_query($con, $get_id);
 $student_id = mysqli_fetch_assoc($get_id_result);
 
 $get_all_student_courses = "
-        SELECT  enrolled.absences, courses.*, sections.id as section_id,sections.*, courses_time.time, teachers.teacher_name
+        SELECT  enrolled.absences, courses.*,courses.course_id as c_id, sections.id as section_id,sections.*, courses_time.time, teachers.teacher_name
         FROM enrolled
         JOIN sections
             ON enrolled.section_id = sections.id
@@ -92,7 +92,7 @@ $get_all_student_courses = "
                                 $course_time = $courses['exam_time'] > 12 ?  $courses['exam_time'] . ' PM' : $courses['exam_time'] . ' AM';
                                 echo <<<_END
                                     <tr>
-                                        <td>{$courses['course_name']}</td>
+                                        <td>{$courses['c_id']}</td>
                                         <td>{$courses['course_name']}</td>
                                         <td>{$courses['exam_date']}</td>
                                         <td>{$course_time}</td>
