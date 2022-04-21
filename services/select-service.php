@@ -225,8 +225,9 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
             $tables = array('aid_request', 'change_branch', 'change_track', 'courses_equalize', 'english_equalize','id_reissuing','semester_excuse','semester_postponing', 'social_reward', 'withdraw_from_university');
             $only_once = true;
             foreach ($tables as $table) {
+                $service_type = ucwords(str_replace("_", " ", $table));
                 $get_requested = "SELECT * FROM `$table` WHERE student_id = {$student_id['id']}";
-            
+                
                 $requested_result = mysqli_query($services_con, $get_requested);
                 if (mysqli_num_rows($requested_result) > 0) {
                     if($only_once){
@@ -250,7 +251,7 @@ $semester = get_season($today) . ' term ' . (date("y") - 1) . '-' . date("y");
                         echo <<<_END
                             <tr>
                                 <td>
-                                    {$table}
+                                    {$service_type}
                                 </td>
                                 <td>
                                     {$requested['request_date']} 
