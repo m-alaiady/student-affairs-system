@@ -211,7 +211,7 @@ if($courses_data <= 0){
                             <div class="view-section viewSections" id="{$row['id']}" style="    
                                 display: none;
                                 position: absolute;
-                                margin-left:30em;
+                                margin-left:25em;
                                 margin-top:16em;
                                 background: white;
                                 border-radius: 10px;
@@ -225,7 +225,7 @@ if($courses_data <= 0){
                             <tr>
                                 <th>Sections</th>
                                 <th>Tutor</th>
-                                <th>Schedule</th>
+                                <th colspan="2">Time</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -235,7 +235,7 @@ if($courses_data <= 0){
                             <div class="view-section viewSections" id="{$row['id']}" style="    
                             display: none;
                             position: absolute;
-                            margin-left:30em;
+                            margin-left:25em;
                             margin-top:16em;
                             background: white;
                             border-radius: 10px;
@@ -249,7 +249,9 @@ if($courses_data <= 0){
                             <tr>
                                 <th>Sections</th>
                                 <th>Tutor</th>
-                                <th>Schedule</th>
+                                <th colspan="2">
+                                    Time
+                                </th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -261,14 +263,39 @@ if($courses_data <= 0){
 
                         $available = $sections_row['status'] ? '<span style="color:green">Open</span>' : '<span style="color:red">Closed</span>';
                         $action = $sections_row['status'] ? '<span onclick="AddSection(' . $sections_row['id'] . ')" style="color:blue; text-decoration: underline;">Add Section</span>' : '';
+                        $day_and_times = explode(' ', $sections_row['time']);
+                        $days = array();
+                        $times = array();
 
+                        // split time and day from string
+                        foreach ($day_and_times as $day_and_time) {
+                            if (DateTime::createFromFormat('H:i', $day_and_time) !== false) {
+                                array_push($times, $day_and_time);
+                            } else {
+                                array_push($days, $day_and_time);
+                            }
+                        }
+
+                        $time_class = strtotime($times[0]);
+                        $time_virtual = strtotime($times[1]);
+
+                        $time_class_format = date('H:i', strtotime($time_class));
+                        $time_virtual_format = date('H:i', strtotime($time_virtual));
+
+                        $time_class_format = $times[0] . " - " . date('H:i', strtotime('+50 minutes', $time_class));
+                        $time_virtual_format = $times[1] . " - " . date('H:i', strtotime('+50 minutes', $time_virtual));
                         echo <<< _END
                             <tr>
                                 <td> {$sections_row['id']} </td>
                                 <td> {$sections_row['teacher_name']} </td>
-                                <td> 
-                                    {$sections_row['time']}
-                                </td>
+                                    <td> 
+                                        <label style='position:absolute;margin-top: -3em;margin-left: 3em;font-weight:bold;'>Class</label>
+                                        {$days[0]} {$time_class_format}
+                                    </td>
+                                    <td> 
+                                        <label style='position:absolute;margin-top: -3em;margin-left: 3em;font-weight:bold;'>Virtual</label>
+                                        {$days[1]} {$time_virtual_format}
+                                    </td>
                                 <td> {$available} </td>
                                 <td> {$action} </td>
                             </tr>
@@ -303,7 +330,7 @@ if($courses_data > 0){
                 <th>Credits</th>
                 <th>Tutor</th>
                 <th>Price</th>
-                <th>Schedule</th>
+                <th colspan='2'>Time</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
@@ -321,9 +348,31 @@ if($courses_data > 0){
             ON teachers.id = sections.tutor_id
         WHERE enrolled.student_id = '" . $student_id['id'] . "'";
     $student_courses_result = mysqli_query($con, $get_all_student_courses);
+    $print_time_header_once_flag = true;
 
     while( $courses_data= mysqli_fetch_assoc($student_courses_result) ){
         $price = number_format($courses_data['course_price'], 2);
+        $day_and_times = explode(' ', $courses_data['time']);
+        $days = array();
+        $times = array();
+
+        // split time and day from string
+        foreach ($day_and_times as $day_and_time) {
+            if (DateTime::createFromFormat('H:i', $day_and_time) !== false) {
+                array_push($times, $day_and_time);
+            } else {
+                array_push($days, $day_and_time);
+            }
+        }
+
+        $time_class = strtotime($times[0]);
+        $time_virtual = strtotime($times[1]);
+
+        $time_class_format = date('H:i', strtotime($time_class));
+        $time_virtual_format = date('H:i', strtotime($time_virtual));
+
+        $time_class_format = $times[0] . " - " . date('H:i', strtotime('+50 minutes', $time_class));
+        $time_virtual_format = $times[1] . " - " . date('H:i', strtotime('+50 minutes', $time_virtual));
 
         echo <<< _END
             <tr>
@@ -332,11 +381,28 @@ if($courses_data > 0){
                 <td> {$courses_data['credits']} </td>
                 <td> {$courses_data['teacher_name']} </td>
                 <td> {$price} SAR </td>
-                <td> {$courses_data['time']} </td>
+                 <td>
+        _END;
+        if($print_time_header_once_flag){
+            echo "<label style='position:absolute;margin-top: -4em;margin-left: 2.5em;font-weight:bold;'>Class</label>";
+        }
+        echo <<< _END
+                    <span style='white-space: nowrap;'>{$days[0]} {$time_class_format}</span>
+                </td>
+                <td>
+        _END;
+        if($print_time_header_once_flag){
+            echo "<label style='position:absolute;margin-top: -4em;margin-left: 2.5em;font-weight:bold;'>Virtual</label>";
+
+        }
+        echo <<< _END
+                    <span style='white-space: nowrap;'>{$days[1]} {$time_virtual_format}</span>
+                </td>
                 <td> <span style="color:green">Enrolled</span> </td>
                 <td> <span style="color:red; text-decoration: underline;" onclick="ConfirmDelete({$courses_data['section_id']})">Drop</span> </td>
             </tr>
         _END;
+        $print_time_header_once_flag = false;
     }
                 
     echo <<< _END

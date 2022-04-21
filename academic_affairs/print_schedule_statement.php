@@ -165,11 +165,15 @@ if (mysqli_num_rows($student_courses_result) > 0) {
             }
         }
         $lecture_or_lab = "lecture_type";
+        $room = $courses_data['room'];
         foreach ($times as $index => $time) {
+            if($lecture_or_lab == "lab_type"){
+                $room = "Virtual";
+            }
             $counter++;
             $time_oo = strtotime($time);
-            $time_format = date('h:i A', strtotime($time));
-            $time_format = $time_format . " - " . date('h:i A', strtotime('+50 minutes', $time_oo));
+            $time_format = date('H:i', strtotime($time));
+            $time_format = $time_format . " - " . date('H:i', strtotime('+50 minutes', $time_oo));
 
             $html .= "
             <tr>
@@ -177,7 +181,7 @@ if (mysqli_num_rows($student_courses_result) > 0) {
                 <td>{$courses_data['course_id']}</td>
                 <td style='width: 22%'>{$courses_data['course_name']}</td>
                 <td style='width: 22%'>{$time_format}</td>
-                <td>{$courses_data['room']}</td>
+                <td>{$room}</td>
                 <td>$days[$index]</td>
                 <td>{$courses_data[$lecture_or_lab]}</td>
             </tr>
