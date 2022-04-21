@@ -70,12 +70,12 @@ $courses_data= mysqli_fetch_assoc($student_courses_result);
     }
     .registered-courses{
         position: absolute;
-        margin-left:17.5em;
+        margin-left:13em;
         margin-top:35em;
         background: white;
         border-radius: 10px;
         opacity: .85;
-        transform: scale(0.85);
+        transform: scale(0.75);
     }
     .registered-courses::after{
        content: "";
