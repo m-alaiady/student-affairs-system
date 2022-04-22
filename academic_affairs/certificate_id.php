@@ -94,6 +94,9 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
             opacity: .85;
             transform: scale(0.85);
          }
+         table{
+             all:unset;
+         }
     </style>
 </head>
 <body>
@@ -414,8 +417,22 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
                `;
                 break;
         }
+        if(select.options[select.selectedIndex].text == 'Schedule Statement'){
+            document.getElementById('service').innerHTML = `
+            <div class="student_data" style='margin-top: 16.5em !important; margin-left: 22.25vw !important; transform: scale(0.80);'>
+                <p class="super-box-title">${select.options[select.selectedIndex].text}</p>
+                <div class="row">
+                    <div class="box">
+                        <p>
+                            ${table}
+                        </p>
+                    </div>
+                </div>
+            </div>`;
+        }
+        else{
         document.getElementById('service').innerHTML = `
-            <div class="student_data" style='margin-top: 17em !important; margin-left: 22vw !important; transform: scale(0.80);'>
+            <div class="student_data" style='margin-top: 17em !important; margin-left: 23.5vw !important; transform: scale(0.80);'>
                 <p class="super-box-title">${select.options[select.selectedIndex].text}</p>
                 <div class="row">
                     <div class="box">
@@ -426,5 +443,6 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
                 </div>
             </div>
         `;
+        }
     }
 </script>
