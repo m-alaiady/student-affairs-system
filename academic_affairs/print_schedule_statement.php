@@ -64,11 +64,7 @@ $head = "
             border-width: 2px;
         }
         th, td{
-            padding: 1em;
-        }
-        .footer{
-            display:flex;
-            justify-content: space-between;
+            padding: 1.6em;
         }
         .logo{
             margin-top: -60x;
@@ -81,13 +77,6 @@ $head = "
             text-align: center;
             margin-bottom: -50px;
             z-index: -5;
-        }
-        .stamp{
-            text-align: right;
-            margin-top: -5.0em;
-        }
-        .deanship{
-            margin-left: 50px;
         }
     </style>
 ";
@@ -143,7 +132,7 @@ if (mysqli_num_rows($student_courses_result) > 0) {
         <tr>
         
             <th>Course Code</th>
-            <th>Course</th>
+            
             <th>Time</th>
             <th>Room</th>
             <th>Day</th>
@@ -179,7 +168,7 @@ if (mysqli_num_rows($student_courses_result) > 0) {
             <tr>
                
                 <td>{$courses_data['course_id']}</td>
-                <td style='width: 22%'>{$courses_data['course_name']}</td>
+                
                 <td style='width: 22%'>{$time_format}</td>
                 <td>{$room}</td>
                 <td>$days[$index]</td>
@@ -203,20 +192,6 @@ if (mysqli_num_rows($student_courses_result) > 0) {
 else{
     $html .= "<p style='color: crimson'>No courses registered</p>";
 }
-$html .= "   
-    <p></p>
-    <br><br><br><br>
-    <div class='footer'>
-        <div class='signature'>
-            <p>
-                Deanship of admission & Students Affairs<br>
-                        <p class='deanship'>Name Here</p>
-            </p>
-        </div>
-        <div class='stamp'>
-            <p>Stamp</p>
-        </div>
-    </div>";
 
 // echo $html;
 

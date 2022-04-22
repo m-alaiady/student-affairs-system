@@ -45,8 +45,8 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
     <style>
         .student_data{
             position: absolute;
-            margin-left:20vw;
-            margin-top:7em;
+            margin-left:30vw;
+            margin-top:10em;
             background: white;
             border-radius: 10px;
             opacity: .85;
@@ -415,7 +415,7 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
                 break;
         }
         document.getElementById('service').innerHTML = `
-            <div class="student_data" style='margin-top: 17em !important; margin-left: 20vw !important'>
+            <div class="student_data" style='margin-top: 17em !important; margin-left: 22vw !important; transform: scale(0.80);'>
                 <p class="super-box-title">${select.options[select.selectedIndex].text}</p>
                 <div class="row">
                     <div class="box">

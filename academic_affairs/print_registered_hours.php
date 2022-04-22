@@ -53,7 +53,7 @@ $head = "
             border-width: 2px;
         }
         th, td{
-            padding: 2em;
+            padding: 1.8em;
         }
         .footer{
             display:flex;
@@ -90,7 +90,7 @@ $html .= "
             <img src='aou-logo.png' alt='logo' width='150'/>
         </div>
         <div class='text'>
-            <p>Study Duration Statement</p>
+            <p>Statement of Credit Hours Completed by Students</p>
         </div>
         <br><br><br><br>
     </div>
@@ -136,7 +136,7 @@ $html .= "
         <div class='signature'>
             <p>
                 Deanship of admission & Students Affairs<br>
-                        <p class='deanship'>Name Here</p>
+                <p class='deanship'>Name Here</p>
             </p>
         </div>
         <div class='stamp'>

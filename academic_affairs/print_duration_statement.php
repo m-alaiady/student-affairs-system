@@ -52,7 +52,7 @@ $head = "
             border-width: 2px;
         }
         th, td{
-            padding: 2em;
+            padding: 1.8em;
         }
         .footer{
             display:flex;
@@ -122,8 +122,8 @@ $html .= "</table>";
 $html .= "
     <p>
         The Deanship of Admission and Students Affairs certifies that the mentioned above student is one of<br>
-        the regular students who is enrolled in the university during " . $data['acceptance_term'] . " where<br>
-        the credit hours by the student are (" . $data['term_credits'] . ") hours out of (127) credits hours.
+        the regular students who is enrolled in the university during " . $data['acceptance_term'] . " and that<br>
+        the student study at the university during the Evening time
         <br><br>
         This statement was issues upon the student's request without any responsibility upon the university.
     </p>

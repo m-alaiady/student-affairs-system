@@ -52,7 +52,7 @@ $head = "
             border-width: 2px;
         }
         th, td{
-            padding: 2em;
+            padding: 1.8em;
         }
         .footer{
             display:flex;

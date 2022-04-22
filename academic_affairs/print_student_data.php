@@ -29,7 +29,7 @@ $head = "
             border-width: 2px;
         }
         th, td{
-            padding: 2em;
+            padding: 1.6em;
         }
         .footer{
             display:flex;
@@ -108,7 +108,7 @@ $html .= "
         <div class='signature'>
             <p>
                 Deanship of admission & Students Affairs<br>
-                        <p class='deanship'>Dr.Maysoon Khoja</p>
+                <p class='deanship'>Name Here</p>
             </p>
         </div>
         <div class='stamp'>
