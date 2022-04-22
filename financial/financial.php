@@ -46,6 +46,7 @@ if( !isset($_SESSION['student_id']))
             border-radius: 10px;
             opacity: .85;
             transform: scale(0.80);
+            padding-bottom: 2em;
         }
         .student_data_2{
             all: unset;
@@ -81,7 +82,7 @@ if( !isset($_SESSION['student_id']))
 <body>
 <?php 
 
-$reg_id = rand(1000000000,9999999999);
+
 
 
 
@@ -97,41 +98,14 @@ $get_all_student_courses = "
     WHERE enrolled.student_id = '" . $student['id'] . "'";
 $student_courses_result = mysqli_query($con, $get_all_student_courses);
 $courses_data= mysqli_fetch_assoc($student_courses_result);
-/*
-    // <fieldset>
-    //     <legend>Courses Registered</legend>
-    //     <table>
-    //         <tr>
-    //             <th>Course Code</th>
-    //             <th>Section </th>
-    //             <th>Credits</th>
-    //             <th>Tutor</th>
-    //             <th>Price</th>
-    //             <th>Schedule</th>
-    //             <th>Status</th>
-    //         </tr>
-                <tr>
-                <td> {$courses_data['course_id']} </td>
-                <td> {$courses_data['section_id']} </td>
-                <td> {$courses_data['credits']} </td>
-                <td> {$courses_data['teacher_name']} </td>
-                <td> {$price} SAR </td>
-                <td> {$courses_data['time']} </td>
-                <td> <span style="color:green">Enrolled</span> </td>
-            </tr>
 
-*/
 ?>
 <div class="student_data">
     <p class="super-box-title">Registered courses</p>
 <?php
 if($courses_data > 0){
     echo <<< _END
-        <div class="header">
-            <strong>Registeration ID: </strong> 
-            <span>{$reg_id}</span>
-            <strong style='margin-left: 10rem'>Student info:</strong>
-            <span> {$student['s_name']} -  {$student['student_id']} - {$student['email']} </span><br />
+        <div class="header">    
             <div class="registered-courses">
         </div>
         <table class="table">
@@ -189,7 +163,17 @@ if($courses_data > 0){
                 
     echo <<< _END
             </table>
-            <a href="../registration/courses.php">Edit my courses</a>
+            <a href="../registration/courses.php" 
+            style="text-decoration: none; 
+            background: #2691d9; 
+            border-radius: 25px;
+            font-size: 18px; 
+            color: #e9f4fb;
+            padding: 10px;
+            font-weight: 500;
+            margin-left:20em;
+            margin-top: 2em !important; 
+            ">ADD / Drop courses</a>
         </fieldset>
     </div>
     _END;

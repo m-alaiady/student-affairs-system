@@ -21,6 +21,7 @@ include('template/t1.php');
         background: #eee;
       }
       .hom{
+        margin-left: 5em;
         background: white;
         border-radius: 10px;
         opacity: .85;

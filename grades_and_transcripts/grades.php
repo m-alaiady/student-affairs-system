@@ -33,12 +33,12 @@ $get_all_grades_data = "SELECT  enrolled.notes, enrolled.grade,enrolled.absences
         .student_data{
             all:unset;
             position: absolute;
-            margin-left:22em;
-            margin-top:10em;
+            margin-left:29em;
+            margin-top:15em;
             background: white;
             border-radius: 10px;
             opacity: .85;
-            transform: scale(0.85);
+            transform: scale(0.95);
         }
     </style>
 </head>

@@ -48,14 +48,14 @@ $faculty= mysqli_fetch_assoc($faculty_data);
     <style>
          .student_data{
                 position: absolute;
-                margin-left:20vw;
-                margin-top:100px;
+                margin-left:23vw;
+                margin-top:170px;
                 background: white;
                 border-radius: 10px;
                 opacity: .85;
                 /* transform: translate(35%, 50%); */
                 /* padding: 20px;  */
-                transform: scale(0.80);
+                transform: scale(0.87);
             }
             th:nth-child(4){
                 padding: 0 1em;

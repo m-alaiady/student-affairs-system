@@ -35,6 +35,8 @@ if( !isset($_SESSION['student_id']))
         }
      
         .update{
+            margin-left: 5em;
+            margin-top: 1em;
             background: white;
             border-radius: 10px;
             opacity: .85;

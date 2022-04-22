@@ -158,14 +158,14 @@ function store_file($file, $course_id, $uploaded_file_result){
             }
         .student_data{
                 position: absolute;
-                margin-left:20vw;
-                margin-top:10em;
+                margin-left:28vw;
+                margin-top:170px;
                 background: white;
                 border-radius: 10px;
                 opacity: .85;
                 /* transform: translate(35%, 50%); */
                 /* padding: 20px;  */
-                transform: scale(0.80);
+                transform: scale(0.87);
             }
             .row{
                 all: unset;

@@ -128,12 +128,12 @@ if( !isset($_SESSION['paid']) ){
         echo <<< _END
                 <div class="student_data" style="
                     position: absolute;
-                    margin-left:15em;
-                    margin-top:2em;
+                    margin-left:23em;
+                    margin-top:5em;
                     background: white;
                     border-radius: 10px;
                     opacity: .85;  
-                    transform: scale(0.75);
+                    transform: scale(0.80);
                 ">
                 <p class="super-box-title">Offered Courses</p>
                     <div class="row">
