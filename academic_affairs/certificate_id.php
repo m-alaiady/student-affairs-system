@@ -97,6 +97,18 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
          table{
              all:unset;
          }
+         .foot{
+        position: fixed;
+        opacity: 0.85;
+    }
+    .student_data:nth-child(2){
+        content:"";
+        white-space: pre;
+        padding:5em;
+    }
+    .logo, .foot{
+        z-index: 999;
+    }
     </style>
 </head>
 <body>
