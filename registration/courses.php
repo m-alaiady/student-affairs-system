@@ -1,7 +1,12 @@
+<!-- here is the registration page, it is the page where the students can choose between advised course
+and view the sections and add them. it is also to show the registered courses with the option to 
+drop any course student wants. it has the design of this page -->
 <?php
 
+// it is to include the SIS project project
 require_once("../connection.php");
 
+// this will include the design of the page such as: background, head, footer, and side menu
 include("../template/t1.php");
 
 $query="select * from courses";
@@ -10,9 +15,21 @@ $get_id = "select id from students where student_id = '" . $_SESSION['student_id
 $get_id_result=mysqli_query($con,$get_id);
 $student_id= mysqli_fetch_assoc($get_id_result);
 
+// here is to get all courses from courses table and join enrolled table and create relation between 
+// course ID in courses table and course id in enrolled table
+$get_all_courses = "SELECT courses.* 
+                    FROM courses 
+                    JOIN enrolled 
+                    ON courses.id = enrolled.course_id 
+                    WHERE enrolled.student_id = '" . $student_id['id'] . "' ";
 
-$get_all_courses = "SELECT courses.* FROM courses JOIN enrolled ON courses.id = enrolled.course_id WHERE enrolled.student_id = '" . $student_id['id'] . "' ";
-$get_all_teachers = "SELECT teachers.* FROM teachers JOIN courses ON teachesr.id = courses.tutor_id WHERE courses.tutor_id = '" . $student_id['id'] . "' ";
+// here is to get all teachers from teachers table and join courses table and create relation between
+// teachers is in teachers table and tutor id in courses table
+$get_all_teachers = "SELECT teachers.* 
+                    FROM teachers 
+                    JOIN courses 
+                    ON teachesr.id = courses.tutor_id
+                    WHERE courses.tutor_id = '" . $student_id['id'] . "' ";
 
 $courses=mysqli_query($con,$get_all_courses);
 
@@ -43,6 +60,7 @@ $courses_data= mysqli_fetch_assoc($student_courses_result);
 
 <html>
 <head>
+<title>SIS | Registration</title>
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/box.css" />
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/alert-box.css" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">

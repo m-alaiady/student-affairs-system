@@ -1,3 +1,4 @@
+<!-- here is the connection between this project and SIS project database -->
 <?php
     require_once('env.php');
     $con=mysqli_connect('localhost','root',$password,'sis project');
