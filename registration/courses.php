@@ -23,13 +23,7 @@ $get_all_courses = "SELECT courses.*
                     ON courses.id = enrolled.course_id 
                     WHERE enrolled.student_id = '" . $student_id['id'] . "' ";
 
-// here is to get all teachers from teachers table and join courses table and create relation between
-// teachers is in teachers table and tutor id in courses table
-$get_all_teachers = "SELECT teachers.* 
-                    FROM teachers 
-                    JOIN courses 
-                    ON teachesr.id = courses.tutor_id
-                    WHERE courses.tutor_id = '" . $student_id['id'] . "' ";
+
 
 $courses=mysqli_query($con,$get_all_courses);
 
@@ -183,9 +177,7 @@ if($courses_data <= 0){
                     while($row= mysqli_fetch_assoc($result) ){
                         $price = number_format($row['course_price'], 2);
                         
-                        // $get_all_teachers = "SELECT teachers.* FROM teachers JOIN courses ON teachers.id = courses.tutor_id WHERE courses.tutor_id = '" . $row['tutor_id'] . "' ";
                         $get_all_teachers_by_course = "SELECT teachers.* FROM teachers JOIN teachers_courses ON teachers.id = teachers_courses.tutor_id WHERE teachers_courses.course_id = '" . $row['id'] . "' ";
-                        // var_dump($get_all_teachers);
                         $teachers_result = mysqli_query($con,$get_all_teachers_by_course);
                         $teacher_name = mysqli_fetch_assoc($teachers_result);
 
