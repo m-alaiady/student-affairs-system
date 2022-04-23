@@ -5,5 +5,5 @@ databases so if we set the password here it will be effected on the other databa
 setting the password in different files or in case if we have many databases -->
 
 <?php
-$password = "123456";
+$password = "";
 ?>
