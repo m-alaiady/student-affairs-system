@@ -52,7 +52,7 @@ if( !isset($_SESSION['student_id']))
             all: unset;
             position: absolute;
             margin-left:19em;
-            margin-top:21em;
+            margin-top:27em;
             background: white;
             border-radius: 10px;
             opacity: .85;
@@ -68,7 +68,7 @@ if( !isset($_SESSION['student_id']))
         }
         .foot{
             position: fixed;
-            opacity: 1;
+            opacity: 0.85;
         }
         .header{
             margin: 0 2em;

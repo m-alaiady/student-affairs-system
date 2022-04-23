@@ -119,7 +119,7 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
   body{
     margin: 0;
     padding: 0;
-    background-image: url("<?php echo $path; ?>/image/pexels-johannes-plenio-1103970.jpg"); 
+    background-image: url("<?php echo $path; ?>/image/6.jpg"); 
     background-repeat: repeat-y;
     background-size: cover;
     height: 100vh;

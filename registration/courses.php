@@ -71,6 +71,7 @@ $courses_data= mysqli_fetch_assoc($student_courses_result);
     }
     .student_data div,.view-section div, .registered-courses div{
         padding: 0.5em 2em;
+        
     }
     
     .pagination a{
@@ -83,8 +84,8 @@ $courses_data= mysqli_fetch_assoc($student_courses_result);
     }
     .registered-courses{
         position: absolute;
-        margin-left:13em;
-        margin-top:35em;
+        margin-left:13.5em;
+        margin-top:37em;
         background: white;
         border-radius: 10px;
         opacity: .85;
@@ -102,9 +103,7 @@ $courses_data= mysqli_fetch_assoc($student_courses_result);
         border-collapse: collapse;
         padding: 1em 2em;
     }
-    table tr{
-        cursor: pointer;
-    }
+    
     table tr:nth-child(2n+1){
         background-color: #eee;
     }
@@ -188,11 +187,19 @@ if($courses_data <= 0){
 
                         echo <<< _END
                             <tr>
-                                <td> {$row['course_id']} </td>
+                                <td> {$row['course_id']} </td> 
                                 <td> {$row['course_name']} </td>
                                 <td> {$row['credits']} </td>
                                 <td> {$price} SAR </td>
-                                <td> <span onclick="showViewSections({$row['id']})" style="color:blue; text-decoration: underline;">View Sections</span> </td>
+                                <td> <span onclick="showViewSections({$row['id']})" style="color:blue;
+                                 text-decoration: none;
+                                 background: #2691d9; 
+                                border-radius: 25px;
+                                font-size: 14px; 
+                                color: white;
+                                padding: 5px;
+                                cursor: pointer;
+                                font-weight: 500">View Sections</span> </td>
                             </tr>
                         _END;
                     }
@@ -277,7 +284,16 @@ if($courses_data <= 0){
                     while($sections_row = mysqli_fetch_assoc($sections_result)){
 
                         $available = $sections_row['status'] ? '<span style="color:green">Open</span>' : '<span style="color:red">Closed</span>';
-                        $action = $sections_row['status'] ? '<span onclick="AddSection(' . $sections_row['id'] . ')" style="color:blue; text-decoration: underline;">Add Section</span>' : '';
+                        $action = $sections_row['status'] ? '<span onclick="AddSection(' . $sections_row['id'] . ')" style="color:blue;
+                         text-decoration: none;
+                                 background: #2691d9; 
+                                border-radius: 25px;
+                                font-size: 14px; 
+                                color: #e9f4fb;
+                                padding: 5px;
+                                cursor: pointer;
+                                font-weight: 500
+                         ">Add Section</span>' : '';
                         $day_and_times = explode(' ', $sections_row['time']);
                         $days = array();
                         $times = array();
@@ -414,7 +430,17 @@ if($courses_data > 0){
                     <span style='white-space: nowrap;'>{$days[1]} {$time_virtual_format}</span>
                 </td>
                 <td> <span style="color:green">Enrolled</span> </td>
-                <td> <span style="color:red; text-decoration: underline;" onclick="ConfirmDelete({$courses_data['section_id']})">Drop</span> </td>
+                <td> <span style="
+               
+                text-decoration: none;
+                                 background: red; 
+                                border-radius: 25px;
+                                font-size: 18px; 
+                                color: #e9f4fb;
+                                padding: 5px;
+                                font-weight: 500;
+                                cursor: pointer;"
+                                 onclick="ConfirmDelete({$courses_data['section_id']})">Drop</span> </td>
             </tr>
         _END;
         $print_time_header_once_flag = false;

@@ -188,8 +188,8 @@ function store_file($file, $course_id, $uploaded_file_result){
         .request_data{
             all: unset;
             position: absolute;
-            margin-left:22vw;
-            margin-top:25em;
+            margin-left:28vw;
+            margin-top:34em;
             background: white;
             border-radius: 10px;
             opacity: .85;
