@@ -52,6 +52,7 @@ $student_courses_result = mysqli_query($con, $get_all_student_courses);
 $courses_data= mysqli_fetch_assoc($student_courses_result);
 ?>
 
+<!-- here is the start the CSS design of the tables in registration page -->
 <html>
 <head>
 <title>SIS | Registration</title>
@@ -115,6 +116,9 @@ $courses_data= mysqli_fetch_assoc($student_courses_result);
     }
 </style>
 </head>
+<!-- here is the END the CSS design of the tables in registration page -->
+
+
 <body>
 <form>
     <div id="status">
@@ -122,6 +126,8 @@ $courses_data= mysqli_fetch_assoc($student_courses_result);
     <?php
 
 
+// here is the courses advised design and code if the courses data
+// has no data
 if($courses_data <= 0){
     echo <<< _END
             <div class="student_data" style="
@@ -144,12 +150,11 @@ if($courses_data <= 0){
                                 <th>View Sections</th>
                         </tr>
         _END;
+
+// here is the courses advised design and code if the courses data
+// has data
 }else{
-    /*
-                    position: absolute;
-                margin-left:15.25em;
-                margin-top:27ema;
-                */
+  
     echo <<< _END
             <div class="student_data" style="
                 position: absolute;
@@ -175,7 +180,7 @@ if($courses_data <= 0){
              
                     $result=mysqli_query($con,$query);
                     while($row= mysqli_fetch_assoc($result) ){
-                        $price = number_format($row['course_price'], 2);
+                        $price = $row['course_price'];
                         
                         $get_all_teachers_by_course = "SELECT teachers.* FROM teachers JOIN teachers_courses ON teachers.id = teachers_courses.tutor_id WHERE teachers_courses.course_id = '" . $row['id'] . "' ";
                         $teachers_result = mysqli_query($con,$get_all_teachers_by_course);
@@ -204,7 +209,7 @@ if($courses_data <= 0){
             <?php
                 $result=mysqli_query($con,$query);
                 while($row= mysqli_fetch_assoc($result) ){
-                    $price = number_format($row['course_price']);
+                    $price = ($row['course_price']);
                    
                    $sections = "
                         SELECT  sections.id, teachers.teacher_name, courses_time.time, sections.status
@@ -361,7 +366,7 @@ if($courses_data > 0){
     $print_time_header_once_flag = true;
 
     while( $courses_data= mysqli_fetch_assoc($student_courses_result) ){
-        $price = number_format($courses_data['course_price'], 2);
+        $price = $courses_data['course_price'];
         $day_and_times = explode(' ', $courses_data['time']);
         $days = array();
         $times = array();
