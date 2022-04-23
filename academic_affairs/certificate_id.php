@@ -43,7 +43,7 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/box.css" />
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/alert-box.css" />
     <style>
-        .student_data{
+        .student_data, .schedule_statement{
             position: absolute;
             margin-left:30vw;
             margin-top:10em;
@@ -101,7 +101,7 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
         position: fixed;
         opacity: 0.85;
     }
-    .student_data:nth-child(2){
+    .schedule_statement::after{
         content:"";
         white-space: pre;
         padding:5em;
@@ -431,7 +431,7 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
         }
         if(select.options[select.selectedIndex].text == 'Schedule Statement'){
             document.getElementById('service').innerHTML = `
-            <div class="student_data" style='margin-top: 16.5em !important; margin-left: 22.25vw !important; transform: scale(0.80);'>
+            <div class="schedule_statement" style='margin-top: 16.5em !important; margin-left: 22.25vw !important; transform: scale(0.80);'>
                 <p class="super-box-title">${select.options[select.selectedIndex].text}</p>
                 <div class="row">
                     <div class="box">
