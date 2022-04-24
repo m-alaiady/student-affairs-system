@@ -7,10 +7,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE DATABASE `sis project`;
-
-USE `sis project`;
-
 DROP TABLE IF EXISTS `absence_excuses`;
 CREATE TABLE `absence_excuses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -20,7 +16,7 @@ CREATE TABLE `absence_excuses` (
   `course_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `student_id` (`student_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `complaints`;
 CREATE TABLE `complaints` (
@@ -30,7 +26,7 @@ CREATE TABLE `complaints` (
   `status` varchar(255) DEFAULT 'Processing',
   `feedback` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `courses`;
 CREATE TABLE `courses` (
@@ -41,7 +37,7 @@ CREATE TABLE `courses` (
   `course_price` decimal(10,2) DEFAULT NULL,
   `allowed_absences` int(128) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `courses_time`;
 CREATE TABLE `courses_time` (
@@ -64,7 +60,7 @@ CREATE TABLE `enrolled` (
   KEY `section_id` (`section_id`),
   CONSTRAINT `enrolled_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE,
   CONSTRAINT `enrolled_ibfk_2` FOREIGN KEY (`section_id`) REFERENCES `sections` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=179 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `faculties`;
 CREATE TABLE `faculties` (
@@ -92,7 +88,7 @@ CREATE TABLE `payment_support` (
   `status` varchar(255) DEFAULT 'Processing',
   `feedback` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `registration_assistant`;
 CREATE TABLE `registration_assistant` (
@@ -102,7 +98,7 @@ CREATE TABLE `registration_assistant` (
   `status` varchar(255) DEFAULT 'Processing',
   `feedback` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `sections`;
 CREATE TABLE `sections` (
@@ -132,8 +128,8 @@ CREATE TABLE `students` (
   `national_id` int(16) NOT NULL,
   `s_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `mobile2` int(128) NOT NULL,
-  `mobile` int(100) NOT NULL,
+  `mobile2` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `mobile` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `blood` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `GPA` float(3,2) NOT NULL,
@@ -177,43 +173,54 @@ CREATE TABLE `teachers_courses` (
 DROP TABLE IF EXISTS `tuition_fees_exemption`;
 CREATE TABLE `tuition_fees_exemption` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `file_name` varchar(255) NOT NULL,
   `student_id` int(11) NOT NULL,
   `request_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `semester` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT 'Processing',
   `feedback` text DEFAULT NULL,
+  `account_file` varchar(255) DEFAULT NULL,
+  `electricity_file` varchar(255) DEFAULT NULL,
+  `salary_file` varchar(255) DEFAULT NULL,
+  `social_file` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `student_id` (`student_id`),
   CONSTRAINT `tuition_fees_exemption_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
+
+INSERT INTO `absence_excuses` (`id`, `file_name`, `student_id`, `request_date`, `course_id`) VALUES
+(55, '6260beb864a2c2.88221040.jpg', 3, '2022-04-21 05:17:28', 'TM111');
 
 
-
-INSERT INTO `complaints` (`id`, `student_id`, `details`, `status`, `feedback`) VALUES
-(10, 3, 'test Complaints', 'Processing', NULL);
 
 
 INSERT INTO `courses` (`id`, `course_id`, `course_name`, `credits`, `course_price`, `allowed_absences`) VALUES
-(31, 'TM111', 'Introduction to computing and information Technology (I)', 8, 2400.00, 4);
+(31, 'TM111', 'Introduction to computing and information Technology (I)', 8, 2400.00, 5);
 INSERT INTO `courses` (`id`, `course_id`, `course_name`, `credits`, `course_price`, `allowed_absences`) VALUES
-(32, 'TM112', 'Introduction to computing and information Technology (II)', 8, 2400.00, 4);
+(32, 'TM112', 'Introduction to computing and information Technology (II)', 8, 2400.00, 5);
 INSERT INTO `courses` (`id`, `course_id`, `course_name`, `credits`, `course_price`, `allowed_absences`) VALUES
-(33, 'MT131', 'Discrete Mathematics', 4, 1250.00, 4);
+(33, 'MT131', 'Discrete Mathematics', 4, 1250.00, 5);
 INSERT INTO `courses` (`id`, `course_id`, `course_name`, `credits`, `course_price`, `allowed_absences`) VALUES
-(34, 'MT132', 'Linear Algebra', 4, 1250.00, 4);
+(34, 'MT132', 'Linear Algebra', 4, 1250.00, 5),
+(35, 'RM115', 'Some course', 8, 2400.00, 5),
+(36, 'RM116', 'Some course 2', 8, 2400.00, 5);
 
 INSERT INTO `courses_time` (`id`, `section_id`, `time`) VALUES
 (1, 1, 'Mon 18:30 Wed 18:00');
 INSERT INTO `courses_time` (`id`, `section_id`, `time`) VALUES
-(2, 1, 'Mon 20:00 Wed  20:00 ');
+(2, 2, 'Mon 20:00 Wed  20:00 ');
 INSERT INTO `courses_time` (`id`, `section_id`, `time`) VALUES
-(3, 2, 'Sun 17:00 Tue 17:30');
+(3, 3, 'Sun 17:00 Tue 17:30');
 INSERT INTO `courses_time` (`id`, `section_id`, `time`) VALUES
-(4, 2, 'Tue 09:30 Thu 09:45'),
-(5, 3, 'Sun 19:00 Mon 19:10'),
-(6, 3, 'Sun 18:00 Wed 18:30');
+(4, 4, 'Thr 15:00 Mon 15:30'),
+(5, 6, 'Mon 18:30 Wed 18:00'),
+(6, 5, 'Thr 15:00 Mon 15:30'),
+(7, 6, 'Thr 15:00 Mon 15:30'),
+(8, 7, 'Thr 15:00 Mon 15:30');
 
+INSERT INTO `enrolled` (`id`, `student_id`, `section_id`, `absences`, `grade`, `notes`) VALUES
+(147, 3, 3, 0, NULL, NULL);
+INSERT INTO `enrolled` (`id`, `student_id`, `section_id`, `absences`, `grade`, `notes`) VALUES
+(148, 3, 1, 0, NULL, NULL);
 
 
 INSERT INTO `faculties` (`id`, `name`, `branch`) VALUES
@@ -266,14 +273,17 @@ INSERT INTO `sections` (`id`, `course_id`, `tutor_id`, `time_id`, `status`, `exa
 INSERT INTO `sections` (`id`, `course_id`, `tutor_id`, `time_id`, `status`, `exam_date`, `exam_time`, `room`, `lecture_type`, `lab_type`) VALUES
 (3, 33, 3, 3, 1, '2022-06-11', '10:00:00', 'RF031', 'Class', 'Virtual');
 INSERT INTO `sections` (`id`, `course_id`, `tutor_id`, `time_id`, `status`, `exam_date`, `exam_time`, `room`, `lecture_type`, `lab_type`) VALUES
-(4, 34, 3, 2, 0, '2022-06-11', '10:00:00', 'RF032', 'Class', 'Class');
+(4, 34, 3, 4, 0, '2022-06-11', '10:00:00', 'RF032', 'Class', 'Class'),
+(5, 35, 3, 4, 1, '2022-06-11', '10:00:00', 'RF032', 'Class', 'Class'),
+(6, 36, 2, 5, 1, '2022-06-11', '10:00:00', 'RF032', 'Class', 'Class'),
+(7, 36, 3, 2, 1, '2022-06-11', '10:00:00', 'RF032', 'Class', 'Class');
 
 INSERT INTO `students` (`id`, `student_id`, `national_id`, `s_name`, `email`, `mobile2`, `mobile`, `blood`, `password`, `GPA`, `term_credits`, `status`, `acceptance_term`, `major`, `faculty_id`, `birth_date`, `nationality`, `degree`, `level`, `gender`, `mother`, `birth_place`) VALUES
-(3, 123456789, 987654321, 'mohammed', 's@a.c22', 553401234, 553409834, 'O+', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 2.41, 0, 1, 'First Semester 2017-2018', 'Computer Science', 1, '1990-01-01', 'Saudi', 'Bachelors', 'One', 'male', '', '');
+(3, 123456789, 987654321, 'Zaiad Falah Hassan Alharbi', 's@a.c22', '0553401234', '0553409834', 'O+', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 2.41, 0, 1, 'First Semester 2017-2018', 'Computer Science', 1, '1990-01-01', 'Saudi', 'Bachelors', 'One', 'male', '', '');
 INSERT INTO `students` (`id`, `student_id`, `national_id`, `s_name`, `email`, `mobile2`, `mobile`, `blood`, `password`, `GPA`, `term_credits`, `status`, `acceptance_term`, `major`, `faculty_id`, `birth_date`, `nationality`, `degree`, `level`, `gender`, `mother`, `birth_place`) VALUES
-(4, 987654321, 123456789, 'ahmed', 'a@b.c', 0, 0, '', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 0.00, 0, 0, '', '', 1, '2004-05-27', 'Saudi', 'Master', 'One', 'male', NULL, NULL);
+(4, 987654321, 123456789, 'ahmed', 'a@b.c', '0', '0', '', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 0.00, 0, 0, '', '', 1, '2004-05-27', 'Saudi', 'Master', 'One', 'male', NULL, NULL);
 INSERT INTO `students` (`id`, `student_id`, `national_id`, `s_name`, `email`, `mobile2`, `mobile`, `blood`, `password`, `GPA`, `term_credits`, `status`, `acceptance_term`, `major`, `faculty_id`, `birth_date`, `nationality`, `degree`, `level`, `gender`, `mother`, `birth_place`) VALUES
-(5, 123654897, 987412563, 'Ali', 'z@y.x', 0, 0, '', '96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e', 0.00, 0, 0, '', '', 1, '1984-07-30', 'Jordanian', 'PhD', 'One', 'male', NULL, NULL);
+(5, 123654897, 987412563, 'Ali', 'z@y.x', '0', '0', '', '96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e', 0.00, 0, 0, '', '', 1, '1984-07-30', 'Jordanian', 'PhD', 'One', 'male', NULL, NULL);
 
 INSERT INTO `teachers` (`id`, `teacher_name`) VALUES
 (1, 'شيخان');
@@ -291,14 +301,7 @@ INSERT INTO `teachers_courses` (`id`, `tutor_id`, `course_id`) VALUES
 INSERT INTO `teachers_courses` (`id`, `tutor_id`, `course_id`) VALUES
 (5, 3, 34);
 
-INSERT INTO `tuition_fees_exemption` (`id`, `file_name`, `student_id`, `request_date`, `semester`, `status`, `feedback`) VALUES
-(20, '625365f85e98e4.77254680.png', 3, '2022-04-11 02:19:20', 'Spring term 21-22', 'Processing', NULL);
-INSERT INTO `tuition_fees_exemption` (`id`, `file_name`, `student_id`, `request_date`, `semester`, `status`, `feedback`) VALUES
-(21, '625365f8733969.40056237.png', 3, '2022-04-11 02:19:20', 'Spring term 21-22', 'Processing', NULL);
-INSERT INTO `tuition_fees_exemption` (`id`, `file_name`, `student_id`, `request_date`, `semester`, `status`, `feedback`) VALUES
-(22, '625365f87f6ef3.80944857.png', 3, '2022-04-11 02:19:20', 'Spring term 21-22', 'Processing', NULL);
-INSERT INTO `tuition_fees_exemption` (`id`, `file_name`, `student_id`, `request_date`, `semester`, `status`, `feedback`) VALUES
-(23, '625365f8922d74.53825133.jpg', 3, '2022-04-11 02:19:20', 'Spring term 21-22', 'Processing', NULL);
+
 
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
