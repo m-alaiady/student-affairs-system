@@ -280,7 +280,7 @@ if($courses_data <= 0){
                          _END;
                     }
                  
-                    
+                    $only_once = true;
                     while($sections_row = mysqli_fetch_assoc($sections_result)){
 
                         $available = $sections_row['status'] ? '<span style="color:green">Open</span>' : '<span style="color:red">Closed</span>';
@@ -319,18 +319,27 @@ if($courses_data <= 0){
                             <tr>
                                 <td> {$sections_row['id']} </td>
                                 <td> {$sections_row['teacher_name']} </td>
-                                    <td> 
-                                        <label style='position:absolute;margin-top: -3em;margin-left: 3em;font-weight:bold;'>Class</label>
+                                    <td>
+                            _END;
+                            if($only_once){
+                                echo " <label style='position:absolute;margin-top: -3em;margin-left: 3em;font-weight:bold;'>Class</label>";
+                            }
+                            echo <<< _END
                                         {$days[0]} {$time_class_format}
                                     </td>
                                     <td> 
-                                        <label style='position:absolute;margin-top: -3em;margin-left: 3em;font-weight:bold;'>Virtual</label>
-                                        {$days[1]} {$time_virtual_format}
-                                    </td>
-                                <td> {$available} </td>
-                                <td> {$action} </td>
-                            </tr>
-                    _END;
+                            _END;
+                            if($only_once){
+                                echo "<label style='position:absolute;margin-top: -3em;margin-left: 3em;font-weight:bold;'>Virtual</label>";
+                            }
+                            echo <<< _END
+                                {$days[1]} {$time_virtual_format}
+                                </td>
+                                    <td> {$available} </td>
+                                    <td> {$action} </td>
+                                </tr>
+                            _END;
+                            $only_once = false;
                     }
                 
                     echo <<< _END

@@ -121,6 +121,7 @@ if( basename(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH)) == "courses.php"
             $given_days = array();
             $given_times = array();
 
+            print_r($given_dates);
     
             // split time and day from string in the student's courses
             foreach ($day_and_times as $day_and_time) {
