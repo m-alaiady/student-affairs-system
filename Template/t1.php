@@ -240,82 +240,82 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
 
     $('.st-btn').click(function(){
       hideOtherMenu();
-      if(st_opened){
+      if(this.st_opened){
         $('nav ul .st-show').removeClass("show");
-        st_opened = false;
+        this.st_opened = false;
       }
       else{
         $('nav ul .st-show').addClass("show");
         $('nav ul .first').addClass("rotate");
-        st_opened = true;
+        this.st_opened = true;
       }
     });
 
     $('.re-btn').click(function(){
       hideOtherMenu();
-      if(re_opened){
+      if(this.re_opened){
         $('nav ul .re-show').removeClass("show1");
-        re_opened = false;
+        this.re_opened = false;
       }
       else{
         $('nav ul .re-show').addClass("show1");
         $('nav ul .second').addClass("rotate");
-        re_opened = true;
+        this.re_opened = true;
       }
 
     });
 
     $('.af-btn').click(function(){
       hideOtherMenu();
-      if(af_opened){
+      if(this.af_opened){
         $('nav ul .af-show').removeClass("show7");
-        af_opened = false;
+        this.af_opened = false;
       }
       else{
         $('nav ul .af-show').addClass("show7");
         $('nav ul .eight').addClass("rotate");
-        af_opened = true;
+        this.af_opened = true;
       }
 
     });
     $('.ex-btn').click(function(){
       hideOtherMenu();
-      if(ex_opened){
+      if(this.ex_opened){
         $('nav ul .ex-show').removeClass("show3");
-        ex_opened = false;
+        this.ex_opened = false;
       }
       else{
         $('nav ul .ex-show').toggleClass("show3");
         $('nav ul .fourth').toggleClass("rotate");
-        ex_opened = true;
+        this.ex_opened = true;
       }
 
     });
     
     $('.rh-btn').click(function(){
       hideOtherMenu();
-      if(rh_opened){
+      if(this.rh_opened){
         $('nav ul .rh-show').removeClass("show5");
-        rh_opened = false;
+        this.rh_opened = false;
       }
       else{
         $('nav ul .rh-show').toggleClass("show5");
         $('nav ul .sixth').toggleClass("rotate");
-        rh_opened = true;
+        this.rh_opened = true;
       }
 
     });
 
     $('.fi-btn').click(function(){
       hideOtherMenu();
-      if(fi_opened){
+      if(this.fi_opened){
         $('nav ul .fi-show').removeClass("show6");
-        fi_opened = false;
+        this.fi_opened = false;
       }
       else{
         $('nav ul .fi-show').toggleClass("show6");
         $('nav ul .seventh').toggleClass("rotate");
-        fi_opened = true;
+        this.fi_opened = true;
       }
 
 
@@ -323,14 +323,14 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
 
     $('.se-btn').click(function(){
       hideOtherMenu();
-      if(se_opened){
+      if(this.se_opened){
         $('nav ul .se-show').removeClass("show2");
-        se_opened = false;
+        this.se_opened = false;
       }
       else{
         $('nav ul .se-show').toggleClass("show2");
         $('nav ul .third').toggleClass("rotate");
-        se_opened = true;
+        this.se_opened = true;
       }
 
 
@@ -338,14 +338,14 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
     $('.su-btn').click(function(){
       hideOtherMenu();
 
-      if(su_opened){
+      if(this.su_opened){
         $('nav ul .su-show').removeClass("show8");
-        su_opened = false;
+        this.su_opened = false;
       }
       else{
         $('nav ul .su-show').toggleClass("show8");
         $('nav ul .nineth').toggleClass("rotate");
-        su_opened = true;
+        this.su_opened = true;
       }
 
 

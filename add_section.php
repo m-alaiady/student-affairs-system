@@ -22,6 +22,17 @@ if( basename(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH)) == "courses.php"
     // this is to assign section id value from enrolled table and make sure student id is equal to $student id
     $get_sections_id = "SELECT  section_id FROM `enrolled` WHERE enrolled.student_id = '" . $student_id['id'] . "'";
     $get_sections_id_result = mysqli_query($con,$get_sections_id);
+    $get_course_id = "
+        SELECT  courses.course_id
+        FROM sections
+        JOIN courses
+            ON sections.course_id = courses.id
+        JOIN courses_time
+            ON sections.id = courses_time.section_id
+        WHERE sections.id =  '" . $_GET['id'] . "'
+        LIMIT 1
+    ";
+    $get_course_id_result = mysqli_query($con,$get_course_id);
 
     // here is to get the credit value or registered from sections table and to join course id from courses table
     //  and create relation between courses IDs in courses and sections 
@@ -103,12 +114,25 @@ if( basename(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH)) == "courses.php"
 
     $credits = mysqli_fetch_assoc($credits_result);
 
+
+
 // here to check the credits and add it to the sum of the credit and check if they are less than or equels to 20 
     if($credits['credits'] + $course_credit['credits'] <= 20){
         while($section_id = mysqli_fetch_assoc($get_sections_id_result)){
-            if($section_id['section_id'] == $_GET['id']){
-                $already_enrolled = true;
+            // if($section_id['section_id'] == $_GET['id']){
+            //     $already_enrolled = true;
+            // }
+
+            $given_course_id = mysqli_fetch_assoc($get_course_id_result);
+            while($row = mysqli_fetch_assoc($student_courses_result)){
+                echo $row['course_id'] . "<br>";
+                if($row['course_id'] == $given_course_id['course_id']){
+                    $already_enrolled = true;
+                }
             }
+
+
+
 
         }
         while($row = mysqli_fetch_assoc($student_courses_result)){
