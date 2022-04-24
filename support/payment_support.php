@@ -30,13 +30,13 @@ $get_all_student_courses = "
  .student_data{
             all: unset;
             position: absolute;
-            margin-left:22vw;
+            margin-left:25vw;
             margin-top:10em;
             background: white;
             border-radius: 10px;
             padding-bottom: 2em;
             opacity: .85;
-            transform: scale(0.75);
+            transform: scale(0.85);
         }
         textarea{
             border: 1px solid black;
@@ -53,12 +53,12 @@ $get_all_student_courses = "
         
         .request_data{
             position: absolute;
-            margin-left:19em;
-            margin-top:25em !important;
+            margin-left:23em;
+            margin-top:26em !important;
             background: white;
             border-radius: 10px;
             opacity: .85;
-            transform: scale(0.75);
+            transform: scale(0.85);
         }
         .delete{
             margin-top: 1.025em;

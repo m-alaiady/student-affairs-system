@@ -39,7 +39,7 @@ $get_all_student_courses = "
         .student_data{
             all: unset;
             position: absolute;
-            margin-left:20vw;
+            margin-left:24vw;
             margin-top:10em;
             background: white;
             border-radius: 10px;
@@ -60,7 +60,7 @@ $get_all_student_courses = "
         .request_data {
             all: unset;
             position: absolute;
-            margin-left:19.5vw;
+            margin-left:22vw;
             margin-top:30em;
             background: white;
             border-radius: 10px;

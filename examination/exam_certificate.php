@@ -39,7 +39,7 @@ $get_all_student_courses = "
        .student_data{
             all: unset;
             position: absolute;
-            margin-left:23vw;
+            margin-left:30vw;
             margin-top:200px;
             background: white;
             border-radius: 10px;

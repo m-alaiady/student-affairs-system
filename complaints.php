@@ -31,13 +31,13 @@ $get_all_student_courses = "
          .student_data{
             all: unset;
             position: absolute;
-            margin-left:22vw;
+            margin-left:25vw;
             margin-top:10em;
             background: white;
             border-radius: 10px;
             padding-bottom: 2em;
             opacity: .85;
-            transform: scale(0.75);
+            transform: scale(0.85);
         }
         textarea{
             border: 1px solid black;
