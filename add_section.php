@@ -26,10 +26,12 @@ if( basename(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH)) == "courses.php"
     // here is to get the credit value or registered from sections table and to join course id from courses table
     //  and create relation between courses IDs in courses and sections 
     $get_course_credit = "
-        SELECT  credits
+        SELECT  time, credits
         FROM sections
         JOIN courses
             ON sections.course_id = courses.id
+        JOIN courses_time
+            ON sections.id = courses_time.section_id
         WHERE sections.id =  '" . $_GET['id'] . "'
         LIMIT 1
     ";
@@ -37,6 +39,26 @@ if( basename(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH)) == "courses.php"
     $get_course_credit_result = mysqli_query($con,$get_course_credit);
     $course_credit= mysqli_fetch_assoc($get_course_credit_result);
     
+    
+    function intersectCheck($from, $from_compare, $to, $to_compare){
+        $from = strtotime($from);
+        $from_compare = strtotime($from_compare);
+        $to = strtotime($to);
+        $to_compare = strtotime($to_compare);
+
+        $intersect = min($to, $to_compare) - max($from, $from_compare);
+            if ( $intersect < 0 ) $intersect = 0;
+            $overlap = $intersect / 3600;
+            if ( $overlap <= 0 ):
+                // There are no time conflicts
+                return FALSE;
+            else:
+                // There is a time conflict
+                // echo '<p>There is a time conflict where the times overlap by ' , $overlap , ' hours.</p>';
+                return TRUE;
+            endif;
+    }
+
 // here to insert the regstered course to enrolled table
     $add_section = "		
         INSERT
@@ -62,6 +84,21 @@ if( basename(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH)) == "courses.php"
             WHERE enrolled.student_id = '" . $student_id['id'] . "'
     ";
 
+    $get_all_student_courses = "
+        SELECT  enrolled.absences, courses.*, sections.id as section_id, courses_time.time, teachers.teacher_name
+        FROM enrolled
+        JOIN sections
+            ON enrolled.section_id = sections.id
+        JOIN courses
+            ON sections.course_id = courses.id
+        JOIN courses_time
+            ON courses_time.id = sections.time_id
+        JOIN teachers
+            ON teachers.id = sections.tutor_id
+        WHERE enrolled.student_id = '" . $student_id['id']  . "'";    
+
+    $student_courses_result = mysqli_query($con,$get_all_student_courses);
+
     $credits_result = mysqli_query($con,$credits_query);
 
     $credits = mysqli_fetch_assoc($credits_result);
@@ -72,8 +109,55 @@ if( basename(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH)) == "courses.php"
             if($section_id['section_id'] == $_GET['id']){
                 $already_enrolled = true;
             }
+
         }
+        while($row = mysqli_fetch_assoc($student_courses_result)){
+            $day_and_times = explode(' ', $row['time']);
+            $given_dates = explode(' ',$course_credit['time']);
+
+            $days = array();
+            $times = array();
+
+            $given_days = array();
+            $given_times = array();
+
     
+            // split time and day from string in the student's courses
+            foreach ($day_and_times as $day_and_time) {
+                if (DateTime::createFromFormat('H:i', $day_and_time) !== false) {
+                    array_push($times, $day_and_time);
+                } else {
+                    array_push($days, $day_and_time);
+                }
+            }
+            
+            // split time and day from string in the given time
+            foreach ($given_dates as $given_date) {
+                if (DateTime::createFromFormat('H:i', $given_date) !== false) {
+                    array_push($given_times, $given_date);
+                } else {
+                    array_push($given_days, $given_date);
+                }
+            }
+            
+
+            for($i = 0; $i < count($times); $i++){
+                $end_time = date('H:i', strtotime('+50 minutes', strtotime($times[$i])) );
+                $end_given_time = date('H:i', strtotime('+50 minutes', strtotime($given_times[0])) );
+                $end_given_time_2 = date('H:i', strtotime('+50 minutes', strtotime($given_times[1])) );
+
+                if(
+                    $days[$i] == $given_days[0] && intersectCheck($times[$i], $given_times[0], $end_time, $end_given_time) ||
+                    $days[$i] == $given_days[1] && intersectCheck($times[$i], $given_times[1], $end_time, $end_given_time_2) 
+                ){
+                    header('location: ' . $_SERVER['HTTP_REFERER'] . "#You have a time conflict flag2");
+                    die;
+                }
+            }
+
+
+
+        }        
         if($already_enrolled){
             // here if the course is enrolled already it will return to the same page 
             // with red notification saying section is already enrolled.
