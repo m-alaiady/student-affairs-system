@@ -16,7 +16,7 @@ include("template/t1.php");
         .student_data{
             all: unset;
             position: absolute;
-            margin-left:20vw;
+            margin-left:30vw;
             margin-top:200px;
             background: white;
             border-radius: 10px;

@@ -53,10 +53,13 @@ $head = "
         }
         .logo{
             margin-top: -60x;
-            margin-left: 450px;
+            margin-left: 39%;
             width: 50%;
         }
         .text p{
+            font-size: 1.6em;
+            font-weight: bold;
+            text-align: center;
             margin-bottom: -50px;
             z-index: -5;
         }
@@ -74,14 +77,15 @@ $html = $head;
 
 $html .= "
     <div class='header'>
+        
+        <div class='logo'>
+        <img src='aou-logo.png' alt='logo' width='150'/>
+        </div>
         <div class='text'>
             <p>
-                Arab Open University/ Saudi Arabia<br />
                 Students Affairs
             </p>
-        </div>
-        <div class='logo'>
-            <img src='logo.png' alt='logo' width='250'/>
+            <br><br><br><br>
         </div>
     </div>
     ";

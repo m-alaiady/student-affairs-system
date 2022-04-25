@@ -16,13 +16,13 @@ include("../template/t1.php");
         .student_data{
             all: unset;
             position: absolute;
-            margin-left:25vw;
+            margin-left:40vw;
             margin-top:10em;
             background: white;
             border-radius: 10px;
             padding-bottom: 2em;
             opacity: .85;
-            transform: scale(0.90);
+            transform: scale(0.85);
         }
     </style>
 </head>

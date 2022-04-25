@@ -64,31 +64,31 @@ if( !isset($_SESSION['student_id']))
     <form method="post">
     <table>
       <tr>
-        <td> Student ID: </td>
+        <td> Student ID </td>
         <td><input type="text" value="<?php echo $data['student_id']; ?>" title="Cannot modified" disabled /></td>
         </tr>
         <tr>
-        <td>National ID: </td>
+        <td>National ID </td>
         <td><input type="text" value="<?php echo $data['national_id']; ?>" title="Cannot modified" disabled /></td>
         </tr>
         <tr>
-        <td> Student Name: </td>
+        <td> Student Name </td>
         <td><input required type="text" name="s_name" value="<?php echo $data['s_name']; ?>" /></td>
         </tr>
         <tr>
-        <td> Personal Email: </td>
+        <td> Personal Email </td>
         <td><input required type="email" name="email" value="<?php echo $data['email']; ?>" /></td> 
         </tr>
         <tr>
-        <td> Mobile number:</td>
+        <td> Mobile number</td>
         <td><input required type="mobile" name="mobile" value="<?php echo $data['mobile']; ?>" /></td> 
         </tr>
         <tr>
-        <td> Alternative mobile number: </td>
+        <td> Alternative mobile number </td>
         <td><input required type="mobile2" name="mobile2" value="<?php echo $data['mobile2']; ?>" /></td>
         </tr>
         <tr>
-        <td> blood type: </td>
+        <td> blood type </td>
         <td><input required type="blood" name="blood" value="<?php echo $data['blood']; ?>" /></td>
         </tr>        
     </table>

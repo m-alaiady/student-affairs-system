@@ -107,7 +107,7 @@ function store_file($file, $course)
         .student_data{
             all: unset;
             position: absolute;
-            margin-left:20vw;
+            margin-left:22vw;
             margin-top:10em;
             background: white;
             border-radius: 10px;

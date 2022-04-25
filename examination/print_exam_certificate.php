@@ -45,6 +45,7 @@ $faculty= mysqli_fetch_assoc($faculty_data);
 $company_name = $_POST['company_name'];
 $std_name = $student_id['s_name'];
 $std_id = $student_id['national_id'];
+$stdn_id = $student_id['student_id'];
 
 $head = "
     <style>
@@ -61,11 +62,14 @@ $head = "
         }
         .logo{
             margin-top: -60x;
-            margin-left: 450px;
+            margin-left: 39%;
             width: 50%;
         }
         .text p{
-            margin-bottom: -65px;
+            font-size: 1.6em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: -50px;
             z-index: -5;
         }
         .stamp{
@@ -82,22 +86,22 @@ $html = $head;
 
 $html .= "
     <div class='header'>
+        <div class='logo'>
+        <img src='aou-logo.png' alt='logo' width='150'/>
+        </div>
         <div class='text'>
             <p>
-                Arab Open University/ Saudi Arabia<br />
-                Students Affairs
+                Exam Certificate
+                <br><br><br><br>
             </p>
-        </div>
-        <div class='logo'>
-            <img src='logo.png' alt='logo' width='250'/>
-        </div>
+            </div>
     </div>
     ";
 
 $html .= "
-    <h3>To advanced {$company_name}</h3>
-    <p>the student with name <b>{$std_name}</b> and ID <b>{$std_id}</b>, have the following courses exams</p>
-    <h3 style='margin-top: 2em'>Courses Examination:</h3>
+    <h3>To {$company_name}</h3>
+    <p>the student with name <b>{$std_name}</b> and ID <b> {$std_id} </b> and Student ID is <b>{$stdn_id}</b>, has the following courses exams.</p>
+    <h3 style='margin-top: 2em'>Examination schedule:</h3>
     <table style='margin-top: 5em'>
         <tr>
             <th>Course Code</th> 
@@ -128,6 +132,7 @@ $html .= "
     <div class='footer'>
         <div class='signature'>
             <p>
+            <br><br><br><br>
                 Deanship of admission & Students Affairs<br>
                     <p class='deanship'>
                            Name Here
