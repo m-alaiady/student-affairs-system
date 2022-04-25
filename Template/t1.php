@@ -49,7 +49,8 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
      echo ' <span style="float: left; 
                       margin-top: 30px;
                         margin-left: 20px;
-     ">' . $data['s_name']. '</span>' ;
+                        color: blue;
+     "> <img src="avatar.png"> '  . $data['s_name']. '</span>' ;
       
       echo '<a  style=" float: right;
                 margin-top: 30px;
@@ -76,7 +77,7 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
     
         <!-- <img src="image/Vision-2030-logo.jpg" height="80" width="200" style="float: right"> -->
         <img src="<?php echo $path ?>/image/aou-logo.png" height="80"  style="float:center; margin-right: 100px">
-        <!-- <img src="image/ministry.jpg" height="80" width="200" style="float: left"> -->
+        <!-- <img src="<?php echo $path ?>/image/avatar.png" height="50" style="margin-left:0.1em;"> -->
       </div>
       </head>
       
@@ -94,7 +95,7 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
       <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
       <script src="https://kit.fontawesome.com/b3914c431d.js" crossorigin="anonymous"></script>
-      
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />                 
       <script src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
       

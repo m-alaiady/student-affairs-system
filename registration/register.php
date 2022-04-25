@@ -27,26 +27,50 @@ include("../template/t1.php");
 <html>
 
 <head>
+<link rel="stylesheet" href="<?php echo $path  ?>/assets/css//alert-box.css" />
+    <link rel="stylesheet" href="<?php echo $path  ?>/assets/css//box.css" />
     <style>
-        .pay-btn-section{
-            position: absolute;
-            margin-top:10em;
-            margin-left: 30em;
-        }
+        
         .pay-btn-section input[type='submit']{
-            padding: 1em 2em;
-            font-size: 1.5em;
+            text-decoration: none; 
+            background: #2691d9; 
+            border-radius: 25px;
+            font-size: 18px; 
+            color: white;
+            padding: .4em;
+            font-weight: 500;
+            margin-left:32%;
+            border: none;
+            cursor: pointer;
+        }
+        .rfees{
+            all:unset;
+            position: absolute;
+            margin-left:32em;
+            margin-top:15em;
+            background: white;
+            border-radius: 10px;
+            opacity: .85;
+            transform: scale(1);
+            padding-bottom:1em; 
         }
     </style>
 </head>
 
 <body>
-
+    <div class="rfees">
+    <p class="super-box-title">Registration fees</p>
+    <p style="padding:1.6em; color:red;">You should pay the registration fees and any previous debt before <br>
+    registering in the current semester and pay Registration Fees First <br> 
+    from the Financial Section and check the registration calendar</p>
     <div class="pay-btn-section">
         <form method="post">
             <input type="hidden" name="paid" value="1" />
-            <input type="submit" name="pay" value="Pay" />
+            <input type="submit" name="pay" value="Pay Registration Fees" />
         </form>
+    </div>
+    <h2 style="text-align: center; padding-bottom: 5px;"></h2>
+    
     </div>
     <?php
 
