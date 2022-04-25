@@ -43,8 +43,9 @@ if( !isset($_SESSION['student_id']))
             min-width: 10em !important;
         }
         .student_data{
-            margin-top: 100px;
-            margin-left:400px;
+            margin-top: 160px;
+            margin-left:450px;
+            height:220px;
             z-index: 1;
             transform: scale(0.85);
         }
@@ -122,7 +123,17 @@ $price['total_price'] = $price['total_price'] ? 0  -  ADMINISTRATIVE_FEES - REGI
         </tr>
 
     </table>
-    <a href="<?php echo $path ?>/financial/financial.php" style="margin-left: 2em;">For more details</a>
+    <a href="<?php echo $path ?>/financial/financial.php" 
+     style="margin-left: 9em;
+            margin-top: 40em;
+             border: none;
+            cursor: pointer;
+            color: white;
+            background-color: dodgerblue;
+            border-radius: 10px;
+            text-decoration:none;
+            padding:0.3em;">
+            For more details</a>
 
     </div>
 </div>
