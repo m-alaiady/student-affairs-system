@@ -4,7 +4,7 @@ $proj_name = $pathInPieces[3];
 $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
 
 error_reporting(E_ALL);
-ini_set("display_errors", 1);
+ini_set("display_errors", 0);
 
 if (session_status() === PHP_SESSION_NONE) {
   session_start();

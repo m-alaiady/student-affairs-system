@@ -67,11 +67,6 @@ if( !isset($_SESSION['student_id']))
 {
     header("location:../index.php");
 }
-// if user did not pay 
-if( !isset($_SESSION['paid']) ){
-    header("location:register.php");
-}
-
 
 
 
