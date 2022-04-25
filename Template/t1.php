@@ -39,7 +39,13 @@ $data = mysqli_fetch_assoc($result);
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="pragma" content="no-cache" />
     <link rel="stylesheet" href="css/bootstrap.css">
-
+  <style>
+    .student_name{
+      float: left;
+      margin-top: 2.5em;
+      margin-left: 1em;
+    }
+    </style>
      <div class="logo">
       
       <?php
@@ -48,12 +54,13 @@ $data = mysqli_fetch_assoc($result);
   
   if(isset($_SESSION['student_id']))
   {
-     echo 
-     ' <div style="float: left;"> 
-     <img src=" ' . $path .'/image/avatar.png" height="60" style="margin-top:15px; margin-left: 20px;">
-     </div>
-     
-     <span style="margin-top:15px; > '  . $data['s_name']. '</span>' ;
+    $s_name = $data['s_name'];
+     echo <<< _END
+        <span style="float: left"> 
+          <img src="${path}/image/avatar.png" height="60" style="margin-top:15px; margin-left: 20px;">
+        </span>
+        <span class="student_name">${s_name}</span>
+     _END;
       
       echo '<a  style=" float: right;
                 margin-top: 30px;
