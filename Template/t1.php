@@ -42,8 +42,10 @@ $data = mysqli_fetch_assoc($result);
   <style>
     .student_name{
       float: left;
-      margin-top: 2.5em;
+      margin-top: 1.7em;
       margin-left: 1em;
+      font-weight:500;
+      font-size:18px;
     }
     </style>
      <div class="logo">
@@ -63,17 +65,18 @@ $data = mysqli_fetch_assoc($result);
      _END;
       
       echo '<a  style=" float: right;
-                margin-top: 30px;
+                margin-top: 22px;
                 margin-right: 20px;
-                border: 1px solid;
-                width: 80px;
+                padding: 0.3em;
+                border: 2px solid;
+                width: 110px;
                 background: red;
-                border-radius: 5px;
+                border-radius: 18px;
                 font-size: 18px;
                 color: #e9f4fb;
                 text-decoration: none;    
        "
-       href="' . $path . '/logout.php?logout">Logout</a>' ;
+       href="' . $path . '/logout.php?logout">Logout <i class="fa-solid fa-power-off"></i></a>' ;
   }
   
   else
@@ -86,7 +89,7 @@ $data = mysqli_fetch_assoc($result);
 
     
         <!-- <img src="image/Vision-2030-logo.jpg" height="80" width="200" style="float: right"> -->
-        <img src="<?php echo $path ?>/image/aou-logo.png" height="80"  style="float:center; margin-right: 100px">
+        <img src="<?php echo $path ?>/image/aou-logo.png" height="80"  style="float:center; margin-right: 160px">
         <!-- <img src="<?php echo $path ?>/image/avatar.png" height="50" style="margin-left:0.1em;"> -->
       </div>
       </head>
