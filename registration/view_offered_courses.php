@@ -1,6 +1,11 @@
+<!-- this file is to view the offeredd courses provided by the AOU -->
+<!-- here is the design of how to show them -->
+
 <?php
 
+// this is include of connection file that has the database and has the offered courses
 require_once("../connection.php");
+
 
 include("../template/t1.php");
 

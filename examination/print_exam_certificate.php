@@ -54,7 +54,7 @@ $head = "
             border-collapse: collapse;
         }
         th, td{
-            padding: 2em;
+            padding: 1em;
         }
         .footer{
             display:flex;
