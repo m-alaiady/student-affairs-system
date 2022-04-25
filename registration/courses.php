@@ -212,6 +212,9 @@ if($courses_data <= 0){
         </div>
 
 </form>
+
+<!-- here is the design of view sections  -->
+<!-- here is the code of adding section, onclick=addsection -->
 <div class="view-sections"> 
             <?php
                 $result=mysqli_query($con,$query);
@@ -357,6 +360,11 @@ if($courses_data <= 0){
 
 
 </div>
+
+
+
+<!-- this part is to show the registered courses and design the table  -->
+<!-- it has the ability to drop course and it is here in this part -->
 <?php
 if($courses_data > 0){
     echo <<< _END
@@ -468,6 +476,11 @@ if($courses_data > 0){
 
 
 
+
+<!-- these are the funnctions that we used to have the ability to add section and remove -->
+<!-- these function will redirect to other files like remove sections and add sections -->
+
+
 <script>
 
 function ConfirmDelete(id)
@@ -486,6 +499,13 @@ function showViewSections(id){
     }
     document.getElementById(id).style.display = 'block';
 }
+
+
+
+
+// these are the messages of the error and success alerts
+// also the ime of the alert is here as 3000ms (setTimeout)
+// success = flag1, error = flag2
 
 
 if (location.href.indexOf("#") != -1) {

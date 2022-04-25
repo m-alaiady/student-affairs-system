@@ -45,7 +45,7 @@ $head = "
             border-collapse: collapse;
         }
         th, td{
-            padding: 2em;
+            padding: 1em;
         }
         .footer{
             display:flex;
@@ -83,7 +83,7 @@ $html .= "
         </div>
         <div class='text'>
             <p>
-                Students Affairs
+            Examination schedule
             </p>
             <br><br><br><br>
         </div>
@@ -91,7 +91,7 @@ $html .= "
     ";
 
 $html .= "
-    <h3 style='margin-top: 2em'>Courses Examination:</h3>
+    
     <table style='margin-top: 5em'>
         <tr>
             <th>Course Code</th> 
@@ -119,13 +119,8 @@ while( $courses_data= mysqli_fetch_assoc($student_courses_result)){
 $html .= "</table>";
 
 $html .= "
-    <p>
-        The Deanship of Admission and Students Affairs certifies that the mentioned above student is one of<br>
-        the regular students who is enrolled in the university during " . $data['acceptance_term'] . " where<br>
-        the credit hours by the student are (" . $data['term_credits'] . ") hours out of (127) credits hours.
-        <br><br>
-        This statement was issues upon the student's request without any responsibility upon the university.
-    </p>
+    
+    
     <br><br><br><br>
     <div class='footer'>
         <div class='signature'>
