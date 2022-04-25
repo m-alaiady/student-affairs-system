@@ -48,11 +48,12 @@ $data = mysqli_fetch_assoc($result);
   
   if(isset($_SESSION['student_id']))
   {
-     echo ' <span style="float: left; 
-                      margin-top: 30px;
-                        margin-left: 20px;
-                        color: blue;
-     "> <img src=" ' . $path .'/image/avatar.png"> '  . $data['s_name']. '</span>' ;
+     echo 
+     ' <div style="float: left;"> 
+     <img src=" ' . $path .'/image/avatar.png" height="60" style="margin-top:15px; margin-left: 20px;">
+     </div>
+     
+     <span style="margin-top:15px; > '  . $data['s_name']. '</span>' ;
       
       echo '<a  style=" float: right;
                 margin-top: 30px;
