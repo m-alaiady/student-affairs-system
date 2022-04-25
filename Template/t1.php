@@ -52,7 +52,7 @@ $data = mysqli_fetch_assoc($result);
                       margin-top: 30px;
                         margin-left: 20px;
                         color: blue;
-     "> <img src=" '.<?php echo $path ?>.'/image/avatar.png"> '  . $data['s_name']. '</span>' ;
+     "> <img src=" ' . $path .'/image/avatar.png"> '  . $data['s_name']. '</span>' ;
       
       echo '<a  style=" float: right;
                 margin-top: 30px;
