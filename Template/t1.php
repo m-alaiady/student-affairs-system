@@ -1,4 +1,8 @@
 <?php
+$pathInPieces = explode('\\', __DIR__);
+$proj_name = $pathInPieces[3];
+$path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
+
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
@@ -15,9 +19,7 @@ $query="select * from students where student_id='".$_SESSION['student_id']."' ";
 $result=mysqli_query($con,$query);
 $data = mysqli_fetch_assoc($result);
 
-$pathInPieces = explode('\\', __DIR__);
-$proj_name = $pathInPieces[3];
-$path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
+
 
 
 
@@ -50,7 +52,7 @@ $path = "http://" . $_SERVER['HTTP_HOST'] . "/" . $proj_name;
                       margin-top: 30px;
                         margin-left: 20px;
                         color: blue;
-     "> <img src="avatar.png"> '  . $data['s_name']. '</span>' ;
+     "> <img src=" '.<?php echo $path ?>.'/image/avatar.png"> '  . $data['s_name']. '</span>' ;
       
       echo '<a  style=" float: right;
                 margin-top: 30px;
