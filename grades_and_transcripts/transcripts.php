@@ -181,40 +181,7 @@ $head = "
 
 $html = $head;
 
-/* if you want a header (logo and title) uncomment the following code */
-// $html .= "
-//     <div class='header'>
-//         <div class='text'>
-//             <p>Statement of Credits Hours Completed by Students</p>
-//         </div>
-//         <div class='logo'>
-//             <img src='logo.png' alt='logo' width='250'/>
-//         </div>
-//     </div>
-//     ";
 
-
-// $html .= "<table>";
-// $html .= "
-//         <tr>
-//             <th>Student Name</th> <td colspan='5'>" . $data['s_name'] . "</td>
-//         </tr>
-//         <tr>
-//             <th>Stundent Number</th> <td colspan='2'>" . $data['national_id'] . "</td>
-//             <th>Date of Birth</th> <td colspan='2'>" . date('M d, Y', strtotime($data['birth_date'])) . "</td>
-//         </tr>
-//         <tr>
-//             <th>Program of Study</th> <td colspan='2'>" . $data['major'] . "</td>
-//             <th>Nationality</th> <td colspan='2'>" . $data['nationality'] . "</td>
-//         </tr>
-//         <tr>
-//             <th>Admission Date</th> <td colspan='2'>" . $data['acceptance_term'] . "</td>
-//             <th>Basis of Admission</th> <td colspan='2'>" . $faculty['name'] . "</td>
-//          </tr>
-//         ";
-
-
-// $html .= "</table>";
 
 $html .= "<table class='no-border'>";
 $html .= "
