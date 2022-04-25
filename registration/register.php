@@ -2,6 +2,8 @@
 
 session_start();
 
+// print_r($_SESSION); die;
+
 
 if(isset($_SESSION['student_id']))
 {
@@ -21,7 +23,18 @@ else
 
 </head>
 <body>
-<button onclick="<?php $_SESSION['paid']='true'; header("Refresh:0"); ?>">pay</button>
 
+<form method="post">
+    <input type="hidden" name="paid" value="1" />
+    <input type="submit" name="pay" value="Pay" />
+</form>
+<?php
+
+if(isset($_POST['pay'])){
+    $_SESSION['paid']=true;
+    header("Refresh:0");
+}
+
+?>
 </body>
 </html>
