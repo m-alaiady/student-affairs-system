@@ -28,7 +28,7 @@ if( !isset($_SESSION['student_id']))
 
 <html>
 <head>
-<title>SIS | Grades & Transcripts</title>
+<title>SIS | Fees Payment</title>
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/box.css" />
     <style>
         body{

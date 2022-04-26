@@ -9,7 +9,7 @@ include("../template/t1.php");
 <html>
 
 <head>
-    <title>SIS | Exam Certificate</title>
+    <title>SIS | Makeup Exam</title>
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/box.css" />
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/alert-box.css" />
     <style>

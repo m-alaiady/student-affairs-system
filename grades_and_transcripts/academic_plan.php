@@ -119,8 +119,8 @@ $html = $head;
 $html .= "<table class='no-border'>";
 $html .= "
         <tr>
-            <th>Stundent Code</th> <td colspan='4'>" . $data['national_id'] . "</td>
-            <th>Branch</th> <td>" . $data['national_id'] . "</td>
+            <th>Stundent Code</th> <td colspan='4'>" . $data['student_id'] . "</td>
+            <th>Branch</th> <td>" . ucwords($faculty['branch']) . "</td>
         </tr>
         <tr>
             <th>Student Name</th> <td colspan='4'>" . ucwords($data['s_name']) . "</td>

@@ -59,6 +59,7 @@ $get_all_student_courses = "
             padding-bottom: 2em;
             opacity: .85;
             max-width: 70%;
+            transform: scale(0.85);
         }
         .request_data{
             all: unset;
@@ -69,7 +70,7 @@ $get_all_student_courses = "
             border-radius: 10px;
             padding-bottom: 2em;
             opacity: .85;
-            /* transform: scale(0.85); */
+            transform: scale(0.85);
         }
         .delete{
             margin-top: 1.025em;

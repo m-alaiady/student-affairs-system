@@ -129,13 +129,13 @@ $data = mysqli_fetch_assoc($result);
     padding: 5px;
     background: white;
       /* background: #D6DEDB;  */
-    opacity: .7;
+    opacity: .9;
   }
   
   body{
     margin: 0;
     padding: 0;
-    background-image: url("<?php echo $path; ?>/image/6.jpg"); 
+    background-image: url("<?php echo $path; ?>/image/pex30.jpg"); 
     background-repeat: repeat-y;
     background-size: cover;
     height: 100vh;
@@ -204,7 +204,7 @@ $data = mysqli_fetch_assoc($result);
             <li><a href="<?php echo $path ?>/examination/exam_postpone.php">Exam postpone</a></li>
             <li><a href="<?php echo $path ?>/examination/exam_objection.php">Exam objection</a></li>
             <li><a href="<?php echo $path ?>/examination/register_for_makeup_exam.php">Register for makeup exam</a></li>
-            <li><a href="<?php echo $path ?>/examination/exam_in_other_branch_or_center.php">Exam in other branch/center</a></li>
+            <li><a href="<?php echo $path ?>/examination/exam_in_other_branch_or_center.php">Exam in other branch</a></li>
         </ul>
     </li>
     <li><a href="#" class="su-btn">Support 
@@ -525,7 +525,7 @@ nav ul li a span.rotate{
   padding: 1px;
   text-align: center;
   background: white;
-  opacity: .7;
+  opacity: .9;
 }
 
 @keyframes slide_Up{

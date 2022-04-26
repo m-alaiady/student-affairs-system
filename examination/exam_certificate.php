@@ -32,20 +32,21 @@ $get_all_student_courses = "
 <html>
 
 <head>
-    <title>SIS | Exam Schedule</title>
+    <title>SIS | Exam Certificate</title>
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/box.css" />
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css/alert-box.css" />
     <style>
        .student_data{
             all: unset;
             position: absolute;
-            margin-left:30vw;
-            margin-top:200px;
+            margin-left:25vw;
+            margin-top:160px;
             background: white;
             border-radius: 10px;
             padding-bottom: 2em;
             opacity: .85;
             max-width: 70%;
+            transform: scale(0.85);
         }
         .student_data_print_btn {
             all: unset;

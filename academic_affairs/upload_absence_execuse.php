@@ -118,7 +118,7 @@ function store_file($file, $course_id, $uploaded_file_result){
 <html>
 
 <head>
-    <title>SIS | Academic Affairs</title>
+    <title>SIS | Absence upload</title>
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css//box.css" />
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css//alert-box.css" />
     <style>

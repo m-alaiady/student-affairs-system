@@ -29,6 +29,7 @@ include("../template/t1.php");
 <head>
 <link rel="stylesheet" href="<?php echo $path  ?>/assets/css//alert-box.css" />
     <link rel="stylesheet" href="<?php echo $path  ?>/assets/css//box.css" />
+    <title>SIS | Registration Fees</title>
     <style>
         
         .pay-btn-section input[type='submit']{

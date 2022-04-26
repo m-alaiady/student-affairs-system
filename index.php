@@ -277,6 +277,7 @@
       <div>
         <ul>
           <li>
+          <br>
             <h3>AOU Vision</h3>
             <h6>Striving to become a leader in teaching methods
               <br>and techniques, a promoter of creative
@@ -285,6 +286,8 @@
             </h6>
           </li>
           <li>
+            <br>
+            
             <h3>AOU Mission</h3>
             <h6> Disseminating knowledge, promoting scientific<br>
               research and serving the community through
@@ -293,6 +296,7 @@
             </h6>
           </li>
           <li>
+          <br>
             <h3>AOU Shared Value </h3>
             <h6>At AOU, values constitute the guidelines, which
               <br>determine conduct at the University at all
@@ -331,7 +335,7 @@
       position: relative;
       height: auto;
       width: auto;
-      height: 185px;
+      height: 180px;
       letter-spacing: 2.5px;
     }
     .word h1 div {
