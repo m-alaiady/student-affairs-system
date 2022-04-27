@@ -1,5 +1,4 @@
 <?php
-define("FIVE_MIGA_BYTES", 5242880);
 ob_start();
 require_once('../connection.php');
 include("../template/t1.php");
@@ -121,10 +120,10 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
                     <p>
                         <select id="servicesList" onchange="services();">
                             <option selected disabled hidden>-- Select statement --</option>
-                            <option value="change_track">Statement of Credit Hours Completed by Student</option>
-                            <option value="center_transfer">Schedule Statement</option>
-                            <option value="semester_postponing">Study Duration Statement</option>
-                            <option value="semester_excuse">Definition Statement</option>
+                            <option value="hours_completed">Statement of Credit Hours Completed by Student</option>
+                            <option value="schedule_stat">Schedule Statement</option>
+                            <option value="duration-stat">Study Duration Statement</option>
+                            <option value="defention-stat">Definition Statement</option>
                         </select>
                     </p>
                 </div>
@@ -139,7 +138,9 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
         let select = document.getElementById('servicesList');
         let table = "";
         switch (select.options[select.selectedIndex].value) {
-            case 'change_track':
+
+            // here is the first case of the statements
+            case 'hours_completed':
                 table = `
                     <div class="row">
                         <div class="student box">
@@ -194,7 +195,10 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
                 </div>
                 `;
                 break;
-            case 'center_transfer':
+
+
+                // here is the second case of the statements
+            case 'schedule_stat':
                 table = `
                 <div class="row">
                         <div class="student box">
@@ -328,7 +332,10 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
                         </div>
                     `;
                 break;
-            case 'semester_postponing':
+
+
+                // here is the third case of the statements
+            case 'duration-stat':
                 table = `
                     <div class="row">
                         <div class="student box">
@@ -378,7 +385,10 @@ $registered_hours['SUM(credits)'] = $registered_hours['SUM(credits)'] > 0 ? $reg
                 </div>
                 `;
                 break;
-            case 'semester_excuse':
+
+                
+                // here is the fourth case of the statements
+            case 'defention-stat':
                 table = `
                 <div class="row">
                         <div class="student box">

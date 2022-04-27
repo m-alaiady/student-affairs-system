@@ -1,4 +1,5 @@
 <?php
+// this is to limit the size of the uploded file from the user
 define("FIVE_MIGA_BYTES" , 5242880);
 ob_start();
 require_once('../connection.php');
@@ -70,47 +71,21 @@ function store_file($file, $course_id, $uploaded_file_result){
                     if(move_uploaded_file($file_tmp, $file_destination)){
                         $insert_file = "INSERT INTO `absence_excuses` (file_name, student_id, course_id) VALUES ('$file_name_new', '$std_id', '$course_id')";
                         if(mysqli_query($con,$insert_file)){
-                            // echo <<< _END
-                            //     <div class="alert success">
-                            //         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                            //         <p>File Uploaded Successfully!</p>
-                            //     </div>
-                            // _END;
-                            // header('Refresh: 2');
+                           
                             return 1;
                         }
                         else{
                             $err = mysqli_error($con);
-                            // echo <<< _END
-                            //     <div class="alert error">
-                            //         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                            //         <p>Something Went Wrong in the database: {$err}</p>
-                            //     </div>
-                            // _END;
+                            
                             return 0;
                         }
                     }
                 }
-                // else{
-                //     // if file too large
-                //     echo <<< _END
-                //         <div class="alert error">
-                //             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                //             <p>File is too large!</p>
-                //         </div>
-                //     _END;
-                // }
+               
             }
         }
     }
-    // else{
-    //     echo <<< _END
-    //         <div class="alert error">
-    //             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-    //             <p>File already uploaded!</p>
-    //         </div>
-    //     _END;
-    // }
+    
 
 }
 ?>
