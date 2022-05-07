@@ -186,7 +186,7 @@ $data = mysqli_fetch_assoc($result);
             <li><a href="<?php echo $path ?>/grades_and_transcripts/academic_plan.php" target="_blank">Acadmemic plan</a></li>
         </ul>
     </li>
-    <li><a href="#" class="fi-btn">Finanical 
+    <li><a href="#" class="fi-btn">Financial 
         <span class="fas fa-caret-down seventh"></span></a>
         <ul class="fi-show">
             <li><a href="<?php echo $path ?>/financial/financial.php">Fees payment</a></li>
@@ -204,7 +204,7 @@ $data = mysqli_fetch_assoc($result);
             <li><a href="<?php echo $path ?>/examination/exam_postpone.php">Exam postpone</a></li>
             <li><a href="<?php echo $path ?>/examination/exam_objection.php">Exam objection</a></li>
             <li><a href="<?php echo $path ?>/examination/register_for_makeup_exam.php">Register for makeup exam</a></li>
-            <li><a href="<?php echo $path ?>/examination/exam_in_other_branch_or_center.php">Exam in other branch</a></li>
+            <li><a href="<?php echo $path ?>/examination/exam_in_other_branch_or_center.php">Exam in other branch/center</a></li>
         </ul>
     </li>
     <li><a href="#" class="su-btn">Support 
