@@ -127,7 +127,7 @@ $html .= "
             <th>Birth Date</th> <td>" . date('M d, Y', strtotime($data['birth_date'])) . "</td>
         </tr>
         <tr>
-            <th>Mother name</th> <td colspan='4'>" . ucwords($data['mother']) . "</td>
+            
             <th>Birth Place</th> <td>" . ucwords($data['birth_place']) . "</td>
         </tr>
         <tr>
