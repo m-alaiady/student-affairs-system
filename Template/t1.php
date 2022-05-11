@@ -204,7 +204,7 @@ $data = mysqli_fetch_assoc($result);
             <li><a href="<?php echo $path ?>/examination/exam_postpone.php">Exam postpone</a></li>
             <li><a href="<?php echo $path ?>/examination/exam_objection.php">Exam objection</a></li>
             <li><a href="<?php echo $path ?>/examination/register_for_makeup_exam.php">Register for makeup exam</a></li>
-            <li><a href="<?php echo $path ?>/examination/exam_in_other_branch_or_center.php">Exam in other branch/center</a></li>
+            <li><a href="<?php echo $path ?>/examination/exam_in_other_branch_or_center.php">Exam in other branch</a></li>
         </ul>
     </li>
     <li><a href="#" class="su-btn">Support 
